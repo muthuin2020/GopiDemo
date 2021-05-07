@@ -120,6 +120,7 @@ public class TestBase {
 
 	@AfterSuite
 	protected void closeDriver() {
+		System.out.println("========================================================================================");
 		driver.quit();
 	}
 
