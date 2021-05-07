@@ -1,0 +1,40 @@
+package TestingMs.TestingMs;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+public class TestP2 extends TestBase {
+
+	@Test(priority = 2)
+	void loginAgain() throws InterruptedException {
+
+		System.out.println("Inside LoginAgain");
+
+		String emailId = "ibecomedemo@illumine.in";
+		String pwd = "illumine123";
+		String loginLoc = "//input[@id=\"user-email\"]";
+		String pwdLoc = "//input[@id=\"user-password\"]";
+		String submitLoc = "//span[text()=\"Login\"]";
+		String firtsPage = "//*[text()=\"Explore Zone\"]";
+
+		driver.findElement(By.xpath(loginLoc)).sendKeys(emailId);
+		driver.findElement(By.xpath(pwdLoc)).sendKeys(pwd);
+		driver.findElement(By.xpath(submitLoc)).click();
+		Thread.sleep(5000);
+		System.out.println("Page Title is : " + driver.findElement(By.xpath(firtsPage)).getText());
+
+	}
+
+	@Test
+	void printB() {
+		// TODO Auto-generated method stub
+		System.out.println("Test PrintP2");
+
+	}
+}

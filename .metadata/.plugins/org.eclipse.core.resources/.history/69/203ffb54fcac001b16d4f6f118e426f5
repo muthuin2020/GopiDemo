@@ -1,0 +1,59 @@
+package com.pedgog.web.pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+public class PedgogLoginPage{
+
+	WebDriver driver;
+	
+	@FindBy(xpath="//input[@id=\"user-email\"]")
+	WebElement email;
+	
+	@FindBy(xpath="//input[@id=\"user-password\"]")
+	WebElement password;
+	
+	@FindBy(xpath = "//span[text()=\"Login\"]")
+			WebElement login;
+	
+	@FindBy(xpath = "//div[@class=\"rightBoxLogin\"]//h4")
+	WebElement loginPageTitle;
+	
+	public PedgogLoginPage(WebDriver driver)
+	{
+		this.driver=driver;
+		PageFactory.initElements(driver, PedgogLoginPage.class);
+	}
+	
+	public void enterUserEmail(String userEmail) {
+		email.sendKeys(userEmail);
+		
+	}
+	
+	public void enterPassword(String pwd)
+	{
+		password.sendKeys(pwd);
+	}
+	
+	public void clickLogin() {
+		login.click();
+	}
+	
+	public void getLoginPageTitle()
+	{
+		loginPageTitle.getText();
+	}
+	
+}

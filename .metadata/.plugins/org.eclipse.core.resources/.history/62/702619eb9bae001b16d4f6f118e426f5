@@ -1,0 +1,41 @@
+package com.pedgog.web.tests;
+
+import java.util.Properties;
+
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.pedgog.utilities.ConfigFileReader;
+import com.pedgog.web.common.TestBase;
+import com.pedgog.web.pages.PedgogHomePage;
+import com.pedgog.web.pages.PedgogLoginPage;
+import com.pedgog.web.pages.PedgogRegisterPage;
+
+public class RegisterTest extends TestBase {
+	PedgogRegisterPage loginPage;
+	PedgogHomePage homePage;
+	Boolean isLoggedIn=false;;
+	Properties prop;
+	
+
+	@BeforeTest
+	public void loginSetup() {
+		loginPage = new PedgogRegisterPage(driver);
+		homePage = new PedgogHomePage(driver);
+		prop=new ConfigFileReader().getConfig();
+	}
+
+	@Test(priority = 1)
+	public void loginWithCorrectCredentials(){
+		loginPage.enterUserEmail(prop.getProperty("emailId"));
+		loginPage.enterPassword(prop.getProperty("pwd"));
+		loginPage.clickLogin();
+		Assert.assertEquals(homePage.homePageTtile(), title);
+		isLoggedIn=true;
+	}
+
+	
+	
+}

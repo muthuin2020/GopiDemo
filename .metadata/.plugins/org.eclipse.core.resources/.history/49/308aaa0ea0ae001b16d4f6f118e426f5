@@ -1,0 +1,68 @@
+package com.pedgog.web.tests;
+
+import java.util.Properties;
+
+import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.pedgog.utilities.ConfigFileReader;
+import com.pedgog.web.common.TestBase;
+import com.pedgog.web.pages.PedgogHomePage;
+import com.pedgog.web.pages.PedgogLoginPage;
+
+public class LoginTest extends TestBase{
+	String emailId = "ibecomedemo@illumine.in";
+	String pwd = "illumine123";
+	String title = "Explore Zone";
+	String loginErrorMsg="Incorrect email or password";
+	PedgogLoginPage loginPage;
+	PedgogHomePage homePage;
+	Boolean isLoggedIn=false;;
+	Properties prop;
+	
+	@BeforeTest
+	public void loginSetup() {
+		loginPage = new PedgogLoginPage(driver);
+		homePage = new PedgogHomePage(driver);
+		prop=new ConfigFileReader().getConfig();
+	}
+
+	@Test(priority = 1)
+	public void loginWithCorrectCredentials(){
+		loginPage.enterUserEmail(prop.getProperty("emailId"));
+		loginPage.enterPassword(prop.getProperty("pwd"));
+		loginPage.clickLogin();
+		Assert.assertEquals(homePage.homePageTtile(), title);
+		isLoggedIn=true;
+	}
+
+	@Test(priority = 2)
+	public void loginWithWrongEmail() throws InterruptedException {
+		loginPage.enterUserEmail("abcd"+emailId);
+		loginPage.enterPassword(pwd);
+		loginPage.clickLogin();
+		Assert.assertEquals(loginPage.getLoginErrorMsg(), loginErrorMsg);
+	}	
+
+	@Test(priority = 3)
+	public void loginWithWrongPassword() throws InterruptedException {
+		loginPage.enterUserEmail(emailId);
+		loginPage.enterPassword("abcd"+pwd);
+		loginPage.clickLogin();
+		Assert.assertEquals(loginPage.getLoginErrorMsg(), loginErrorMsg);
+	}
+	
+	@AfterMethod
+	public void logout() throws InterruptedException
+	{
+		if(isLoggedIn)
+		{
+		homePage.logout();
+		isLoggedIn=false;
+		}
+	}
+	
+}

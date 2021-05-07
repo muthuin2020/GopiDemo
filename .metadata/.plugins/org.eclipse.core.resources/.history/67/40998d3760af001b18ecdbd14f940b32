@@ -1,0 +1,70 @@
+package com.pedgog.web.tests;
+
+import java.util.Properties;
+import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+import com.pedgog.utilities.ConfigFileReader;
+import com.pedgog.web.common.TestBase;
+import com.pedgog.web.pages.ConductPage;
+import com.pedgog.web.pages.ExplorePage;
+import com.pedgog.web.pages.PedgogHomePage;
+import com.pedgog.web.pages.PedgogLoginPage;
+import com.pedgog.web.pages.PreparePage;
+import com.pedgog.web.pages.ProjectsPage;
+
+public class HomePageTest extends TestBase {
+	PedgogLoginPage loginPage;
+	PedgogHomePage homePage;
+	ExplorePage explorePage;
+	PreparePage preparePage;
+	ConductPage conductPage;
+	ProjectsPage projectsPage;
+
+	@BeforeTest
+	public void loginSetup() {
+		prop = new ConfigFileReader().getConfig();
+		if (!isLoggedIn) {
+			homePage = loginToPedgog();
+		}
+	}
+
+	@Test
+	public void navigateToPreparePage() throws InterruptedException {
+		homePage.gotoPrepare();
+		preparePage = new PreparePage(driver);
+		Assert.assertEquals(preparePage.getPreparePageTtile(), prop.getProperty("preparePageTitle"));
+		Thread.sleep(3000);
+	}
+
+	@Test
+	public void navigateToConductPage() throws InterruptedException {
+		homePage.gotoConduct();
+		conductPage = new ConductPage(driver);
+		Assert.assertEquals(conductPage.getConductPageTtile(), prop.getProperty("conductPageTitle"));
+		Thread.sleep(3000);
+	}
+
+	@Test
+	public void navigateToProjectsPage() throws InterruptedException {
+		homePage.gotoProjects();
+		projectsPage = new ProjectsPage(driver);
+		Assert.assertEquals(projectsPage.getProjectsPageTtile(), prop.getProperty("projectsPageTitle"));
+		Thread.sleep(3000);
+	}
+
+	@Test
+	public void navigateToExplorePage() {
+		homePage.gotoExplore();
+		explorePage = new ExplorePage(driver);
+		Assert.assertEquals(explorePage.getExplorePageTtile(), prop.getProperty("explorePageTitle"));
+	}
+	
+	@Test
+	public void navigateToExplorePage() throws InterruptedException {
+		homePage.gotoExplore();
+		explorePage = new ExplorePage(driver);
+		Assert.assertEquals(explorePage.getExplorePageTtile(), prop.getProperty("explorePageTitle"));
+		Thread.sleep(3000);
+	}
+}

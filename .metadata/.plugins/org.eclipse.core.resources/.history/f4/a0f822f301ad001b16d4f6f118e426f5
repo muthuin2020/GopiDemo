@@ -1,0 +1,63 @@
+package com.pedgog.web.tests;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.pedgog.common.TestBase;
+import com.pedgog.web.pages.PedgogHomePage;
+import com.pedgog.web.pages.PedgogLoginPage;
+
+public class LoginTest extends TestBase {
+	String emailId = "ibecomedemo@illumine.in";
+	String pwd = "illumine123";
+	String title = "Explore Zone";
+	PedgogLoginPage loginPage;
+	PedgogHomePage homePage;
+
+	@BeforeTest
+	public void loginSetup() {
+		loginPage = new PedgogLoginPage(driver);
+		homePage = new PedgogHomePage(driver);
+	}
+
+	@Test(priority = 1)
+	public void loginWithCorrectCredentials() throws InterruptedException {
+		Thread.sleep(3000);
+		loginPage.enterUserEmail(emailId);
+		loginPage.enterPassword(pwd);
+		loginPage.clickLogin();
+		Thread.sleep(5000);
+		Assert.assertEquals(homePage.homePageTtile(), title);
+	}
+
+	@Test(priority = 2)
+	public void loginWithWrongEmail() throws InterruptedException {
+		Thread.sleep(3000);
+		loginPage.enterUserEmail("abcd"+emailId);
+		loginPage.enterPassword(pwd);
+		loginPage.clickLogin();
+		Thread.sleep(5000);
+		Assert.assertEquals(homePage.homePageTtile(), title);
+	}	
+
+	@Test(priority = 3)
+	public void loginWithWrongPassword() throws InterruptedException {
+		Thread.sleep(3000);
+		loginPage.enterUserEmail(emailId);
+		loginPage.enterPassword("abcd"+pwd);
+		loginPage.clickLogin();
+		Thread.sleep(5000);
+		Assert.assertEquals(homePage.homePageTtile(), title);
+	}
+	
+	@AfterTest
+	public void logout()
+	{
+		homePage.logout();
+	}
+	
+}
