@@ -47,7 +47,7 @@ public class TestBase {
 	}
 
 	@BeforeMethod
-	public void nameBefore(Method method) {
+	protected void nameBefore(Method method) {
 		System.out.println("========================================================================================");
 		testMethodName = method.getName();
 		System.out.println("Starting Test Method : " + testMethodName);
