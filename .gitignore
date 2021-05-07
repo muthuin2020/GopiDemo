@@ -1,2 +1,8 @@
 .metadata
 test-output
+.metadata/.log
+.metadata/.log
+*.snap
+*.resources
+*.xml
+*.html
