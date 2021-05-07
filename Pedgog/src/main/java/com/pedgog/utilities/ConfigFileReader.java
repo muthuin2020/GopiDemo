@@ -14,7 +14,7 @@ public class ConfigFileReader {
 	private String propertyFilePath;
 
 	public ConfigFileReader() {
-		String testClassQualifiedName = new Exception().getStackTrace()[1].getClassName();
+		String testClassQualifiedName = Thread.currentThread().getStackTrace()[1].getClassName();
 		String testClassName = testClassQualifiedName.split("tests")[1].substring(1);
 
 		System.out.println(
