@@ -1,5 +1,5 @@
 .metadata
-test-output
+Pedgog/test-output/*
 .metadata/.log
 .metadata/.log
 *.snap
