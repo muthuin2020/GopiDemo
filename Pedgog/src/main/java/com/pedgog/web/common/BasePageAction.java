@@ -44,7 +44,7 @@ public class BasePageAction {
 		// ((JavascriptExecutor) driver).executeScript("arguments[0].click();",
 		// element);
 		element.click();
-		System.out.println("I am on " + Thread.currentThread().getStackTrace()[2].getMethodName());
+		System.out.println("I " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
 	}
 
@@ -65,7 +65,7 @@ public class BasePageAction {
 		new WebDriverWait(driver, 60).withMessage("element is not visible")
 				.until(ExpectedConditions.visibilityOf(element));
 		element.clear();
-		System.out.println("I am on " + Thread.currentThread().getStackTrace()[2].getMethodName());
+		System.out.println("I " + Thread.currentThread().getStackTrace()[2].getMethodName());
 		element.sendKeys(text);
 	}
 
@@ -101,7 +101,7 @@ public class BasePageAction {
 	}
 
 	public String getText(WebElement element) {
-		System.out.println("I am on " + Thread.currentThread().getStackTrace()[2].getMethodName());
+		System.out.println("I " + Thread.currentThread().getStackTrace()[2].getMethodName());
 		new WebDriverWait(driver, 60).withMessage("element is not present").ignoring(NoSuchElementException.class)
 				.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.visibilityOf(element));
 		return element.getText();
