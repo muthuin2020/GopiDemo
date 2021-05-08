@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.pedgog.web.common.BasePageAction;
 
-public class ExplorePage extends BasePageAction{
+public class ExplorePage extends BasePageAction {
 
 	WebDriver driver;
 
@@ -35,24 +35,23 @@ public class ExplorePage extends BasePageAction{
 
 	@FindBy(xpath = "//*[text()=\"Explore Zone\"]")
 	WebElement explorePageTtile;
-	
+
 	@FindBy(xpath = "//h1")
 	WebElement explorePageHeader;
-	
+
 	@FindBy(xpath = "//div[@class=\"-headerTitle\"]//p")
 	WebElement explorePageSummary;
-	
+
 	@FindBy(xpath = "//section")
 	WebElement explorePageModuleSections;
-	
+
 	String moduleSections = "//section";
-	
-	@FindBy(xpath = "//section//h3") 
+
+	@FindBy(xpath = "//section//h3")
 	private List<WebElement> moduleSectionTitles;
-	
-	
+
 	int elementCount;
-	
+
 	public ExplorePage(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
@@ -66,24 +65,23 @@ public class ExplorePage extends BasePageAction{
 	public String getExplorePageHeader() {
 		return getText(explorePageHeader);
 	}
-	
+
 	public String getExplorePageSummary() {
 		return getText(explorePageSummary);
 	}
-	
+
 	public int getExplorePageSectionsCount() {
-		elementCount= getElementCount(moduleSections);
-		return elementCount;
+		return getElementCount(moduleSections);
 	}
-	
+
 	public List<String> getExplorePageModuleSectionsTitle() {
-		List<String> titles=new ArrayList<String>();
+		List<String> titles = new ArrayList<String>();
 		for (WebElement ele : moduleSectionTitles) {
-		     titles.add(ele.getText());
-		 }
+			titles.add(ele.getText());
+		}
 		return titles;
 	}
-	
+
 	public void gotoExplore() {
 		clickElement(explore);
 	}
