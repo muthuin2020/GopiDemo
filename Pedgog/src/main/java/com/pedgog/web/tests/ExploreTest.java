@@ -1,5 +1,8 @@
 package com.pedgog.web.tests;
 
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -38,15 +41,23 @@ public class ExploreTest extends TestBase {
 		Assert.assertEquals(explorePage.getExplorePageHeader(), prop.getProperty("header"));
 	}
 
-	@Test(priority = 12) 
+	@Test(priority = 12)
 	public void verifyExplorePageSummary() {
 		Assert.assertEquals(explorePage.getExplorePageSummary(), prop.getProperty("summary"));
 	}
 
-	@Test(priority = 13) 
+	@Test(priority = 13)
 	public void verifyModuleSectionsCount() {
 		Assert.assertEquals(explorePage.getExplorePageSectionsCount(),
 				Integer.parseInt(prop.getProperty("moduleSectionCount")));
+	}
+
+	@Test(priority = 14)
+	public void verifyModuleSectionsTitles() {
+		List<String> titles = explorePage.getExplorePageModuleSectionsTitle();
+		for (int i = 0; i < titles.size(); i++) {
+			Assert.assertEquals(titles.get(i), prop.getProperty("moduleSectionTitle" + (i + 1)));
+		}
 	}
 
 }

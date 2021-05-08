@@ -1,5 +1,8 @@
 package com.pedgog.web.pages;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -44,6 +47,12 @@ public class ExplorePage extends BasePageAction{
 	
 	String moduleSections = "//section";
 	
+	@FindBy(xpath = "//section//h3") 
+	private List<WebElement> moduleSectionTitles;
+	
+	
+	int elementCount;
+	
 	public ExplorePage(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
@@ -63,7 +72,16 @@ public class ExplorePage extends BasePageAction{
 	}
 	
 	public int getExplorePageSectionsCount() {
-		return getElementCount(moduleSections);
+		elementCount= getElementCount(moduleSections);
+		return elementCount;
+	}
+	
+	public List<String> getExplorePageModuleSectionsTitle() {
+		List<String> titles=new ArrayList<String>();
+		for (WebElement ele : moduleSectionTitles) {
+		     titles.add(ele.getText());
+		 }
+		return titles;
 	}
 	
 	public void gotoExplore() {
