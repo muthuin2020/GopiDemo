@@ -22,7 +22,7 @@ public class LoginTest extends TestBase {
 		prop = new ConfigFileReader().getConfig();
 	}
 
-	@Test(priority = 1, groups = {"LoginPage"})
+	@Test(priority = 1)
 	public void loginWithCorrectCredentials() {
 		loginPage.enterUserEmail(prop.getProperty("emailId"));
 		loginPage.enterPassword(prop.getProperty("pwd"));
@@ -31,7 +31,7 @@ public class LoginTest extends TestBase {
 		isLoggedIn = true;
 	}
 
-	@Test(priority = 2, groups = {"LoginPage"})
+	@Test(priority = 2)
 	public void loginWithWrongEmail() throws InterruptedException {
 		loginPage.enterUserEmail("abcd" + prop.getProperty("emailId"));
 		loginPage.enterPassword(prop.getProperty("pwd"));
@@ -39,7 +39,7 @@ public class LoginTest extends TestBase {
 		Assert.assertEquals(loginPage.getLoginErrorMsg(), prop.getProperty("loginErrorMsg"));
 	}
 
-	@Test(priority = 3, groups = {"LoginPage"})
+	@Test(priority = 3)
 	public void loginWithWrongPassword() throws InterruptedException {
 		loginPage.enterUserEmail(prop.getProperty("emailId"));
 		loginPage.enterPassword("abcd" + prop.getProperty("pwd"));

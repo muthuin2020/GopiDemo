@@ -33,17 +33,17 @@ public class ExploreTest extends TestBase {
 		}
 	}
 
-	@Test (groups = {"ExplorePage"})
+	@Test
 	public void verifyExplorePageHeader() {
 		Assert.assertEquals(explorePage.getExplorePageHeader(), prop.getProperty("header"));
 	}
 
-	@Test (groups = {"ExplorePage"})
+	@Test 
 	public void verifyExplorePageSummary() {
 		Assert.assertEquals(explorePage.getExplorePageSummary(), prop.getProperty("summary"));
 	}
 
-	@Test (groups = {"ExplorePage"})
+	@Test 
 	public void verifyModuleSectionsCount() {
 		Assert.assertEquals(explorePage.getExplorePageSectionsCount(),
 				Integer.parseInt(prop.getProperty("moduleSectionCount")));

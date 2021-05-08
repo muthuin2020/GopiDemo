@@ -32,35 +32,35 @@ public class HomePageTest extends TestBase {
 		}
 	}
 
-	@Test(priority = 6, groups = {"HomePage"})
+	@Test(priority = 6)
 	public void navigateToPreparePage() {
 		homePage.gotoPrepare();
 		preparePage = new PreparePage(driver);
 		Assert.assertEquals(preparePage.getPreparePageTtile(), prop.getProperty("preparePageTitle"));
 	}
 
-	@Test(priority = 7, groups = {"HomePage"})
+	@Test(priority = 7)
 	public void navigateToConductPage() {
 		homePage.gotoConduct();
 		conductPage = new ConductPage(driver);
 		Assert.assertEquals(conductPage.getConductPageTtile(), prop.getProperty("conductPageTitle"));
 	}
 
-	@Test(priority = 8, groups = {"HomePage"})
+	@Test(priority = 8)
 	public void navigateToProjectsPage() {
 		homePage.gotoProjects();
 		projectsPage = new ProjectsPage(driver);
 		Assert.assertEquals(projectsPage.getProjectsPageTtile(), prop.getProperty("projectsPageTitle"));
 	}
 
-	@Test(priority = 9, groups = {"HomePage"})
+	@Test(priority = 9)
 	public void navigateToExplorePage() {
 		homePage.gotoExplore();
 		explorePage = new ExplorePage(driver);
 		Assert.assertEquals(explorePage.getExplorePageTtile(), prop.getProperty("explorePageTitle"));
 	}
 	
-	@Test(priority = 10, groups = {"HomePage"})
+	@Test(priority = 10)
 	public void navigateToHelpPage() throws InterruptedException {
 		homePage.gotoHelp();
 		helpPage = new HelpPage(driver);
