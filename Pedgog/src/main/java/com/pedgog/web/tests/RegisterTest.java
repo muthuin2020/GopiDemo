@@ -15,7 +15,6 @@ import com.pedgog.web.pages.PedgogRegisterPage;
 public class RegisterTest extends TestBase{
 	PedgogRegisterPage registerPage;
 	PedgogLoginPage loginPage;
-	Boolean isLoggedIn = false;
 
 	@BeforeClass
 	public void registerSetup() {

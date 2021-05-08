@@ -5,8 +5,8 @@
 		<classes>
 			<class name="com.pedgog.web.tests.LoginTest" />
 			<class name="com.pedgog.web.tests.RegisterTest" />
-			
 			<class name="com.pedgog.web.tests.HomePageTest" />
+			<class name="com.pedgog.web.tests.ExploreTest" />
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->
