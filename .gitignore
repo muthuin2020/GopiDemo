@@ -9,3 +9,6 @@ Pedgog/target/*
 *.html
 .metadata/.log
 *.html
+.metadata/.log
+*.index
+*.class
