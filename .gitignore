@@ -1,6 +1,6 @@
 .metadata
-Pedgog/test-output/*
-Pedgog/target/*
+*Pedgog/test-output/*
+*Pedgog/target/*
 .metadata/*
 .metadata/.log
 *.snap
