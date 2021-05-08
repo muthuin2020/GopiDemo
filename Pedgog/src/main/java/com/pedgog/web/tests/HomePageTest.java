@@ -2,6 +2,7 @@ package com.pedgog.web.tests;
 
 import java.util.Properties;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import com.pedgog.utilities.ConfigFileReader;
@@ -23,7 +24,7 @@ public class HomePageTest extends TestBase {
 	ProjectsPage projectsPage;
 	HelpPage helpPage;
 
-	@BeforeTest
+	@BeforeClass
 	public void loginSetup() {
 		prop = new ConfigFileReader().getConfig();
 		if (!isLoggedIn) {
@@ -31,38 +32,39 @@ public class HomePageTest extends TestBase {
 		}
 	}
 
-	@Test(priority = 6)
+	@Test(priority = 6, groups = {"HomePage"})
 	public void navigateToPreparePage() {
 		homePage.gotoPrepare();
 		preparePage = new PreparePage(driver);
 		Assert.assertEquals(preparePage.getPreparePageTtile(), prop.getProperty("preparePageTitle"));
 	}
 
-	@Test(priority = 7)
+	@Test(priority = 7, groups = {"HomePage"})
 	public void navigateToConductPage() {
 		homePage.gotoConduct();
 		conductPage = new ConductPage(driver);
 		Assert.assertEquals(conductPage.getConductPageTtile(), prop.getProperty("conductPageTitle"));
 	}
 
-	@Test(priority = 8)
+	@Test(priority = 8, groups = {"HomePage"})
 	public void navigateToProjectsPage() {
 		homePage.gotoProjects();
 		projectsPage = new ProjectsPage(driver);
 		Assert.assertEquals(projectsPage.getProjectsPageTtile(), prop.getProperty("projectsPageTitle"));
 	}
 
-	@Test(priority = 9)
+	@Test(priority = 9, groups = {"HomePage"})
 	public void navigateToExplorePage() {
 		homePage.gotoExplore();
 		explorePage = new ExplorePage(driver);
 		Assert.assertEquals(explorePage.getExplorePageTtile(), prop.getProperty("explorePageTitle"));
 	}
 	
-	@Test(priority = 10)
+	@Test(priority = 10, groups = {"HomePage"})
 	public void navigateToHelpPage() throws InterruptedException {
 		homePage.gotoHelp();
 		helpPage = new HelpPage(driver);
 		Assert.assertTrue(helpPage.isVideoAvailable());
+		helpPage.closeHelpPage();
 	}
 }

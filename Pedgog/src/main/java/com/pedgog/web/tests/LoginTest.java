@@ -2,6 +2,7 @@ package com.pedgog.web.tests;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -14,14 +15,14 @@ public class LoginTest extends TestBase {
 	PedgogLoginPage loginPage;
 	PedgogHomePage homePage;
 
-	@BeforeTest
+	@BeforeClass
 	public void loginSetup() {
 		loginPage = new PedgogLoginPage(driver);
 		homePage = new PedgogHomePage(driver);
 		prop = new ConfigFileReader().getConfig();
 	}
 
-	@Test(priority = 1)
+	@Test(priority = 1, groups = {"LoginPage"})
 	public void loginWithCorrectCredentials() {
 		loginPage.enterUserEmail(prop.getProperty("emailId"));
 		loginPage.enterPassword(prop.getProperty("pwd"));
@@ -30,7 +31,7 @@ public class LoginTest extends TestBase {
 		isLoggedIn = true;
 	}
 
-	@Test(priority = 2)
+	@Test(priority = 2, groups = {"LoginPage"})
 	public void loginWithWrongEmail() throws InterruptedException {
 		loginPage.enterUserEmail("abcd" + prop.getProperty("emailId"));
 		loginPage.enterPassword(prop.getProperty("pwd"));
@@ -38,7 +39,7 @@ public class LoginTest extends TestBase {
 		Assert.assertEquals(loginPage.getLoginErrorMsg(), prop.getProperty("loginErrorMsg"));
 	}
 
-	@Test(priority = 3)
+	@Test(priority = 3, groups = {"LoginPage"})
 	public void loginWithWrongPassword() throws InterruptedException {
 		loginPage.enterUserEmail(prop.getProperty("emailId"));
 		loginPage.enterPassword("abcd" + prop.getProperty("pwd"));

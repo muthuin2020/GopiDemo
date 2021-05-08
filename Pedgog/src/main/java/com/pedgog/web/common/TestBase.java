@@ -56,6 +56,7 @@ public class TestBase {
 	public PedgogHomePage loginToPedgog() {
 		loginPage = new PedgogLoginPage(driver);
 		homePage = new PedgogHomePage(driver);
+		driver.get("https://coaching.pedgog.in/");
 		System.out.println("Logging into Pedgog");
 		loginPage.enterUserEmail(userName);
 		System.out.println("Entered user email ");

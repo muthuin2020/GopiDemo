@@ -74,6 +74,16 @@ public class BasePageAction {
 		js.executeScript("arguments[0].scrollIntoView();", element);
 	}
 
+	public int getElementCount(String xpath) {
+		try {
+			Thread.sleep(50000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return driver.findElements(By.xpath(xpath)).size();
+	}
+
 	public boolean isElementVisible(WebElement element) {
 		return new WebDriverWait(driver, 60).withMessage("element is not visible")
 				.until(ExpectedConditions.visibilityOf(element)).isDisplayed();
@@ -105,7 +115,7 @@ public class BasePageAction {
 		new WebDriverWait(driver, 60).withMessage("element is not present").ignoring(NoSuchElementException.class)
 				.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.visibilityOf(element));
 		return element.getText();
-		
+
 	}
 
 	public boolean elementHasText(WebElement we, String text) {

@@ -1,5 +1,6 @@
 package com.pedgog.web.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,7 +32,18 @@ public class ExplorePage extends BasePageAction{
 
 	@FindBy(xpath = "//*[text()=\"Explore Zone\"]")
 	WebElement explorePageTtile;
-
+	
+	@FindBy(xpath = "//h1")
+	WebElement explorePageHeader;
+	
+	@FindBy(xpath = "//div[@class=\"-headerTitle\"]//p")
+	WebElement explorePageSummary;
+	
+	@FindBy(xpath = "//section")
+	WebElement explorePageModuleSections;
+	
+	String moduleSections = "//section";
+	
 	public ExplorePage(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
@@ -42,6 +54,18 @@ public class ExplorePage extends BasePageAction{
 		return getText(explorePageTtile);
 	}
 
+	public String getExplorePageHeader() {
+		return getText(explorePageHeader);
+	}
+	
+	public String getExplorePageSummary() {
+		return getText(explorePageSummary);
+	}
+	
+	public int getExplorePageSectionsCount() {
+		return getElementCount(moduleSections);
+	}
+	
 	public void gotoExplore() {
 		clickElement(explore);
 	}
