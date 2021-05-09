@@ -124,4 +124,8 @@ public class ExplorePage extends BasePageAction {
 		return getElementCountByXpath(moduleSections + "[" + i + "]" + modulesPerSection);
 	}
 
+	public String getListedModulesTitle(int i, int j) {
+		return getTextByXpath(moduleSections + "[" + i + "]" + modulesPerSection+ "[" + j + "]//h6");
+	}
+	
 }

@@ -61,6 +61,7 @@ public class ExploreTest extends TestBase {
 			Assert.assertEquals(titles.get(i), prop.getProperty("moduleSectionTitle" + (i + 1)));
 		}
 	}
+
 	@Test(priority = 15)
 	public void verifyModuleSectionsSummary() {
 		List<String> titles = explorePage.getExplorePageModuleSectionsSummary();
@@ -68,17 +69,33 @@ public class ExploreTest extends TestBase {
 			Assert.assertEquals(titles.get(i), prop.getProperty("moduleSectionSummary" + (i + 1)));
 		}
 	}
+
 	@Test(priority = 16)
 	public void verifyTitlesCountWithListedModulesCount() {
 		List<String> titles = explorePage.getExplorePageModuleSectionsTitle();
-		int count= explorePage.getExplorePageSectionsCount();
-		for(int i=0;i<count;i++)
-		{
-		String title=titles.get(i);
-		int titleCount=Integer.parseInt(title.substring(title.lastIndexOf('(')+1).split("\\)")[0]);
-		int listedCount=explorePage.getListedModulesCountInTheSection(i+1);
-		Assert.assertEquals(titleCount, listedCount);
-		System.out.println(i+1+" module's title count matches with listed Modules");
-		}	
-	}	
+		int count = explorePage.getExplorePageSectionsCount();
+		for (int i = 0; i < count; i++) {
+			String title = titles.get(i);
+			int titleCount = Integer.parseInt(title.substring(title.lastIndexOf('(') + 1).split("\\)")[0]);
+			int listedCount = explorePage.getListedModulesCountInTheSection(i + 1);
+			Assert.assertEquals(titleCount, listedCount);
+			System.out.println(i + 1 + " module's title count matches with listed Modules");
+		}
+	}
+
+	@Test(priority = 17)
+	public void verifyAllModulesTitle() {
+		int count = explorePage.getExplorePageSectionsCount();
+		for (int i = 0; i < count; i++) {
+			int listedCount = explorePage.getListedModulesCountInTheSection(i + 1);
+			for (int j = 0; j < listedCount; j++) {
+				int a = i + 1, b = j + 1;
+				String title = explorePage.getListedModulesTitle(a, b);
+				System.out.println("page module : "+title);
+				System.out.println("config module : "+prop.get("moduleTitle" + a + b));
+				Assert.assertEquals(title, prop.get("moduleTitle" + a + b));
+			}
+		}
+	}
+
 }

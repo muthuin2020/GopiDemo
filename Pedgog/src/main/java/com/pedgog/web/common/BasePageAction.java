@@ -160,7 +160,33 @@ public class BasePageAction {
 		new WebDriverWait(driver, 60).withMessage("element is not present").ignoring(NoSuchElementException.class)
 				.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.visibilityOf(element));
 		return element.getText();
+	}
+	
+	public String getTextByXpath(String xpath) {
+		String text=null;
+		int i = 0;
+		System.out.println("I " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
+		do {
+			if (driver.findElement(By.xpath(xpath)).getText().length()>0) {
+				text = driver.findElement(By.xpath(xpath)).getText();
+				System.out.println("Element found");
+				break;
+			} else {
+				try {
+					System.out.println("Element not found, waiting for it..."+xpath);
+					Thread.sleep(2000);
+				} catch (InterruptedException e1) {
+
+					e1.printStackTrace();
+				}
+				i++;
+			}
+		} while (i < 30);
+
+		if (text == null)
+			System.err.println("Elements not found ");
+		return text;
 	}
 
 	public Boolean isElementPresent(String xpath) {
