@@ -1,5 +1,6 @@
 package com.pedgog.web.tests;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -66,4 +67,17 @@ public class ExploreTest extends TestBase {
 			Assert.assertEquals(titles.get(i), prop.getProperty("moduleSectionSummary" + (i + 1)));
 		}
 	}
+	@Test(priority = 16)
+	public void verifyTitlesCountWithListedModulesCount() {
+		List<String> titles = explorePage.getExplorePageModuleSectionsTitle();
+		int count= explorePage.getExplorePageSectionsCount();
+		for(int i=0;i<count;i++)
+		{
+		String title=titles.get(i);
+		int titleCount=Integer.parseInt(title.substring(title.lastIndexOf('(')+1).split("\\)")[0]);
+		int listedCount=explorePage.getListedModulesCountInTheSection(i+1);
+		Assert.assertEquals(titleCount, listedCount);
+		System.out.println(i+1+" module's title count matches with listed Modules");
+		}	
+	}	
 }

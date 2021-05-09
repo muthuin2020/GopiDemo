@@ -90,7 +90,7 @@ public class BasePageAction {
 					System.out.println("Element not found, waiting for it...");
 					Thread.sleep(2000);
 				} catch (InterruptedException e1) {
-					
+
 					e1.printStackTrace();
 				}
 				i++;
@@ -98,7 +98,34 @@ public class BasePageAction {
 		} while (i < 30);
 
 		if (count == 0)
-			System.err.println("Element not found " );
+			System.err.println("Element not found ");
+		return count;
+	}
+
+	public int getElementCountByXpath(String xpath) {
+		int count = 0;
+		int i = 0;
+		System.out.println("I " + Thread.currentThread().getStackTrace()[2].getMethodName());
+
+		do {
+			if (driver.findElements(By.xpath(xpath)).size() > 0) {
+				count = driver.findElements(By.xpath(xpath)).size();
+				System.out.println("Elements found");
+				break;
+			} else {
+				try {
+					System.out.println("Elements not found, waiting for it..."+xpath);
+					Thread.sleep(2000);
+				} catch (InterruptedException e1) {
+
+					e1.printStackTrace();
+				}
+				i++;
+			}
+		} while (i < 30);
+
+		if (count == 0)
+			System.err.println("Elements not found ");
 		return count;
 	}
 

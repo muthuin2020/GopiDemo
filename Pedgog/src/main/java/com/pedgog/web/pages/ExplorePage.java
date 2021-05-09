@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 import com.pedgog.web.common.BasePageAction;
 
@@ -52,6 +53,8 @@ public class ExplorePage extends BasePageAction {
 
 	@FindBy(xpath = "//section//h3/following-sibling::p")
 	private List<WebElement> moduleSectionSummary;
+
+	String modulesPerSection = "//div[@class=\"module-card\"]";
 
 	int elementCount;
 
@@ -115,6 +118,10 @@ public class ExplorePage extends BasePageAction {
 			titles.add(getText(ele));
 		}
 		return titles;
+	}
+
+	public int getListedModulesCountInTheSection(int i) {
+		return getElementCountByXpath(moduleSections + "[" + i + "]" + modulesPerSection);
 	}
 
 }
