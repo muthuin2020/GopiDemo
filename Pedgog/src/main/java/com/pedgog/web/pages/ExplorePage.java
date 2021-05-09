@@ -61,6 +61,30 @@ public class ExplorePage extends BasePageAction {
 		PageFactory.initElements(driver, this);
 	}
 
+	void gotoExplore() {
+		clickElement(explore);
+	}
+
+	public void gotoPrepare() {
+		clickElement(prepare);
+	}
+
+	public void gotoConduct() {
+		clickElement(conduct);
+	}
+
+	public void gotoProject() {
+		clickElement(project);
+	}
+
+	public void gotoHelp() {
+		clickElement(help);
+	}
+
+	public void logout() {
+		clickElement(logout);
+	}
+
 	public String getExplorePageTtile() {
 		return getText(explorePageTtile);
 	}
@@ -84,37 +108,13 @@ public class ExplorePage extends BasePageAction {
 		}
 		return titles;
 	}
-	
+
 	public List<String> getExplorePageModuleSectionsSummary() {
 		List<String> titles = new ArrayList<String>();
 		for (WebElement ele : moduleSectionSummary) {
 			titles.add(getText(ele));
 		}
 		return titles;
-	}
-
-	public void gotoExplore() {
-		clickElement(explore);
-	}
-
-	public void gotoPrepare() {
-		clickElement(prepare);
-	}
-
-	public void gotoConduct() {
-		clickElement(conduct);
-	}
-
-	public void gotoProject() {
-		clickElement(project);
-	}
-
-	public void gotoHelp() {
-		clickElement(help);
-	}
-
-	public void logout() {
-		clickElement(logout);
 	}
 
 }
