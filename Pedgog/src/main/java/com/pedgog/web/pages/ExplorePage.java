@@ -55,7 +55,17 @@ public class ExplorePage extends BasePageAction {
 	private List<WebElement> moduleSectionSummary;
 
 	String modulesPerSection = "//div[@class=\"module-card\"]";
+	
+	@FindBy(xpath = "//section//div[@class=\"module-card\"]//a[@class=\"button-label\"]")
+	private List<WebElement> exploreButton;
 
+	@FindBy(xpath = "//img[@alt=\"Illumine\"]")
+	private WebElement exitFromExplore;
+
+	@FindBy(xpath = "//p/following-sibling::h2")
+	private WebElement exploreModuleTitle;
+
+	
 	int elementCount;
 
 	public ExplorePage(WebDriver driver) {
@@ -144,4 +154,17 @@ public class ExplorePage extends BasePageAction {
 		return getTextByXpath(moduleSections + "[" + i + "]" + modulesPerSection+ "[" + j + "]//p");
 	}
 	
+	public void clickOnExploreModule(int i, int j) {
+		 clickElementByXpath(moduleSections + "[" + i + "]" + modulesPerSection+ "[" + j + "]//a[@class=\"button-label\"]");
+	}
+	
+	public String getExploringModuleTitle()
+	{
+		return getText(exploreModuleTitle);
+	}
+	
+	public void exitFromExploringModule()
+	{
+		clickElement(exitFromExplore);
+	}
 }

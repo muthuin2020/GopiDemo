@@ -114,7 +114,7 @@ public class BasePageAction {
 				break;
 			} else {
 				try {
-					System.out.println("Elements not found, waiting for it..."+xpath);
+					System.out.println("Elements not found, waiting for it..." + xpath);
 					Thread.sleep(2000);
 				} catch (InterruptedException e1) {
 
@@ -161,20 +161,20 @@ public class BasePageAction {
 				.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.visibilityOf(element));
 		return element.getText();
 	}
-	
+
 	public String getTextByXpath(String xpath) {
-		String text=null;
+		String text = null;
 		int i = 0;
 		System.out.println("I " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
 		do {
-			if (driver.findElement(By.xpath(xpath)).getText().length()>0) {
+			if (driver.findElement(By.xpath(xpath)).getText().length() > 0) {
 				text = driver.findElement(By.xpath(xpath)).getText();
 				System.out.println("Element found");
 				break;
 			} else {
 				try {
-					System.out.println("Element not found, waiting for it..."+xpath);
+					System.out.println("Element not found, waiting for it..." + xpath);
 					Thread.sleep(2000);
 				} catch (InterruptedException e1) {
 
@@ -187,6 +187,26 @@ public class BasePageAction {
 		if (text == null)
 			System.err.println("Elements not found ");
 		return text;
+	}
+
+	public void clickElementByXpath(String xpath) {
+		int i = 0;
+		System.out.println("I " + Thread.currentThread().getStackTrace()[2].getMethodName());
+		do {
+			try {
+				scrollToElement(driver.findElement(By.xpath(xpath)));
+				driver.findElement(By.xpath(xpath)).click();
+				break;
+			} catch (Exception e) {
+				System.out.println("Element not found, waiting for it..." + xpath);
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
+			i++;
+		} while (i < 30);
 	}
 
 	public Boolean isElementPresent(String xpath) {

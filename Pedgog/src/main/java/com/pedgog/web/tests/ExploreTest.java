@@ -112,11 +112,29 @@ public class ExploreTest extends TestBase {
 				int a = i + 1, b = j + 1;
 				String title = explorePage.getListedModulesSummary(a, b);
 				try {
-					Assert.assertEquals(title, prop.get("moduleSummary" + a + b));
+					Assert.assertTrue(title.equalsIgnoreCase((String) prop.get("moduleSummary" + a + b)));
 				} catch (Exception e) {
 					System.err.print("Module summary NOT matching : Section " + a + ", module " + b);
 				}
 			}
 		}
+	}
+
+	@Test(priority = 19)
+	public void verifyExploreButtonOnModules() {
+		Assert.assertEquals(homePage.getHomePageTtile(), prop.getProperty("pageTitle"));
+		int count = explorePage.getExplorePageSectionsCount();
+		for (int i = 0; i < count; i++) {
+			int listedCount = explorePage.getListedModulesCountInTheSection(i + 1);
+			for (int j = 0; j < listedCount; j++) {
+				Assert.assertEquals(homePage.getHomePageTtile(), prop.getProperty("pageTitle"));
+				int a = i + 1, b = j + 1;
+				explorePage.clickOnExploreModule(a, b);
+				String title = explorePage.getExploringModuleTitle();
+				Assert.assertTrue(title.equalsIgnoreCase((String) prop.get("moduleTitle" + a + b)));
+				explorePage.exitFromExploringModule();
+			}
+		}
+
 	}
 }
