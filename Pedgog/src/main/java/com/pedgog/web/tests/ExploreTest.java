@@ -78,8 +78,11 @@ public class ExploreTest extends TestBase {
 			String title = titles.get(i);
 			int titleCount = Integer.parseInt(title.substring(title.lastIndexOf('(') + 1).split("\\)")[0]);
 			int listedCount = explorePage.getListedModulesCountInTheSection(i + 1);
-			Assert.assertEquals(titleCount, listedCount);
-			System.out.println(i + 1 + " module's title count matches with listed Modules");
+			try {
+				Assert.assertEquals(titleCount, listedCount);
+			} catch (Exception e) {
+				System.err.println(i + 1 + " module's title count NOT matches with listed Module's count");
+			}
 		}
 	}
 
@@ -91,11 +94,29 @@ public class ExploreTest extends TestBase {
 			for (int j = 0; j < listedCount; j++) {
 				int a = i + 1, b = j + 1;
 				String title = explorePage.getListedModulesTitle(a, b);
-				System.out.println("page module : "+title);
-				System.out.println("config module : "+prop.get("moduleTitle" + a + b));
-				Assert.assertEquals(title, prop.get("moduleTitle" + a + b));
+				try {
+					Assert.assertEquals(title, prop.get("moduleTitle" + a + b));
+				} catch (Exception e) {
+					System.err.println("Module titles NOT matching : Section " + a + ", module " + b);
+				}
 			}
 		}
 	}
 
+	@Test(priority = 18)
+	public void verifyAllModulesSummary() {
+		int count = explorePage.getExplorePageSectionsCount();
+		for (int i = 0; i < count; i++) {
+			int listedCount = explorePage.getListedModulesCountInTheSection(i + 1);
+			for (int j = 0; j < listedCount; j++) {
+				int a = i + 1, b = j + 1;
+				String title = explorePage.getListedModulesSummary(a, b);
+				try {
+					Assert.assertEquals(title, prop.get("moduleSummary" + a + b));
+				} catch (Exception e) {
+					System.err.print("Module summary NOT matching : Section " + a + ", module " + b);
+				}
+			}
+		}
+	}
 }

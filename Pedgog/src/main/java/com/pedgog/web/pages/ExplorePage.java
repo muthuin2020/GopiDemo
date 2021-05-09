@@ -101,10 +101,22 @@ public class ExplorePage extends BasePageAction {
 	}
 
 	public int getExplorePageSectionsCount() {
-		return getElementCount(explorePageModuleSections);
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return getElementCountByXpath(moduleSections);
 	}
 
 	public List<String> getExplorePageModuleSectionsTitle() {
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		List<String> titles = new ArrayList<String>();
 		for (WebElement ele : moduleSectionTitles) {
 			titles.add(getText(ele));
@@ -126,6 +138,10 @@ public class ExplorePage extends BasePageAction {
 
 	public String getListedModulesTitle(int i, int j) {
 		return getTextByXpath(moduleSections + "[" + i + "]" + modulesPerSection+ "[" + j + "]//h6");
+	}
+	
+	public String getListedModulesSummary(int i, int j) {
+		return getTextByXpath(moduleSections + "[" + i + "]" + modulesPerSection+ "[" + j + "]//p");
 	}
 	
 }
