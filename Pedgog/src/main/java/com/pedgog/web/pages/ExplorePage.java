@@ -50,6 +50,9 @@ public class ExplorePage extends BasePageAction {
 	@FindBy(xpath = "//section//h3")
 	private List<WebElement> moduleSectionTitles;
 
+	@FindBy(xpath = "//section//h3/following-sibling::p")
+	private List<WebElement> moduleSectionSummary;
+
 	int elementCount;
 
 	public ExplorePage(WebDriver driver) {
@@ -77,7 +80,15 @@ public class ExplorePage extends BasePageAction {
 	public List<String> getExplorePageModuleSectionsTitle() {
 		List<String> titles = new ArrayList<String>();
 		for (WebElement ele : moduleSectionTitles) {
-			titles.add(ele.getText());
+			titles.add(getText(ele));
+		}
+		return titles;
+	}
+	
+	public List<String> getExplorePageModuleSectionsSummary() {
+		List<String> titles = new ArrayList<String>();
+		for (WebElement ele : moduleSectionSummary) {
+			titles.add(getText(ele));
 		}
 		return titles;
 	}

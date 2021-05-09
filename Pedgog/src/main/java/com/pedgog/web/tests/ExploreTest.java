@@ -59,5 +59,11 @@ public class ExploreTest extends TestBase {
 			Assert.assertEquals(titles.get(i), prop.getProperty("moduleSectionTitle" + (i + 1)));
 		}
 	}
-
+	@Test(priority = 15)
+	public void verifyModuleSectionsSummary() {
+		List<String> titles = explorePage.getExplorePageModuleSectionsSummary();
+		for (int i = 0; i < titles.size(); i++) {
+			Assert.assertEquals(titles.get(i), prop.getProperty("moduleSectionSummary" + (i + 1)));
+		}
+	}
 }
