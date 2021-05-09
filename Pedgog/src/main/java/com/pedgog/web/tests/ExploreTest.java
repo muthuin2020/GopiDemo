@@ -33,6 +33,7 @@ public class ExploreTest extends TestBase {
 		try {
 			Assert.assertEquals(homePage.getHomePageTtile(), prop.getProperty("pageTitle"));
 		} catch (Exception e) {
+			System.out.println("User is not in Explore Page, navigating to Explore page...");
 			homePage.gotoExplore();
 		}
 	}
