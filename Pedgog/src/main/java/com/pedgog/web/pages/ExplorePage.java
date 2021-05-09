@@ -43,7 +43,7 @@ public class ExplorePage extends BasePageAction {
 	WebElement explorePageSummary;
 
 	@FindBy(xpath = "//section")
-	WebElement explorePageModuleSections;
+	List<WebElement> explorePageModuleSections;
 
 	String moduleSections = "//section";
 
@@ -74,7 +74,7 @@ public class ExplorePage extends BasePageAction {
 	}
 
 	public int getExplorePageSectionsCount() {
-		return getElementCount(moduleSections);
+		return getElementCount(explorePageModuleSections);
 	}
 
 	public List<String> getExplorePageModuleSectionsTitle() {

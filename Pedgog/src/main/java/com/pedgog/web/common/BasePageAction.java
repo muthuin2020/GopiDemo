@@ -3,6 +3,7 @@ package com.pedgog.web.common;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.lang.model.element.Element;
@@ -74,14 +75,31 @@ public class BasePageAction {
 		js.executeScript("arguments[0].scrollIntoView();", element);
 	}
 
-	public int getElementCount(String xpath) {
-		try {
-			Thread.sleep(50000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return driver.findElements(By.xpath(xpath)).size();
+	public int getElementCount(List<WebElement> element) {
+		int count = 0;
+		int i = 0;
+		System.out.println("I " + Thread.currentThread().getStackTrace()[2].getMethodName());
+		do {
+
+			if (element.size() > 0) {
+				count = element.size();
+				System.out.println("Elements found");
+				break;
+			} else {
+				try {
+					System.out.println("Element not found, waiting for it...");
+					Thread.sleep(2000);
+				} catch (InterruptedException e1) {
+					
+					e1.printStackTrace();
+				}
+				i++;
+			}
+		} while (i < 30);
+
+		if (count == 0)
+			System.err.println("Element not found " );
+		return count;
 	}
 
 	public boolean isElementVisible(WebElement element) {
@@ -116,6 +134,33 @@ public class BasePageAction {
 				.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.visibilityOf(element));
 		return element.getText();
 
+	}
+
+	public Boolean isElementPresent(String xpath) {
+		boolean isPresent = false;
+		int i = 0;
+		System.out.println("I " + Thread.currentThread().getStackTrace()[2].getMethodName());
+		do {
+			try {
+				driver.findElement(By.xpath(xpath));
+				isPresent = true;
+			} catch (Exception e) {
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				i++;
+			}
+
+			if (isPresent)
+				break;
+		} while (i < 30);
+
+		if (!isPresent)
+			System.err.println("Element no found -> " + xpath);
+		return isPresent;
 	}
 
 	public boolean elementHasText(WebElement we, String text) {
