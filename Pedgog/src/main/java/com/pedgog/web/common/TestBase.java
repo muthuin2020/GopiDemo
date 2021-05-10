@@ -1,14 +1,18 @@
 package com.pedgog.web.common;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -22,6 +26,7 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.asserts.SoftAssert;
 
+import com.aventstack.extentreports.ExtentTest;
 import com.pedgog.web.pages.PedgogHomePage;
 import com.pedgog.web.pages.PedgogLoginPage;
 import com.pedgog.web.tests.HomePageTest;
@@ -35,7 +40,7 @@ public class TestBase {
 	PedgogHomePage homePage;
 	ITestResult result;
 	public static SoftAssert sAssert;
-	
+	ExtentTest logger;
 
 	@BeforeSuite
 	protected void setDrivers() throws InterruptedException {
@@ -109,6 +114,16 @@ public class TestBase {
 
 		case ITestResult.FAILURE:
 			System.err.println("Test case " + testMethodName + " is Failed");
+			try {
+				File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+				File destFile = new File(System.getProperty("user.dir") + "\\screenshots\\" + testMethodName + ".png");
+				FileHandler.copy(scrFile, destFile);
+				Reporter.log("<a href='" + destFile.getAbsolutePath() + "'> <img src='" + destFile.getAbsolutePath()
+						+ "' height='100' width='100'/> </a>");
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			break;
 
 		case ITestResult.SKIP:

@@ -129,7 +129,7 @@ public class ExploreTest extends TestBase {
 		sAssert.assertAll();
 	}
 
-	@Test(enabled = false)
+	@Test(priority = 19)
 	public void verifyExploreButtonOnModules() {
 		sAssert.assertEquals(homePage.getHomePageTtile(), prop.getProperty("pageTitle"));
 		int count = explorePage.getExplorePageSectionsCount();
