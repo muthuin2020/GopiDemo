@@ -101,10 +101,7 @@ public class TestBase {
 	}
 
 	@AfterMethod
-	public void afterMethod() {
-
-		result = Reporter.getCurrentTestResult();
-
+	public void afterMethod(ITestResult result) {
 		switch (result.getStatus()) {
 		case ITestResult.SUCCESS:
 			System.out.println("Test case " + testMethodName + " is Passed");
