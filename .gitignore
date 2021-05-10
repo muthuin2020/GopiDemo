@@ -1,6 +1,7 @@
 .metadata
 *Pedgog\test-output\*
 *Pedgog\target\*
+*Pedgog\screenshots\*
 .metadata\*
 .metadata\.log
 *.snap
