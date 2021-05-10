@@ -1,10 +1,8 @@
 package com.pedgog.utilities;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -15,6 +13,7 @@ public class ConfigFileReader {
 
 	public ConfigFileReader() {
 		String testClassQualifiedName = Thread.currentThread().getStackTrace()[1].getClassName();
+		System.out.println("Class name : "+testClassQualifiedName);
 		String testClassName = testClassQualifiedName.split("tests")[1].substring(1);
 
 		System.out.println(

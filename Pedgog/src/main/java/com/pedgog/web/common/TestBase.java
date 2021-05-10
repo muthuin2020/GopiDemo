@@ -26,7 +26,6 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.asserts.SoftAssert;
 
-import com.aventstack.extentreports.ExtentTest;
 import com.pedgog.web.pages.PedgogHomePage;
 import com.pedgog.web.pages.PedgogLoginPage;
 import com.pedgog.web.tests.HomePageTest;
@@ -40,7 +39,7 @@ public class TestBase {
 	PedgogHomePage homePage;
 	ITestResult result;
 	public static SoftAssert sAssert;
-	ExtentTest logger;
+
 
 	@BeforeSuite
 	protected void setDrivers() throws InterruptedException {
