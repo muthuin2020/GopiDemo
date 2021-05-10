@@ -36,35 +36,40 @@ public class HomePageTest extends TestBase {
 	public void navigateToPreparePage() {
 		homePage.gotoPrepare();
 		preparePage = new PreparePage(driver);
-		Assert.assertEquals(preparePage.getPreparePageTtile(), prop.getProperty("preparePageTitle"));
+		sAssert.assertEquals(preparePage.getPreparePageTtile(), prop.getProperty("preparePageTitle"));
+		sAssert.assertAll();
 	}
 
 	@Test(priority = 7)
 	public void navigateToConductPage() {
 		homePage.gotoConduct();
 		conductPage = new ConductPage(driver);
-		Assert.assertEquals(conductPage.getConductPageTtile(), prop.getProperty("conductPageTitle"));
+		sAssert.assertEquals(conductPage.getConductPageTtile(), prop.getProperty("conductPageTitle"));
+		sAssert.assertAll();
 	}
 
 	@Test(priority = 8)
 	public void navigateToProjectsPage() {
 		homePage.gotoProjects();
 		projectsPage = new ProjectsPage(driver);
-		Assert.assertEquals(projectsPage.getProjectsPageTtile(), prop.getProperty("projectsPageTitle"));
+		sAssert.assertEquals(projectsPage.getProjectsPageTtile(), prop.getProperty("projectsPageTitle"));
+		sAssert.assertAll();
 	}
 
 	@Test(priority = 9)
 	public void navigateToExplorePage() {
 		homePage.gotoExplore();
 		explorePage = new ExplorePage(driver);
-		Assert.assertEquals(explorePage.getExplorePageTtile(), prop.getProperty("explorePageTitle"));
+		sAssert.assertEquals(explorePage.getExplorePageTtile(), prop.getProperty("explorePageTitle"));
+		sAssert.assertAll();
 	}
 	
 	@Test(priority = 10)
 	public void navigateToHelpPage() throws InterruptedException {
 		homePage.gotoHelp();
 		helpPage = new HelpPage(driver);
-		Assert.assertTrue(helpPage.isVideoAvailable());
+		sAssert.assertTrue(helpPage.isVideoAvailable());
 		helpPage.closeHelpPage();
+		sAssert.assertAll();
 	}
 }

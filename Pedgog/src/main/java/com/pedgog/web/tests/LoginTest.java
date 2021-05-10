@@ -27,8 +27,9 @@ public class LoginTest extends TestBase {
 		loginPage.enterUserEmail(prop.getProperty("emailId"));
 		loginPage.enterPassword(prop.getProperty("pwd"));
 		loginPage.clickLogin();
-		Assert.assertEquals(homePage.getHomePageTtile(), prop.getProperty("title"));
+		sAssert.assertEquals(homePage.getHomePageTtile(), prop.getProperty("title"));
 		isLoggedIn = true;
+		sAssert.assertAll();
 	}
 
 	@Test(priority = 2)
@@ -36,7 +37,8 @@ public class LoginTest extends TestBase {
 		loginPage.enterUserEmail("abcd" + prop.getProperty("emailId"));
 		loginPage.enterPassword(prop.getProperty("pwd"));
 		loginPage.clickLogin();
-		Assert.assertEquals(loginPage.getLoginErrorMsg(), prop.getProperty("loginErrorMsg"));
+		sAssert.assertEquals(loginPage.getLoginErrorMsg(), prop.getProperty("loginErrorMsg"));
+		sAssert.assertAll();
 	}
 
 	@Test(priority = 3)
@@ -44,7 +46,8 @@ public class LoginTest extends TestBase {
 		loginPage.enterUserEmail(prop.getProperty("emailId"));
 		loginPage.enterPassword("abcd" + prop.getProperty("pwd"));
 		loginPage.clickLogin();
-		Assert.assertEquals(loginPage.getLoginErrorMsg(), prop.getProperty("loginErrorMsg"));
+		sAssert.assertEquals(loginPage.getLoginErrorMsg(), prop.getProperty("loginErrorMsg"));
+		sAssert.assertAll();
 	}
 
 	@AfterMethod
