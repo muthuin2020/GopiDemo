@@ -9,6 +9,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.pedgog.utilities.ConfigFileReader;
 import com.pedgog.web.common.TestBase;
@@ -31,7 +32,7 @@ public class ExploreTest extends TestBase {
 			homePage = new PedgogHomePage(driver);
 
 		try {
-			Assert.assertEquals(homePage.getHomePageTtile(), prop.getProperty("pageTitle"));
+			sAssert.assertEquals(homePage.getHomePageTtile(), prop.getProperty("pageTitle"));
 		} catch (Exception e) {
 			System.out.println("User is not in Explore Page, navigating to Explore page...");
 			homePage.gotoExplore();
@@ -40,34 +41,39 @@ public class ExploreTest extends TestBase {
 
 	@Test(priority = 11)
 	public void verifyExplorePageHeader() {
-		Assert.assertEquals(explorePage.getExplorePageHeader(), prop.getProperty("header"));
+		sAssert.assertEquals(explorePage.getExplorePageHeader(), prop.getProperty("header"));
+		sAssert.assertAll();
 	}
 
 	@Test(priority = 12)
 	public void verifyExplorePageSummary() {
-		Assert.assertEquals(explorePage.getExplorePageSummary(), prop.getProperty("summary"));
+		sAssert.assertEquals(explorePage.getExplorePageSummary(), prop.getProperty("summary"));
+		sAssert.assertAll();
 	}
 
 	@Test(priority = 13)
 	public void verifyModuleSectionsCount() {
-		Assert.assertEquals(explorePage.getExplorePageSectionsCount(),
+		sAssert.assertEquals(explorePage.getExplorePageSectionsCount(),
 				Integer.parseInt(prop.getProperty("moduleSectionCount")));
+		sAssert.assertAll();
 	}
 
 	@Test(priority = 14)
 	public void verifyModuleSectionsTitles() {
 		List<String> titles = explorePage.getExplorePageModuleSectionsTitle();
 		for (int i = 0; i < titles.size(); i++) {
-			Assert.assertEquals(titles.get(i), prop.getProperty("moduleSectionTitle" + (i + 1)));
+			sAssert.assertEquals(titles.get(i), prop.getProperty("moduleSectionTitle" + (i + 1)));
 		}
+		sAssert.assertAll();
 	}
 
 	@Test(priority = 15)
 	public void verifyModuleSectionsSummary() {
 		List<String> titles = explorePage.getExplorePageModuleSectionsSummary();
 		for (int i = 0; i < titles.size(); i++) {
-			Assert.assertEquals(titles.get(i), prop.getProperty("moduleSectionSummary" + (i + 1)));
+			sAssert.assertEquals(titles.get(i), prop.getProperty("moduleSectionSummary" + (i + 1)));
 		}
+		sAssert.assertAll();
 	}
 
 	@Test(priority = 16)
@@ -79,11 +85,12 @@ public class ExploreTest extends TestBase {
 			int titleCount = Integer.parseInt(title.substring(title.lastIndexOf('(') + 1).split("\\)")[0]);
 			int listedCount = explorePage.getListedModulesCountInTheSection(i + 1);
 			try {
-				Assert.assertEquals(titleCount, listedCount);
+				sAssert.assertEquals(titleCount, listedCount);
 			} catch (Exception e) {
 				System.err.println(i + 1 + " module's title count NOT matches with listed Module's count");
 			}
 		}
+		sAssert.assertAll();
 	}
 
 	@Test(priority = 17)
@@ -95,12 +102,13 @@ public class ExploreTest extends TestBase {
 				int a = i + 1, b = j + 1;
 				String title = explorePage.getListedModulesTitle(a, b);
 				try {
-					Assert.assertEquals(title, prop.get("moduleTitle" + a + b));
+					sAssert.assertEquals(title, prop.get("moduleTitle" + a + b));
 				} catch (Exception e) {
 					System.err.println("Module titles NOT matching : Section " + a + ", module " + b);
 				}
 			}
 		}
+		sAssert.assertAll();
 	}
 
 	@Test(priority = 18)
@@ -112,29 +120,30 @@ public class ExploreTest extends TestBase {
 				int a = i + 1, b = j + 1;
 				String title = explorePage.getListedModulesSummary(a, b);
 				try {
-					Assert.assertTrue(title.equalsIgnoreCase((String) prop.get("moduleSummary" + a + b)));
+					sAssert.assertEquals(title.toLowerCase(), prop.get("moduleSummary" + a + b).toString().toLowerCase());
 				} catch (Exception e) {
 					System.err.print("Module summary NOT matching : Section " + a + ", module " + b);
 				}
 			}
 		}
+		sAssert.assertAll();
 	}
 
-	@Test(priority = 19)
+	@Test(enabled = false)
 	public void verifyExploreButtonOnModules() {
-		Assert.assertEquals(homePage.getHomePageTtile(), prop.getProperty("pageTitle"));
+		sAssert.assertEquals(homePage.getHomePageTtile(), prop.getProperty("pageTitle"));
 		int count = explorePage.getExplorePageSectionsCount();
 		for (int i = 0; i < count; i++) {
 			int listedCount = explorePage.getListedModulesCountInTheSection(i + 1);
 			for (int j = 0; j < listedCount; j++) {
-				Assert.assertEquals(homePage.getHomePageTtile(), prop.getProperty("pageTitle"));
+				sAssert.assertEquals(homePage.getHomePageTtile(), prop.getProperty("pageTitle"));
 				int a = i + 1, b = j + 1;
 				explorePage.clickOnExploreModule(a, b);
 				String title = explorePage.getExploringModuleTitle();
-				Assert.assertTrue(title.equalsIgnoreCase((String) prop.get("moduleTitle" + a + b)));
+				sAssert.assertEquals(title.toLowerCase(), prop.get("moduleTitle" + a + b).toString().toLowerCase());
 				explorePage.exitFromExploringModule();
 			}
 		}
-
+		sAssert.assertAll();
 	}
 }

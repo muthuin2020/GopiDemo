@@ -20,6 +20,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
+import org.testng.asserts.SoftAssert;
 
 import com.pedgog.web.pages.PedgogHomePage;
 import com.pedgog.web.pages.PedgogLoginPage;
@@ -33,6 +34,8 @@ public class TestBase {
 	PedgogLoginPage loginPage;
 	PedgogHomePage homePage;
 	ITestResult result;
+	public static SoftAssert sAssert;
+	
 
 	@BeforeSuite
 	protected void setDrivers() throws InterruptedException {
@@ -51,6 +54,7 @@ public class TestBase {
 		System.out.println("========================================================================================");
 		testMethodName = method.getName();
 		System.out.println("Starting Test Method : " + testMethodName);
+		sAssert = new SoftAssert();
 	}
 
 	public PedgogHomePage loginToPedgog() {
