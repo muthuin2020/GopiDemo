@@ -40,7 +40,6 @@ public class TestBase {
 	ITestResult result;
 	public static SoftAssert sAssert;
 
-
 	@BeforeSuite
 	protected void setDrivers() throws InterruptedException {
 		setLoginData();
@@ -115,7 +114,8 @@ public class TestBase {
 			System.err.println("Test case " + testMethodName + " is Failed");
 			try {
 				File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-				File destFile = new File(System.getProperty("user.dir") + "\\screenshots\\" + testMethodName + ".png");
+				File destFile = new File(System.getProperty("user.dir") + "\\screenshots\\" + testMethodName
+						+ System.currentTimeMillis() + "_" + ".png");
 				FileHandler.copy(scrFile, destFile);
 				Reporter.log("<a href='" + destFile.getAbsolutePath() + "'> <img src='" + destFile.getAbsolutePath()
 						+ "' height='100' width='100'/> </a>");
