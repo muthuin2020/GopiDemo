@@ -26,6 +26,10 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.asserts.SoftAssert;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.pedgog.web.pages.PedgogHomePage;
 import com.pedgog.web.pages.PedgogLoginPage;
 import com.pedgog.web.tests.HomePageTest;
@@ -39,6 +43,9 @@ public class TestBase {
 	PedgogHomePage homePage;
 	ITestResult result;
 	public static SoftAssert sAssert;
+	public static ExtentHtmlReporter reporter;
+	public static ExtentReports extent;
+	public static ExtentTest logger;
 
 	@BeforeSuite
 	protected void setDrivers() throws InterruptedException {
@@ -50,12 +57,23 @@ public class TestBase {
 		driver.get("https://coaching.pedgog.in/");
 		System.out.println("Opened Pedgog website");
 		Thread.sleep(2000);
+
+		reporter = new ExtentHtmlReporter("./reports/learn_automation1.html");
+
+		// Create object of ExtentReports class- This is main class which will create
+		// report
+		extent = new ExtentReports();
+
+		// attach the reporter which we created in Step 1
+		extent.attachReporter(reporter);
 	}
 
 	@BeforeMethod
 	protected void nameBefore(Method method) {
 		System.out.println("========================================================================================");
 		testMethodName = method.getName();
+		logger = extent.createTest(testMethodName);
+		logger.log(Status.INFO, "starting test method " + testMethodName);
 		System.out.println("Starting Test Method : " + testMethodName);
 		sAssert = new SoftAssert();
 	}
@@ -108,10 +126,12 @@ public class TestBase {
 		switch (result.getStatus()) {
 		case ITestResult.SUCCESS:
 			System.out.println("Test case " + testMethodName + " is Passed");
+			 logger.log(Status.PASS, "Test case " + testMethodName + " is Passed");
 			break;
 
 		case ITestResult.FAILURE:
 			System.err.println("Test case " + testMethodName + " is Failed");
+			 logger.log(Status.FAIL, "Test case " + testMethodName + " is Failed");
 			try {
 				File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 				File destFile = new File(System.getProperty("user.dir") + "\\screenshots\\" + testMethodName
@@ -126,12 +146,14 @@ public class TestBase {
 			break;
 
 		case ITestResult.SKIP:
+			 logger.log(Status.SKIP, "Test case " + testMethodName + " is Skipped");
 			System.out.println("Test case " + testMethodName + " is Skipped");
 			break;
 
 		default:
 			throw new RuntimeException("Invalid status");
 		}
+		 extent.flush();
 	}
 
 	@AfterSuite

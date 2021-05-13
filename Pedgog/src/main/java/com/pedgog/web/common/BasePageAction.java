@@ -20,7 +20,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class BasePageAction {
+import com.aventstack.extentreports.Status;
+
+public class BasePageAction extends TestBase{
 
 	WebDriver driver;
 
@@ -46,6 +48,7 @@ public class BasePageAction {
 		// element);
 		element.click();
 		System.out.println("I " + Thread.currentThread().getStackTrace()[2].getMethodName());
+		logger.log(Status.INFO, "I " + Thread.currentThread().getStackTrace()[2].getMethodName());
 
 	}
 
@@ -67,6 +70,7 @@ public class BasePageAction {
 				.until(ExpectedConditions.visibilityOf(element));
 		element.clear();
 		System.out.println("I " + Thread.currentThread().getStackTrace()[2].getMethodName());
+		logger.log(Status.INFO, "I " + Thread.currentThread().getStackTrace()[2].getMethodName());
 		element.sendKeys(text);
 	}
 
@@ -88,6 +92,7 @@ public class BasePageAction {
 			} else {
 				try {
 					System.out.println("Element not found, waiting for it...");
+					logger.log(Status.INFO, "Element not found, waiting for it...");
 					Thread.sleep(2000);
 				} catch (InterruptedException e1) {
 
@@ -192,6 +197,7 @@ public class BasePageAction {
 	public void clickElementByXpath(String xpath) {
 		int i = 0;
 		System.out.println("I " + Thread.currentThread().getStackTrace()[2].getMethodName());
+		logger.log(Status.INFO, "I " + Thread.currentThread().getStackTrace()[2].getMethodName());
 		do {
 			try {
 				scrollToElement(driver.findElement(By.xpath(xpath)));
