@@ -28,6 +28,7 @@ import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.pedgog.web.pages.PedgogHomePage;
@@ -126,19 +127,20 @@ public class TestBase {
 		switch (result.getStatus()) {
 		case ITestResult.SUCCESS:
 			System.out.println("Test case " + testMethodName + " is Passed");
-			 logger.log(Status.PASS, "Test case " + testMethodName + " is Passed");
+			logger.log(Status.PASS, "Test case " + testMethodName + " is Passed");
 			break;
 
 		case ITestResult.FAILURE:
 			System.err.println("Test case " + testMethodName + " is Failed");
-			 logger.log(Status.FAIL, "Test case " + testMethodName + " is Failed");
+			logger.log(Status.FAIL, "Test case " + testMethodName + " is Failed");
 			try {
 				File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-				File destFile = new File(System.getProperty("user.dir") + "\\screenshots\\" + testMethodName
-						+ System.currentTimeMillis() + "_" + ".png");
+				String filePath = System.getProperty("user.dir") + "\\screenshots\\" + testMethodName
+						+ System.currentTimeMillis() + "_" + ".png";
+				File destFile = new File(filePath);
 				FileHandler.copy(scrFile, destFile);
-				Reporter.log("<a href='" + destFile.getAbsolutePath() + "'> <img src='" + destFile.getAbsolutePath()
-						+ "' height='100' width='100'/> </a>");
+				logger.fail(result.getThrowable().getMessage(),
+						MediaEntityBuilder.createScreenCaptureFromPath(filePath).build());
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -146,14 +148,14 @@ public class TestBase {
 			break;
 
 		case ITestResult.SKIP:
-			 logger.log(Status.SKIP, "Test case " + testMethodName + " is Skipped");
+			logger.log(Status.SKIP, "Test case " + testMethodName + " is Skipped");
 			System.out.println("Test case " + testMethodName + " is Skipped");
 			break;
 
 		default:
 			throw new RuntimeException("Invalid status");
 		}
-		 extent.flush();
+		extent.flush();
 	}
 
 	@AfterSuite
