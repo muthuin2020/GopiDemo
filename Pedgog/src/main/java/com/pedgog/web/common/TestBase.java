@@ -6,12 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
@@ -52,12 +56,30 @@ public class TestBase {
 	protected void setDrivers() throws InterruptedException {
 		setLoginData();
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\drivers\\chromedriver.exe");
-		driver = new ChromeDriver();
+		Map<String, Object> pref=new HashMap<String, Object>();
+		pref.put("profile.default_content_setting_values.notifications", 2);
+		ChromeOptions options=new ChromeOptions();
+		options.addArguments("--disable-extensions");
+		options.addArguments("–disable-notifications");
+		options.setExperimentalOption("prefs", pref);
+		driver = new ChromeDriver(options);
 		System.out.println("Launched Google Chrome");
 		driver.manage().window().maximize();
 		driver.get("https://coaching.pedgog.in/");
 		System.out.println("Opened Pedgog website");
 		Thread.sleep(2000);
+		 System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") +
+		 "\\drivers\\geckodriver.exe");
+
+//		System.setProperty("webdriver.firefox.marionette",
+//				System.getProperty("user.dir") + "\\drivers\\geckodriver.exe");
+//
+//		driver = new FirefoxDriver();
+//		System.out.println("Launched Google Chrome");
+//		driver.manage().window().maximize();
+//		driver.get("https://coaching.pedgog.in/");
+//		System.out.println("Opened Pedgog website");
+//		Thread.sleep(2000);
 
 		reporter = new ExtentHtmlReporter("./reports/learn_automation1.html");
 
