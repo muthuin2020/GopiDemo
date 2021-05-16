@@ -71,6 +71,7 @@ public class TestBase {
 		reporter = new ExtentHtmlReporter("./reports/learn_automation1.html");
 		extent = new ExtentReports();
 		extent.attachReporter(reporter);
+		logger = extent.createTest("Starting logger...");
 	}
 
 	@BeforeMethod
@@ -166,6 +167,7 @@ public class TestBase {
 	protected void closeDriver() {
 		System.out.println("========================================================================================");
 		driver.quit();
+		isLoggedIn=false;
 	}
 
 }

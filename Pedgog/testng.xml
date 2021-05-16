@@ -7,6 +7,7 @@
 			<class name="com.pedgog.web.tests.RegisterTest" />
 			<class name="com.pedgog.web.tests.HomePageTest" />
 			<class name="com.pedgog.web.tests.ExploreTest" />
+			<class name="com.pedgog.web.tests.ConductTest" />
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->
