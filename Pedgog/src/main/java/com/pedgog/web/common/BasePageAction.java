@@ -6,8 +6,6 @@ import static org.testng.Assert.assertTrue;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import javax.lang.model.element.Element;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.By;

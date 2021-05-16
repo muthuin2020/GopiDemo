@@ -1,16 +1,9 @@
 package com.pedgog.web.tests;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.openqa.selenium.WebElement;
-import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
-
 import com.pedgog.utilities.ConfigFileReader;
 import com.pedgog.web.common.TestBase;
 import com.pedgog.web.pages.ExplorePage;
