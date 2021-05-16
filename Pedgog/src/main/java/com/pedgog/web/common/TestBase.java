@@ -56,38 +56,27 @@ public class TestBase {
 	protected void setDrivers() throws InterruptedException {
 		setLoginData();
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\drivers\\chromedriver.exe");
-		Map<String, Object> pref=new HashMap<String, Object>();
+		Map<String, Object> pref = new HashMap<String, Object>();
 		pref.put("profile.default_content_setting_values.notifications", 2);
-		ChromeOptions options=new ChromeOptions();
+		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--disable-extensions");
 		options.addArguments("–disable-notifications");
 		options.setExperimentalOption("prefs", pref);
 		driver = new ChromeDriver(options);
-		System.out.println("Launched Google Chrome");
+
+//		enable the below line to run in firefox browser
+//		 System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") +
+//		 "\\drivers\\geckodriver.exe");
+//		driver = new FirefoxDriver();
+
+		System.out.println("Browser is launched...");
 		driver.manage().window().maximize();
 		driver.get("https://coaching.pedgog.in/");
 		System.out.println("Opened Pedgog website");
 		Thread.sleep(2000);
-		 System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") +
-		 "\\drivers\\geckodriver.exe");
-
-//		System.setProperty("webdriver.firefox.marionette",
-//				System.getProperty("user.dir") + "\\drivers\\geckodriver.exe");
-//
-//		driver = new FirefoxDriver();
-//		System.out.println("Launched Google Chrome");
-//		driver.manage().window().maximize();
-//		driver.get("https://coaching.pedgog.in/");
-//		System.out.println("Opened Pedgog website");
-//		Thread.sleep(2000);
 
 		reporter = new ExtentHtmlReporter("./reports/learn_automation1.html");
-
-		// Create object of ExtentReports class- This is main class which will create
-		// report
 		extent = new ExtentReports();
-
-		// attach the reporter which we created in Step 1
 		extent.attachReporter(reporter);
 	}
 
