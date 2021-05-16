@@ -13,3 +13,5 @@
 .metadata\.log
 *.index
 *.class
+Pedgog/.classpath
+Pedgog/.settings
