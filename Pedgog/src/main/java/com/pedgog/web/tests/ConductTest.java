@@ -30,9 +30,10 @@ public class ConductTest extends TestBase {
 		} catch (Exception e) {
 			System.out.println("User is not in Conduct Page, navigating to Conduct page...");
 			homePage.gotoConduct();
+			currentPage = conductPage.getConductPageTtile();
 		}
 	}
-	
+
 	@Test(priority = 20)
 	public void verifyConductPageTitle() {
 		sAssert.assertEquals(conductPage.getConductPageTtile(), prop.getProperty("pageTitle"));
@@ -79,7 +80,6 @@ public class ConductTest extends TestBase {
 		sAssert.assertAll();
 	}
 
-
 	@Test(priority = 25)
 	public void verifyConductButtonOnModules() {
 		sAssert.assertEquals(conductPage.getConductPageTtile(), prop.getProperty("pageTitle"));
@@ -97,7 +97,7 @@ public class ConductTest extends TestBase {
 		}
 		sAssert.assertAll();
 	}
-	
+
 	@Test(priority = 26)
 	public void verifyClickOnConductLaunchesTheCorrectModule() {
 		sAssert.assertEquals(conductPage.getConductPageTtile(), prop.getProperty("pageTitle"));
@@ -108,13 +108,38 @@ public class ConductTest extends TestBase {
 				sAssert.assertEquals(conductPage.getConductPageTtile(), prop.getProperty("pageTitle"));
 				int a = i + 1, b = j + 1;
 				conductPage.clickConductOnModule(a, b);
-				sAssert.assertEquals(conductPage.getCreateSessionPageTitle().toLowerCase(), prop.get("CreateSessionPageTitle").toString().toLowerCase());
-				sAssert.assertEquals(conductPage.getCreateSessionPageCourse().toLowerCase(), prop.get("moduleSectionTitle"+a).toString().toLowerCase());
-				sAssert.assertEquals(conductPage.getCreateSessionPageTopic().toLowerCase(), prop.get("moduleTitle"+a+b).toString().toLowerCase());
-				
+				sAssert.assertEquals(conductPage.getCreateSessionPageTitle().toLowerCase(),
+						prop.get("CreateSessionPageTitle").toString().toLowerCase());
+				sAssert.assertEquals(conductPage.getCreateSessionPageCourse().toLowerCase(),
+						prop.get("moduleSectionTitle" + a).toString().toLowerCase());
+				sAssert.assertEquals(conductPage.getCreateSessionPageTopic().toLowerCase(),
+						prop.get("moduleTitle" + a + b).toString().toLowerCase());
+
 				conductPage.closeCreateSessionPage();
 			}
 		}
 		sAssert.assertAll();
 	}
+
+	@Test(priority = 27)
+	public void createNewConductSession() {
+		sAssert.assertEquals(conductPage.getConductPageTtile(), prop.getProperty("pageTitle"));
+		int count = conductPage.getModuleSectionsCount();
+		for (int i = 0; i < count; i++) {
+			int listedCount = conductPage.getListedModulesCountInTheSection(i + 1);
+			for (int j = 0; j < listedCount; j++) {
+				sAssert.assertEquals(conductPage.getConductPageTtile(), prop.getProperty("pageTitle"));
+				int a = i + 1, b = j + 1;
+				conductPage.clickConductOnModule(a, b);
+				conductPage.enterSessionName(prop.get("moduleTitle" + a + b) + " testing");
+				conductPage.clickSessionCreateButton();
+				System.out.println("conducting module is : " + conductPage.getConductingModuleTitle());
+				sAssert.assertEquals(conductPage.getConductingModuleTitle().toLowerCase(),
+						(currentPage + " | " + prop.get("moduleTitle" + a + b)).toString().toLowerCase());
+				conductPage.exitFromConducting();
+			}
+		}
+		sAssert.assertAll();
+	}
+
 }

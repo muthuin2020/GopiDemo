@@ -35,7 +35,7 @@ import com.pedgog.web.pages.PedgogLoginPage;
 public class TestBase {
 	public static WebDriver driver;
 	public static boolean isLoggedIn = false;
-	public static String userName, userPassword, homePageTitle, testMethodName;
+	public static String userName, userPassword, homePageTitle, testMethodName, currentPage;
 	public static Properties prop;
 	PedgogLoginPage loginPage;
 	PedgogHomePage homePage;

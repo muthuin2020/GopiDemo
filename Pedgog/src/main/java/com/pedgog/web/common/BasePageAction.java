@@ -258,6 +258,11 @@ public class BasePageAction extends TestBase{
 		actions.moveToElement(element);
 		actions.build().perform();
 	}
+	
+	public String getPageTitle()
+	{
+		return driver.getTitle();
+	}
 
 	public BasePageAction hitKey(Keys key) {
 		Actions actions = new Actions(driver);

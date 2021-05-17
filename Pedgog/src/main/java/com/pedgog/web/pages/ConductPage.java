@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.pedgog.web.common.BasePageAction;
 
-public class ConductPage extends BasePageAction{
+public class ConductPage extends BasePageAction {
 
 	WebDriver driver;
 
@@ -34,8 +34,7 @@ public class ConductPage extends BasePageAction{
 
 	@FindBy(xpath = "//h6[text()=\"Conduct Zone\"]")
 	WebElement conductPageTtile;
-	
-	
+
 	@FindBy(xpath = "//h1")
 	WebElement pageHeader;
 
@@ -47,9 +46,8 @@ public class ConductPage extends BasePageAction{
 	@FindBy(xpath = "//section//h3")
 	private List<WebElement> moduleSectionTitles;
 
-
 	String modulesPerSection = "//div[@class=\"module-card\"]";
-	
+
 	@FindBy(xpath = "//section//div[@class=\"module-card\"]//div[@class=\"button-label\"]")
 	private List<WebElement> conductButton;
 
@@ -58,7 +56,7 @@ public class ConductPage extends BasePageAction{
 
 	@FindBy(xpath = "//div//h5")
 	private WebElement createSessionPageTitle;
-	
+
 	@FindBy(xpath = "//div//h5/following-sibling::button")
 	private WebElement closeCreateSessionPage;
 
@@ -68,7 +66,18 @@ public class ConductPage extends BasePageAction{
 	@FindBy(xpath = "//div[text()=\"TOPIC:\"]/following-sibling::p")
 	private WebElement createSessionTopic;
 
+	@FindBy(xpath = "//a/following-sibling::div")
+	private WebElement condutingModulePageTitle;
+
+	@FindBy(xpath = "//div//input")
+	private WebElement sessionNameField;
+
+	@FindBy(xpath = "//button//*[text()=\"create session\"]")
+	private WebElement createSessionButton;
 	
+	@FindBy(xpath = "//a//img")
+	private WebElement exitFromConducting;
+
 	public ConductPage(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
@@ -102,7 +111,6 @@ public class ConductPage extends BasePageAction{
 	public void logout() {
 		clickElement(logout);
 	}
-	
 
 	public String getPageHeader() {
 		return getText(pageHeader);
@@ -137,14 +145,14 @@ public class ConductPage extends BasePageAction{
 	}
 
 	public String getListedModulesTitle(int i, int j) {
-		return getTextByXpath(moduleSections + "[" + i + "]" + modulesPerSection+ "[" + j + "]//h6");
+		return getTextByXpath(moduleSections + "[" + i + "]" + modulesPerSection + "[" + j + "]//h6");
 	}
-	
-	
+
 	public void clickConductOnModule(int i, int j) {
-		 clickElementByXpath(moduleSections + "[" + i + "]" + modulesPerSection+ "[" + j + "]//div[@class=\"button-label\"]");
+		clickElementByXpath(
+				moduleSections + "[" + i + "]" + modulesPerSection + "[" + j + "]//div[@class=\"button-label\"]");
 	}
-	
+
 	public String getCreateSessionPageTitle() {
 		return getText(createSessionPageTitle);
 	}
@@ -152,10 +160,29 @@ public class ConductPage extends BasePageAction{
 	public void closeCreateSessionPage() {
 		clickElement(closeCreateSessionPage);
 	}
+
 	public String getCreateSessionPageTopic() {
 		return getText(createSessionTopic);
 	}
+
 	public String getCreateSessionPageCourse() {
 		return getText(createSessionCourse);
+	}
+
+	public String getConductingModuleTitle() {
+		return getText(condutingModulePageTitle);
+	}
+	
+	public void enterSessionName(String sessionName) {
+		enterText(sessionNameField, sessionName);
+	}
+
+	public void clickSessionCreateButton() {
+		clickElement(createSessionButton);
+	}
+	
+	public void exitFromConducting()
+	{
+		clickElement(exitFromConducting);
 	}
 }
