@@ -1,9 +1,13 @@
 package com.pedgog.web.tests;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.Status;
 import com.pedgog.utilities.ConfigFileReader;
 import com.pedgog.web.common.TestBase;
 import com.pedgog.web.pages.ConductPage;
@@ -28,7 +32,7 @@ public class ConductTest extends TestBase {
 		try {
 			sAssert.assertEquals(conductPage.getConductPageTtile(), prop.getProperty("pageTitle"));
 		} catch (Exception e) {
-			System.out.println("User is not in Conduct Page, navigating to Conduct page...");
+			System.out.println("I am not in Conduct Page, navigating to Conduct page...");
 			homePage.gotoConduct();
 			currentPage = conductPage.getConductPageTtile();
 		}
@@ -140,6 +144,23 @@ public class ConductTest extends TestBase {
 			}
 		}
 		sAssert.assertAll();
+	}
+
+	@Test(priority = 28)
+	public void verifySearchOnConductPage() {
+		String searchTexts[] = { "Become", "your", "Conduct", "Recognize", "Destiny", "of", "to", "Trust", "Creator",
+				"Think", "Solution", "Dynamic", "Our", "Success" };
+		sAssert.assertEquals(conductPage.getConductPageTtile(), prop.getProperty("pageTitle"));
+		conductPage.clickOnSearchButton();
+		int randomNumber = (int) (Math.random() * (searchTexts.length - 0 + 1) + 0);
+		conductPage.enterSearchText(searchTexts[randomNumber]);
+		logger.log(Status.INFO, "searching for text : " + searchTexts[randomNumber]);
+		System.out.println("searching for text : " + searchTexts[randomNumber]);
+		List<String> titles = conductPage.getModuleTitles();
+		for (String title : titles) {
+			sAssert.assertTrue(title.toLowerCase().contains(searchTexts[randomNumber]));
+		}
+		conductPage.closeSearchBar();
 	}
 
 }

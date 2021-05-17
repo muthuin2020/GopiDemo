@@ -52,7 +52,7 @@ public class ConductPage extends BasePageAction {
 	private List<WebElement> conductButton;
 
 	@FindBy(xpath = "//section//div[@class=\"module-card\"]//h6")
-	private WebElement conductModuleTitle;
+	private List<WebElement> conductModuleTitles;
 
 	@FindBy(xpath = "//div//h5")
 	private WebElement createSessionPageTitle;
@@ -74,9 +74,18 @@ public class ConductPage extends BasePageAction {
 
 	@FindBy(xpath = "//button//*[text()=\"create session\"]")
 	private WebElement createSessionButton;
-	
+
 	@FindBy(xpath = "//a//img")
 	private WebElement exitFromConducting;
+
+	@FindBy(xpath = "//div[text()=\"Find Module\"]/following-sibling::div")
+	private WebElement searchButton;
+
+	@FindBy(xpath = "//input[@id=\"search-field\"]")
+	private WebElement searchBar;
+
+	@FindBy(xpath = "//button[@type=\"button\"]//*[text()=\"Close\"]")
+	private WebElement closeSearchBar;
 
 	public ConductPage(WebDriver driver) {
 		super(driver);
@@ -140,6 +149,20 @@ public class ConductPage extends BasePageAction {
 		return titles;
 	}
 
+	public List<String> getModuleTitles() {
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<String> titles = new ArrayList<String>();
+		for (WebElement ele : conductModuleTitles) {
+			titles.add(getText(ele));
+		}
+		return titles;
+	}
+	
 	public int getListedModulesCountInTheSection(int i) {
 		return getElementCountByXpath(moduleSections + "[" + i + "]" + modulesPerSection);
 	}
@@ -172,7 +195,7 @@ public class ConductPage extends BasePageAction {
 	public String getConductingModuleTitle() {
 		return getText(condutingModulePageTitle);
 	}
-	
+
 	public void enterSessionName(String sessionName) {
 		enterText(sessionNameField, sessionName);
 	}
@@ -180,9 +203,20 @@ public class ConductPage extends BasePageAction {
 	public void clickSessionCreateButton() {
 		clickElement(createSessionButton);
 	}
-	
-	public void exitFromConducting()
-	{
+
+	public void exitFromConducting() {
 		clickElement(exitFromConducting);
+	}
+
+	public void clickOnSearchButton() {
+		clickElement(searchButton);
+	}
+
+	public void enterSearchText(String searchText) {
+		enterText(searchBar, searchText);
+	}
+
+	public void closeSearchBar() {
+		clickElement(closeSearchBar);
 	}
 }
