@@ -1,18 +1,12 @@
 package com.pedgog.web.tests;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.aventstack.extentreports.Status;
 import com.pedgog.utilities.ConfigFileReader;
 import com.pedgog.web.common.TestBase;
 import com.pedgog.web.pages.ConductModulePage;
 import com.pedgog.web.pages.ConductPage;
-import com.pedgog.web.pages.ExplorePage;
 import com.pedgog.web.pages.PedgogHomePage;
 import com.pedgog.web.pages.PedgogLoginPage;
 
