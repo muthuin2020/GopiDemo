@@ -13,7 +13,7 @@ public class ConfigFileReader {
 
 	public ConfigFileReader() {
 		String testClassQualifiedName = new Exception().getStackTrace()[1].getClassName();
-		System.out.println("Class name : "+testClassQualifiedName);
+		System.out.println("Class name : " + testClassQualifiedName);
 		String testClassName = testClassQualifiedName.split("tests")[1].substring(1);
 
 		System.out.println(
@@ -23,22 +23,25 @@ public class ConfigFileReader {
 		System.out.println("config file path : " + propertyFilePath);
 
 		FileInputStream fileInput;
-		try {
-			fileInput = new FileInputStream(new File(propertyFilePath));
-			prop = new Properties();
+		if (new File(propertyFilePath).exists())
 			try {
-				prop.load(fileInput);
-				fileInput.close();
+				fileInput = new FileInputStream(new File(propertyFilePath));
+				prop = new Properties();
+				try {
+					prop.load(fileInput);
+					fileInput.close();
 
-			} catch (IOException e) {
-				System.err.println("problem loading config file");
+				} catch (IOException e) {
+					System.err.println("problem loading config file");
+					e.printStackTrace();
+				}
+			} catch (FileNotFoundException e) {
 				e.printStackTrace();
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 
-			throw new RuntimeException("Configuration.properties not found at " + propertyFilePath);
-		}
+				throw new RuntimeException("Configuration.properties not found at " + propertyFilePath);
+			}
+		else
+			System.out.println("Config file is not present fo this Test....");
 
 	}
 
