@@ -85,7 +85,7 @@ public class JiraOperations {
 			CloseableHttpResponse response = httpclient.execute(target, httppost, localContext);
 			try {
 				System.out.println(response.getStatusLine());
-				System.out.println("Test case result update: "+EntityUtils.toString(response.getEntity()));
+				System.out.println("Test case result update : "+EntityUtils.toString(response.getEntity()));
 			} finally {
 				response.close();
 			}
