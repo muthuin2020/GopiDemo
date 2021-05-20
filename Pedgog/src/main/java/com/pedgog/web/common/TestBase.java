@@ -133,6 +133,12 @@ public class TestBase {
 		case ITestResult.SUCCESS:
 			System.out.println("Test case " + testMethodName + " is Passed");
 			logger.log(Status.PASS, "Test case " + testMethodName + " is Passed");
+			try {
+				JiraOperations.updateTestInJira("AD-7863", "Listener_Regression_UAT1", "AD-3279", "Passed");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			break;
 
 		case ITestResult.FAILURE:
