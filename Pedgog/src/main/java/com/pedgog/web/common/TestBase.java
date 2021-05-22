@@ -132,36 +132,15 @@ public class TestBase {
 	public void afterMethod(ITestResult result) {
 		switch (result.getStatus()) {
 		case ITestResult.SUCCESS:
-			System.out.println("Test case " + testMethodName + " is Passed");
-			logger.log(Status.PASS, "Test case " + testMethodName + " is Passed");
-			try {
-				JiraOperationsREST.updateJira("AD-7863", "Listener_Regression_UAT1", "AD-3279", "Passed");
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			TestResult.testPassed(result, testMethodName);
 			break;
 
 		case ITestResult.FAILURE:
-			System.err.println("Test case " + testMethodName + " is Failed");
-			logger.log(Status.FAIL, "Test case " + testMethodName + " is Failed");
-			try {
-				File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-				String filePath = System.getProperty("user.dir") + "\\screenshots\\" + testMethodName
-						+ System.currentTimeMillis() + "_" + ".png";
-				File destFile = new File(filePath);
-				FileHandler.copy(scrFile, destFile);
-				logger.fail(result.getThrowable().getMessage(),
-						MediaEntityBuilder.createScreenCaptureFromPath(filePath).build());
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			TestResult.testFailed(result, testMethodName);
 			break;
 
 		case ITestResult.SKIP:
-			logger.log(Status.SKIP, "Test case " + testMethodName + " is Skipped");
-			System.out.println("Test case " + testMethodName + " is Skipped");
+			TestResult.testSkipped(result, testMethodName);
 			break;
 
 		default:
@@ -174,7 +153,7 @@ public class TestBase {
 	protected void closeDriver() {
 		System.out.println("========================================================================================");
 		driver.quit();
-		isLoggedIn=false;
+		isLoggedIn = false;
 	}
 
 }
