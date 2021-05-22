@@ -1,4 +1,4 @@
-package com.pedgog.web.common;
+package com.pedgog.utilities;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;

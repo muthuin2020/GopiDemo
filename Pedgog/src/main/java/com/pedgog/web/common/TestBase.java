@@ -29,6 +29,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.pedgog.utilities.JiraOperationsREST;
 import com.pedgog.web.pages.PedgogHomePage;
 import com.pedgog.web.pages.PedgogLoginPage;
 

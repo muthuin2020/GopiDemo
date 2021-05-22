@@ -1,5 +1,5 @@
 
-package com.pedgog.web.common;
+package com.pedgog.utilities;
 
 import java.nio.charset.Charset;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class JiraOperationsREST {
 	public static void updateJira(String testPlanId, String cycleName, String testCaseId, String result) {
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-		String auth = "muthuselvam@illumine.com" + ":" + "asdf1234";
+		String auth = "muthuselvam.kandhasamy@bluescape.com" + ":" + "Royal@123";
 		byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
 		HttpHeaders requestAuthHeaders = new HttpHeaders();
 		requestAuthHeaders.setContentType(MediaType.APPLICATION_JSON);
