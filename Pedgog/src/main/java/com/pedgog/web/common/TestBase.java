@@ -79,7 +79,7 @@ public class TestBase {
 			System.out.println("Analytics Pedgog website");
 			Thread.sleep(2000);
 			System.out.println("Page title is : "+driver.getTitle());
-			
+			driver = driverOne;
 		}
 		
 		
