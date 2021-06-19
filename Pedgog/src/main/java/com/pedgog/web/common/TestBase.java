@@ -29,9 +29,9 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.coaching.pedgog.web.pages.PedgogHomePage;
+import com.coaching.pedgog.web.pages.PedgogLoginPage;
 import com.pedgog.utilities.JiraOperationsREST;
-import com.pedgog.web.pages.PedgogHomePage;
-import com.pedgog.web.pages.PedgogLoginPage;
 
 public class TestBase {
 	public static WebDriver driver, driverOne, driverTwo;

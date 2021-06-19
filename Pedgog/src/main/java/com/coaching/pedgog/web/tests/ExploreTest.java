@@ -1,14 +1,15 @@
-package com.pedgog.web.tests;
+package com.coaching.pedgog.web.tests;
 
 import java.util.List;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import com.coaching.pedgog.web.pages.ExplorePage;
+import com.coaching.pedgog.web.pages.PedgogHomePage;
+import com.coaching.pedgog.web.pages.PedgogLoginPage;
 import com.pedgog.utilities.ConfigFileReader;
 import com.pedgog.web.common.TestBase;
-import com.pedgog.web.pages.ExplorePage;
-import com.pedgog.web.pages.PedgogHomePage;
-import com.pedgog.web.pages.PedgogLoginPage;
 
 public class ExploreTest extends TestBase {
 	PedgogLoginPage loginPage;

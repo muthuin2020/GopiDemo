@@ -1,13 +1,13 @@
-package com.pedgog.web.tests;
+package com.coaching.pedgog.web.tests;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.coaching.pedgog.web.pages.PedgogHomePage;
+import com.coaching.pedgog.web.pages.PedgogLoginPage;
 import com.pedgog.utilities.ConfigFileReader;
 import com.pedgog.web.common.TestBase;
-import com.pedgog.web.pages.PedgogHomePage;
-import com.pedgog.web.pages.PedgogLoginPage;
 
 public class LoginTest extends TestBase {
 	PedgogLoginPage loginPage;

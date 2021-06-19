@@ -1,4 +1,4 @@
-package com.pedgog.web.pages;
+package com.coaching.pedgog.web.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.pedgog.web.common.BasePageAction;
 
-public class PedgogHomePage extends BasePageAction{
+public class ProjectsPage extends BasePageAction{
 
 	WebDriver driver;
 
@@ -23,23 +23,23 @@ public class PedgogHomePage extends BasePageAction{
 	@FindBy(xpath = "//a[@href=\"/application/Projects\"]")
 	WebElement project;
 
-	@FindBy(xpath = "//div[@class=\"last-div\"]//*[@title=\"Play Tutorial\"]")
+	@FindBy(xpath = "//div[@class=\"last-div\"]//*[text()=\"Help\"]")
 	WebElement help;
 
 	@FindBy(xpath = "//div[@class=\"last-div\"]//a[@href=\"/auth/logout\"]")
 	WebElement logout;
 
-	@FindBy(xpath = "//*[text()=\"Explore Zone\"]")
-	WebElement homePageTtile;
+	@FindBy(xpath = "//h6[text()=\"Projects Zone\"]")
+	WebElement projectsPageTtile;
 
-	public PedgogHomePage(WebDriver driver) {
+	public ProjectsPage(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 
-	public String getHomePageTtile() {
-		return getText(homePageTtile);
+	public String getProjectsPageTtile() {
+		return getText(projectsPageTtile);
 	}
 
 	public void gotoExplore() {
@@ -54,7 +54,7 @@ public class PedgogHomePage extends BasePageAction{
 		clickElement(conduct);
 	}
 
-	public void gotoProjects() {
+	public void gotoProject() {
 		clickElement(project);
 	}
 

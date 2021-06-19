@@ -1,4 +1,4 @@
-package com.pedgog.web.tests;
+package com.coaching.pedgog.web.tests;
 
 import java.util.ArrayList;
 import java.util.List;

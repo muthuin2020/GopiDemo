@@ -1,4 +1,4 @@
-package com.pedgog.web.pages;
+package com.coaching.pedgog.web.pages;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.pedgog.web.pages;
+package com.coaching.pedgog.web.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.pedgog.web.common.BasePageAction;
 
-public class PreparePage extends BasePageAction{
+public class PedgogHomePage extends BasePageAction{
 
 	WebDriver driver;
 
@@ -23,23 +23,23 @@ public class PreparePage extends BasePageAction{
 	@FindBy(xpath = "//a[@href=\"/application/Projects\"]")
 	WebElement project;
 
-	@FindBy(xpath = "//div[@class=\"last-div\"]//*[text()=\"Help\"]")
+	@FindBy(xpath = "//div[@class=\"last-div\"]//*[@title=\"Play Tutorial\"]")
 	WebElement help;
 
 	@FindBy(xpath = "//div[@class=\"last-div\"]//a[@href=\"/auth/logout\"]")
 	WebElement logout;
 
-	@FindBy(xpath = "//h6[text()=\"Prepare Zone\"]")
-	WebElement preparePageTtile;
+	@FindBy(xpath = "//*[text()=\"Explore Zone\"]")
+	WebElement homePageTtile;
 
-	public PreparePage(WebDriver driver) {
+	public PedgogHomePage(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 
-	public String getPreparePageTtile() {
-		return getText(preparePageTtile);
+	public String getHomePageTtile() {
+		return getText(homePageTtile);
 	}
 
 	public void gotoExplore() {
@@ -54,7 +54,7 @@ public class PreparePage extends BasePageAction{
 		clickElement(conduct);
 	}
 
-	public void gotoProject() {
+	public void gotoProjects() {
 		clickElement(project);
 	}
 

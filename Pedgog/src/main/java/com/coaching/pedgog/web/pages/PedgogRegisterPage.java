@@ -1,4 +1,4 @@
-package com.pedgog.web.pages;
+package com.coaching.pedgog.web.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,7 +7,10 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.pedgog.web.common.BasePageAction;
 
-public class PedgogLoginPage extends BasePageAction {
+public class PedgogRegisterPage extends BasePageAction {
+
+	@FindBy(xpath = "//input[@id=\"fullname\"]")
+	WebElement fullname;
 
 	@FindBy(xpath = "//input[@id=\"user-email\"]")
 	WebElement email;
@@ -15,7 +18,13 @@ public class PedgogLoginPage extends BasePageAction {
 	@FindBy(xpath = "//input[@id=\"user-password\"]")
 	WebElement password;
 
-	@FindBy(xpath = "//span[text()=\"Login\"]")
+	@FindBy(xpath = "//input[@id=\"accesscode\"]")
+	WebElement accessCode;
+
+	@FindBy(xpath = "//*[text()=\"Register\"]")
+	WebElement register;
+
+	@FindBy(xpath = "//*[text()=\"Login\"]")
 	WebElement login;
 
 	@FindBy(xpath = "//div[@class=\"rightBoxLogin\"]//h4")
@@ -24,17 +33,19 @@ public class PedgogLoginPage extends BasePageAction {
 	@FindBy(xpath = "//div[@class=\"errorMsg\"]//label[text()=\"Incorrect email or password\"]")
 	WebElement loginErrorMsg;
 	
-	@FindBy(xpath = "//*[text()=\"Register\"]")
-	WebElement register;
 	
-
 
 	WebDriver driver;
-	
-	public PedgogLoginPage(WebDriver driver) {
+
+	public PedgogRegisterPage(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
+	}
+
+	public void enterUserName(String name) {
+		enterText(fullname, name);
+
 	}
 
 	public void enterUserEmail(String userEmail) {
@@ -46,13 +57,16 @@ public class PedgogLoginPage extends BasePageAction {
 		enterText(password, pwd);
 	}
 
-	public void clickLogin() {
-		clickElement(login);
+	public void enterAccessCode(String code) {
+		enterText(accessCode, code);
 	}
 	
-
 	public void clickRegister() {
-		scrollToElementAndClick(register);
+		clickElement(register);
+	}
+	
+	public void clickLogin() {
+		clickElement(login);
 	}
 
 	public String getLoginPageTitle() {

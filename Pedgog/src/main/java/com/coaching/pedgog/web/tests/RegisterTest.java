@@ -1,12 +1,12 @@
-package com.pedgog.web.tests;
+package com.coaching.pedgog.web.tests;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.coaching.pedgog.web.pages.PedgogLoginPage;
+import com.coaching.pedgog.web.pages.PedgogRegisterPage;
 import com.pedgog.utilities.ConfigFileReader;
 import com.pedgog.web.common.TestBase;
-import com.pedgog.web.pages.PedgogLoginPage;
-import com.pedgog.web.pages.PedgogRegisterPage;
 
 public class RegisterTest extends TestBase{
 	PedgogRegisterPage registerPage;

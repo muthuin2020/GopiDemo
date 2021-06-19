@@ -1,4 +1,4 @@
-package com.pedgog.web.pages;
+package com.coaching.pedgog.web.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
