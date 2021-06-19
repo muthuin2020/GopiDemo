@@ -34,8 +34,8 @@ import com.pedgog.web.pages.PedgogHomePage;
 import com.pedgog.web.pages.PedgogLoginPage;
 
 public class TestBase {
-	public static WebDriver driver;
-	public static boolean isLoggedIn = false;
+	public static WebDriver driver, driverOne, driverTwo;
+	public static boolean isLoggedIn = false, analyticsTest=true;
 	public static String userName, userPassword, homePageTitle, testMethodName, currentPage;
 	public static Properties prop;
 	PedgogLoginPage loginPage;
@@ -56,19 +56,33 @@ public class TestBase {
 		options.addArguments("--disable-extensions");
 		options.addArguments("–disable-notifications");
 		options.setExperimentalOption("prefs", pref);
-		driver = new ChromeDriver(options);
+		driverOne = new ChromeDriver(options);
+		driverTwo = new ChromeDriver(options);
 
 //		enable the below line to run in firefox browser
 //		 System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") +
 //		 "\\drivers\\geckodriver.exe");
 //		driver = new FirefoxDriver();
-
+		driver = driverOne;
 		System.out.println("Browser is launched...");
 		driver.manage().window().maximize();
 		driver.get("https://coaching.pedgog.in/");
 		System.out.println("Opened Pedgog website");
 		Thread.sleep(2000);
+		System.out.println("Page title is : "+driver.getTitle());
 
+		if(analyticsTest)
+		{
+			driver=driverTwo;
+			driver.manage().window().maximize();
+			driver.get("https://uatanalytics.pedgog.in/");
+			System.out.println("Analytics Pedgog website");
+			Thread.sleep(2000);
+			System.out.println("Page title is : "+driver.getTitle());
+			
+		}
+		
+		
 		reporter = new ExtentHtmlReporter("./reports/learn_automation1.html");
 		extent = new ExtentReports();
 		extent.attachReporter(reporter);
