@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -24,6 +25,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.asserts.SoftAssert;
 
+import com.analytics.pedgog.web.pages.AnalyticsHomePage;
+import com.analytics.pedgog.web.pages.AnalyticsLoginPage;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
@@ -34,12 +37,14 @@ import com.coaching.pedgog.web.pages.PedgogLoginPage;
 import com.pedgog.utilities.JiraOperationsREST;
 
 public class TestBase {
-	public static WebDriver driver, driverOne, driverTwo;
-	public static boolean isLoggedIn = false, analyticsTest=true;
+	public static WebDriver driver, driverTwo;
+	public static boolean isLoggedIn = false, isLoggedInToAnalytics = false, analyticsTest = true;
 	public static String userName, userPassword, homePageTitle, testMethodName, currentPage;
 	public static Properties prop;
 	PedgogLoginPage loginPage;
 	PedgogHomePage homePage;
+	AnalyticsLoginPage analyticsLoginPage;
+	AnalyticsHomePage analyticsHomePage;
 	ITestResult result;
 	public static SoftAssert sAssert;
 	public static ExtentHtmlReporter reporter;
@@ -56,33 +61,26 @@ public class TestBase {
 		options.addArguments("--disable-extensions");
 		options.addArguments("–disable-notifications");
 		options.setExperimentalOption("prefs", pref);
-		driverOne = new ChromeDriver(options);
-		driverTwo = new ChromeDriver(options);
+		driver = new ChromeDriver(options);
 
 //		enable the below line to run in firefox browser
 //		 System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") +
 //		 "\\drivers\\geckodriver.exe");
 //		driver = new FirefoxDriver();
-		driver = driverOne;
+
 		System.out.println("Browser is launched...");
 		driver.manage().window().maximize();
 		driver.get("https://coaching.pedgog.in/");
 		System.out.println("Opened Pedgog website");
 		Thread.sleep(2000);
-		System.out.println("Page title is : "+driver.getTitle());
+		System.out.println("Page title is : " + driver.getTitle());
 
-		if(analyticsTest)
-		{
-			driver=driverTwo;
-			driver.manage().window().maximize();
-			driver.get("https://uatanalytics.pedgog.in/");
-			System.out.println("Analytics Pedgog website");
-			Thread.sleep(2000);
-			System.out.println("Page title is : "+driver.getTitle());
-			driver = driverOne;
+		if (analyticsTest) {
+			driverTwo = new ChromeDriver(options);
+			driverTwo.manage().window().maximize();
+
 		}
-		
-		
+
 		reporter = new ExtentHtmlReporter("./reports/learn_automation1.html");
 		extent = new ExtentReports();
 		extent.attachReporter(reporter);
@@ -105,11 +103,8 @@ public class TestBase {
 		driver.get("https://coaching.pedgog.in/");
 		System.out.println("Logging into Pedgog");
 		loginPage.enterUserEmail(userName);
-		System.out.println("Entered user email ");
 		loginPage.enterPassword(userPassword);
-		System.out.println("Entered user password ");
 		loginPage.clickLogin();
-		System.out.println("Clicked Login button ");
 		if (homePage.getHomePageTtile().equals(homePageTitle)) {
 			isLoggedIn = true;
 			System.out.println("Logged in to Pedgog");
@@ -117,6 +112,35 @@ public class TestBase {
 			System.err.println(
 					"------------------------------ Login to Pedgog failed -----------------------------------");
 		return PageFactory.initElements(driver, PedgogHomePage.class);
+	}
+
+	public AnalyticsHomePage loginToAnalytics() {
+		String uName = "sagar@gamil.com";
+		String pWord = "Sagar@123";
+		String PageTitle = "React Apa";
+		analyticsLoginPage = new AnalyticsLoginPage(driverTwo);
+		driverTwo.get("https://uatanalytics.pedgog.in/");
+		System.out.println("Loggin to Analytics Pedgog website");
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		driverTwo.findElement(By.xpath("//input[@name=\"email\"]")).sendKeys("sagar@gmail.com");
+		// analyticsLoginPage.enterUserEmail("sagar@gamil.com");
+		analyticsLoginPage.enterPassword(pWord);
+		analyticsLoginPage.clickLogin();
+		System.out.println("Page title is : " + driverTwo.getTitle());
+		if (driverTwo.getTitle().equals(PageTitle)) {
+			isLoggedInToAnalytics = true;
+			System.out.println("Logged in to Pedgog");
+		} else
+			System.err.println(
+					"------------------------------ Login to Pedgog failed -----------------------------------");
+
+		return PageFactory.initElements(driverTwo, AnalyticsHomePage.class);
+
 	}
 
 	public void setLoginData() {
@@ -168,6 +192,10 @@ public class TestBase {
 		System.out.println("========================================================================================");
 		driver.quit();
 		isLoggedIn = false;
+		if (analyticsTest) {
+			//driverTwo.quit();
+			analyticsTest = false;
+		}
 	}
 
 }
