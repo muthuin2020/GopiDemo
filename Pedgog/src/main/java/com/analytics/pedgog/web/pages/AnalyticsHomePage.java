@@ -7,24 +7,28 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.pedgog.web.common.BasePageAction;
 
-public class AnalyticsHomePage extends BasePageAction{
-	
+public class AnalyticsHomePage extends BasePageAction {
+
 	WebDriver driver;
-	
-	
+
 	@FindBy(xpath = "//a[@href=\"/onboarding/facilitators\"]")
-	WebElement fecilitators;
-	
-	
+	WebElement facilitatorsOnboarding;
+
+	@FindBy(xpath = "//a[@href=\"/onboarding/students\"]")
+	WebElement studentsOnboarding;
+
 	public AnalyticsHomePage(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
-	
-	public void goToFecilitators() {
-		clickElement(fecilitators);
+
+	public void goToFacilitatorsOnboarding() {
+		clickElement(facilitatorsOnboarding);
 	}
-	
-	
+
+	public void goToStudentsOnboarding() {
+		clickElement(studentsOnboarding);
+	}
+
 }

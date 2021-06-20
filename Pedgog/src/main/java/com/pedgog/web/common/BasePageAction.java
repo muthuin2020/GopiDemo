@@ -73,6 +73,8 @@ public class BasePageAction extends TestBase{
 	}
 
 	public void scrollToElement(WebElement element) {
+		new WebDriverWait(driver, 60).withMessage("element is not visible")
+		.until(ExpectedConditions.visibilityOf(element));
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView();", element);
 	}
