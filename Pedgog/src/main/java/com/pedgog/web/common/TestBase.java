@@ -99,8 +99,7 @@ public class TestBase {
 		sAssert = new SoftAssert();
 	}
 
-	public void registerToPedgog(String name, String emailId, String password, String accessCode)
-	{
+	public void registerToPedgog(String name, String emailId, String password, String accessCode) {
 		registerPage = new PedgogRegisterPage(driver);
 		loginPage = new PedgogLoginPage(driver);
 		loginPage.clickRegister();
@@ -110,7 +109,7 @@ public class TestBase {
 		registerPage.enterAccessCode(accessCode);
 		registerPage.clickRegister();
 	}
-	
+
 	public PedgogHomePage loginToPedgog() {
 		loginPage = new PedgogLoginPage(driver);
 		homePage = new PedgogHomePage(driver);
@@ -177,11 +176,10 @@ public class TestBase {
 		userName = prop.getProperty("emailId");
 		userPassword = prop.getProperty("pwd");
 		homePageTitle = prop.getProperty("homePageTitle");
-		if (analyticsTest) {		
-			analyticsLoginEmail=prop.getProperty("analyticsLoginEmail");
-			analyticsLoginPassword=prop.getProperty("analyticsLoginPassword");
+		if (analyticsTest) {
+			analyticsLoginEmail = prop.getProperty("analyticsLoginEmail");
+			analyticsLoginPassword = prop.getProperty("analyticsLoginPassword");
 		}
-		
 
 	}
 
