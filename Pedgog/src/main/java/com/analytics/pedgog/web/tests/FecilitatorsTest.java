@@ -2,7 +2,9 @@ package com.analytics.pedgog.web.tests;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
+import com.analytics.pedgog.web.pages.AnalyticsFecilatorsPage;
 import com.analytics.pedgog.web.pages.AnalyticsHomePage;
 import com.analytics.pedgog.web.pages.AnalyticsLoginPage;
 import com.coaching.pedgog.web.pages.ExplorePage;
@@ -15,13 +17,12 @@ import com.pedgog.web.common.TestBase;
 public class FecilitatorsTest extends TestBase {
 	AnalyticsLoginPage loginPage;
 	AnalyticsHomePage homePage;
-	PedgogLoginPage pedgogLoginPage;
-	PedgogRegisterPage pedgogRegisterPage;
+	AnalyticsFecilatorsPage analyticsFecilatorsPage;
 
 	@BeforeClass
 	public void loginSetup() {
 		prop = new ConfigFileReader().getConfig();
-
+		analyticsFecilatorsPage = new AnalyticsFecilatorsPage(driverTwo);
 		if (!isLoggedInToAnalytics) {
 			homePage = loginToAnalytics();
 		} else
@@ -38,14 +39,14 @@ public class FecilitatorsTest extends TestBase {
 	public void verifyNewFacultyRegistrations() throws InterruptedException {
 		homePage.goToFecilitators();
 		Thread.sleep(3000);
-		pedgogLoginPage = new PedgogLoginPage(driver);
-		pedgogRegisterPage = new PedgogRegisterPage(driver);
-		pedgogLoginPage.clickRegister();
-		pedgogRegisterPage.enterUserName("test user");
-		pedgogRegisterPage.enterUserEmail("test10_bputfrcp1@illumine.in");
-		pedgogRegisterPage.enterPassword("Testing@123");
-		pedgogRegisterPage.enterAccessCode("BPUTFRCP1");
-		pedgogRegisterPage.clickRegister();
+		int initialCount = analyticsFecilatorsPage.getNewFacultyRegistrations();
+		System.out.println(initialCount);
+		registerToPedgog(prop.getProperty("pedgogRegisterName"), prop.getProperty("pedgogRegisterEmail"),
+				prop.getProperty("pedgogRegisterPassword"), prop.getProperty("pedgogRegisterAccessCode"));
+		driverTwo.navigate().refresh();
+		int afterCount = analyticsFecilatorsPage.getNewFacultyRegistrations();
+		System.out.println(afterCount);
+		sAssert.assertEquals(initialCount + 1, afterCount);
 
 	}
 

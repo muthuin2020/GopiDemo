@@ -19,15 +19,11 @@ public class RegisterTest extends TestBase{
 		prop = new ConfigFileReader().getConfig();
 	}
 
+	
 	@Test(priority = 5)
 	public void registerWithCorrectData() {
-		loginPage.clickRegister();
-		registerPage.enterUserName(prop.getProperty("fullname"));
-		registerPage.enterUserEmail(prop.getProperty("emailId"));
-		registerPage.enterPassword(prop.getProperty("pwd"));
-		registerPage.enterAccessCode(prop.getProperty("accessCode"));
-		registerPage.clickRegister();
-		// Assert.assertEquals(homePage.homePageTtile(), title);
+		registerToPedgog(prop.getProperty("fullname"),prop.getProperty("emailId"), prop.getProperty("pwd"),prop.getProperty("accessCode")  );
+		//Assert.assertEquals(homePage.homePageTtile(), title);
 	}
 
 }

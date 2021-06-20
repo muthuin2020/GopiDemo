@@ -34,14 +34,17 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.coaching.pedgog.web.pages.PedgogHomePage;
 import com.coaching.pedgog.web.pages.PedgogLoginPage;
+import com.coaching.pedgog.web.pages.PedgogRegisterPage;
 import com.pedgog.utilities.JiraOperationsREST;
 
 public class TestBase {
 	public static WebDriver driver, driverTwo;
-	public static boolean isLoggedIn = false, isLoggedInToAnalytics = false, analyticsTest = true;
+	public static boolean isLoggedIn = false, isLoggedInToAnalytics = false, analyticsTest = false;
 	public static String userName, userPassword, homePageTitle, testMethodName, currentPage;
+	public static String analyticsLoginEmail, analyticsLoginPassword;
 	public static Properties prop;
 	PedgogLoginPage loginPage;
+	PedgogRegisterPage registerPage;
 	PedgogHomePage homePage;
 	AnalyticsLoginPage analyticsLoginPage;
 	AnalyticsHomePage analyticsHomePage;
@@ -78,7 +81,6 @@ public class TestBase {
 		if (analyticsTest) {
 			driverTwo = new ChromeDriver(options);
 			driverTwo.manage().window().maximize();
-
 		}
 
 		reporter = new ExtentHtmlReporter("./reports/learn_automation1.html");
@@ -97,6 +99,18 @@ public class TestBase {
 		sAssert = new SoftAssert();
 	}
 
+	public void registerToPedgog(String name, String emailId, String password, String accessCode)
+	{
+		registerPage = new PedgogRegisterPage(driver);
+		loginPage = new PedgogLoginPage(driver);
+		loginPage.clickRegister();
+		registerPage.enterUserName(name);
+		registerPage.enterUserEmail(emailId);
+		registerPage.enterPassword(password);
+		registerPage.enterAccessCode(accessCode);
+		registerPage.clickRegister();
+	}
+	
 	public PedgogHomePage loginToPedgog() {
 		loginPage = new PedgogLoginPage(driver);
 		homePage = new PedgogHomePage(driver);
@@ -115,8 +129,8 @@ public class TestBase {
 	}
 
 	public AnalyticsHomePage loginToAnalytics() {
-		String uName = "sagar@gamil.com";
-		String pWord = "Sagar@123";
+//		String uName = "sagar@gamil.com";
+//		String pWord = "Sagar@123";
 		String PageTitle = "React Apa";
 		analyticsLoginPage = new AnalyticsLoginPage(driverTwo);
 		driverTwo.get("https://uatanalytics.pedgog.in/");
@@ -127,9 +141,9 @@ public class TestBase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		driverTwo.findElement(By.xpath("//input[@name=\"email\"]")).sendKeys("sagar@gmail.com");
+		driverTwo.findElement(By.xpath("//input[@name=\"email\"]")).sendKeys(analyticsLoginEmail);
 		// analyticsLoginPage.enterUserEmail("sagar@gamil.com");
-		analyticsLoginPage.enterPassword(pWord);
+		analyticsLoginPage.enterPassword(analyticsLoginPassword);
 		analyticsLoginPage.clickLogin();
 		System.out.println("Page title is : " + driverTwo.getTitle());
 		if (driverTwo.getTitle().equals(PageTitle)) {
@@ -163,6 +177,11 @@ public class TestBase {
 		userName = prop.getProperty("emailId");
 		userPassword = prop.getProperty("pwd");
 		homePageTitle = prop.getProperty("homePageTitle");
+		if (analyticsTest) {		
+			analyticsLoginEmail=prop.getProperty("analyticsLoginEmail");
+			analyticsLoginPassword=prop.getProperty("analyticsLoginPassword");
+		}
+		
 
 	}
 
@@ -193,7 +212,7 @@ public class TestBase {
 		driver.quit();
 		isLoggedIn = false;
 		if (analyticsTest) {
-			//driverTwo.quit();
+			driverTwo.quit();
 			analyticsTest = false;
 		}
 	}
