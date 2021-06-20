@@ -39,8 +39,8 @@ import com.pedgog.utilities.JiraOperationsREST;
 
 public class TestBase {
 	public static WebDriver driver, driverTwo;
-	public static boolean isLoggedIn = false, isLoggedInToAnalytics = false, analyticsTest = false;
-	public static String userName, userPassword, homePageTitle, testMethodName, currentPage;
+	public static boolean isLoggedIn = false, isLoggedInToAnalytics = false, analyticsTest;
+	public static String userName, userPassword, homePageTitle, testMethodName, currentPage, pedgogURL, analyticsURL;
 	public static String analyticsLoginEmail, analyticsLoginPassword;
 	public static Properties prop;
 	PedgogLoginPage loginPage;
@@ -73,8 +73,8 @@ public class TestBase {
 
 		System.out.println("Browser is launched...");
 		driver.manage().window().maximize();
-		driver.get("https://coaching.pedgog.in/");
-		System.out.println("Opened Pedgog website");
+		driver.get(pedgogURL);
+		System.out.println("Launched Pedgog website : " + pedgogURL);
 		Thread.sleep(2000);
 		System.out.println("Page title is : " + driver.getTitle());
 
@@ -113,8 +113,8 @@ public class TestBase {
 	public PedgogHomePage loginToPedgog() {
 		loginPage = new PedgogLoginPage(driver);
 		homePage = new PedgogHomePage(driver);
-		driver.get("https://coaching.pedgog.in/");
-		System.out.println("Logging into Pedgog");
+		driver.get(pedgogURL);
+		System.out.println("Logging into : " + pedgogURL);
 		loginPage.enterUserEmail(userName);
 		loginPage.enterPassword(userPassword);
 		loginPage.clickLogin();
@@ -132,8 +132,8 @@ public class TestBase {
 //		String pWord = "Sagar@123";
 		String PageTitle = "React Apa";
 		analyticsLoginPage = new AnalyticsLoginPage(driverTwo);
-		driverTwo.get("https://uatanalytics.pedgog.in/");
-		System.out.println("Loggin to Analytics Pedgog website");
+		driverTwo.get(analyticsURL);
+		System.out.println("Logging into : " + analyticsURL);
 		try {
 			Thread.sleep(1500);
 		} catch (InterruptedException e) {
@@ -176,9 +176,12 @@ public class TestBase {
 		userName = prop.getProperty("emailId");
 		userPassword = prop.getProperty("pwd");
 		homePageTitle = prop.getProperty("homePageTitle");
+		pedgogURL = prop.getProperty("pedgogURL");
+		analyticsTest = Boolean.parseBoolean(prop.getProperty("analyticsTest"));
 		if (analyticsTest) {
 			analyticsLoginEmail = prop.getProperty("analyticsLoginEmail");
 			analyticsLoginPassword = prop.getProperty("analyticsLoginPassword");
+			analyticsURL = prop.getProperty("analyticsURL");
 		}
 
 	}
