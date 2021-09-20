@@ -30,6 +30,18 @@ public class CoachingAppHomePage extends BasePageAction{
 	@FindBy(xpath = "//div[@class=\"ap-module-card-img\"]")
 	List<WebElement> availableModules;
 	
+	@FindBy(xpath = "//div[@class=\"ap-conduct-popup-title\"]")
+	WebElement conductingModuleTitle;
+	
+	@FindBy(xpath = "//span[text()=\"copy link \"]")
+	WebElement otpLinkCopyButton;
+	
+	@FindBy(xpath = "//span[text()=\"copy link \"]/following-sibling::div[1]")
+	WebElement otpLink;
+	
+	@FindBy(xpath = "//span[@class=\"otp-text\"]/following-sibling::span")
+	WebElement otpNumber;
+	
 	public CoachingAppHomePage(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
@@ -40,7 +52,19 @@ public class CoachingAppHomePage extends BasePageAction{
 	public String getHomePageTtile() {
 		return getText(homePageTtile);
 	}
+	
+	public String getConductingModuleTitle() {
+		return getText(conductingModuleTitle);
+	}
 
+	public String getOtpLink() {
+		return getText(otpLink);
+	}
+
+	public String getOtpNumber() {
+		return getText(otpNumber);
+	}
+	
 	public int getNumberOfModules() {
 		return getElementCount(numberOfModules);
 	}
@@ -73,5 +97,7 @@ public class CoachingAppHomePage extends BasePageAction{
 		act.click().build().perform();
 		
 	}
+	
+	
 
 }

@@ -32,6 +32,8 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.coaching.myApp.web.pages.CoachingAppHomePage;
+import com.coaching.myApp.web.pages.CoachingAppLoginPage;
 import com.coaching.pedgog.web.pages.PedgogHomePage;
 import com.coaching.pedgog.web.pages.PedgogLoginPage;
 import com.coaching.pedgog.web.pages.PedgogRegisterPage;
@@ -39,11 +41,14 @@ import com.pedgog.utilities.JiraOperationsREST;
 
 public class TestBase {
 	public static WebDriver driver, driverTwo;
-	public static boolean isLoggedIn = false, isLoggedInToAnalytics = false, analyticsTest;
-	public static String userName, userPassword, homePageTitle, testMethodName, currentPage, pedgogURL, analyticsURL;
-	public static String analyticsLoginEmail, analyticsLoginPassword;
+	public static boolean isLoggedIn = false, isLoggedInToAnalytics = false, analyticsTest, myAppTesting;
+	public static String userName, userPassword, homePageTitle, testMethodName, currentPage, pedgogURL, analyticsURL, coachingAppUserName, coachingAppUserPassword, coachingAppHomePageTitle, coachingAppURL;
+	public static String analyticsLoginEmail, analyticsLoginPassword, myAppLoginEmail, myAppLoginPassword, myAppURL;
+	public static String otpLink, otpNumber;
 	public static Properties prop;
 	PedgogLoginPage loginPage;
+	CoachingAppHomePage coachingAppHomePage;
+	CoachingAppLoginPage coachingAppLoginPage;
 	PedgogRegisterPage registerPage;
 	PedgogHomePage homePage;
 	AnalyticsLoginPage analyticsLoginPage;
@@ -81,6 +86,12 @@ public class TestBase {
 		if (analyticsTest) {
 			driverTwo = new ChromeDriver(options);
 			driverTwo.manage().window().maximize();
+		}
+		
+		if (myAppTesting) {
+			driverTwo = new ChromeDriver(options);
+			driverTwo.manage().window().maximize();
+			driverTwo.get(myAppURL);
 		}
 
 		reporter = new ExtentHtmlReporter("./reports/learn_automation1.html");
@@ -127,6 +138,23 @@ public class TestBase {
 		return PageFactory.initElements(driver, PedgogHomePage.class);
 	}
 
+	public CoachingAppHomePage loginToCoachingApp() {
+		coachingAppLoginPage = new CoachingAppLoginPage(driver);
+		coachingAppHomePage = new CoachingAppHomePage(driver);
+		driver.get(coachingAppURL);
+		System.out.println("Logging into : " + coachingAppURL);
+		coachingAppLoginPage.enterUserEmail(coachingAppUserName);
+		coachingAppLoginPage.enterPassword(coachingAppUserPassword);
+		coachingAppLoginPage.clickLogin();
+		if (coachingAppHomePage.getHomePageTtile().equals(coachingAppHomePageTitle)) {
+			isLoggedIn = true;
+			System.out.println("Logged in to Pedgog");
+		} else
+			System.err.println(
+					"------------------------------ Login to Pedgog failed -----------------------------------");
+		return PageFactory.initElements(driver, CoachingAppHomePage.class);
+	}
+
 	public AnalyticsHomePage loginToAnalytics() {
 //		String uName = "sagar@gamil.com";
 //		String pWord = "Sagar@123";
@@ -155,7 +183,7 @@ public class TestBase {
 		return PageFactory.initElements(driverTwo, AnalyticsHomePage.class);
 
 	}
-
+	
 	public void setLoginData() {
 		String propertyFilePath = System.getProperty("user.dir") + "\\config\\config.properties";
 		Properties prop = new Properties();
@@ -177,6 +205,12 @@ public class TestBase {
 		userPassword = prop.getProperty("pwd");
 		homePageTitle = prop.getProperty("homePageTitle");
 		pedgogURL = prop.getProperty("pedgogURL");
+		
+		coachingAppUserName = prop.getProperty("coachingAppEmailId");
+		coachingAppUserPassword = prop.getProperty("coachingAppPassword");
+		coachingAppHomePageTitle = prop.getProperty("coachingAppHomePageTitle");
+		coachingAppURL = prop.getProperty("coachingAppURL");
+		
 		analyticsTest = Boolean.parseBoolean(prop.getProperty("analyticsTest"));
 		if (analyticsTest) {
 			analyticsLoginEmail = prop.getProperty("analyticsLoginEmail");
@@ -184,6 +218,12 @@ public class TestBase {
 			analyticsURL = prop.getProperty("analyticsURL");
 		}
 
+		myAppTesting = Boolean.parseBoolean(prop.getProperty("myAppTesting"));
+		if (myAppTesting) {
+			myAppLoginEmail = prop.getProperty("myAppLoginEmail");
+			myAppLoginPassword = prop.getProperty("myAppLoginPassword");
+			myAppURL = prop.getProperty("myAppURL");
+		}
 	}
 
 	@AfterMethod

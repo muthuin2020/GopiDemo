@@ -24,31 +24,31 @@ public class LoginTest extends TestBase {
 
 	@Test(priority = 1)
 	public void loginWithCorrectCredentials() {
-		loginPage.enterUserEmail(prop.getProperty("myAppEmailId"));
-		loginPage.enterPassword(prop.getProperty("myAppPassword"));
-		loginPage.clickLogin();
-		sAssert.assertEquals(homePage.getHomePageTtile(), prop.getProperty("myAppHomePageTitle"));
+		loginToCoachingApp(prop.getProperty("coachingAppEmailId"), prop.getProperty("coachingAppPassword"));
+		sAssert.assertEquals(homePage.getHomePageTtile(), prop.getProperty("coachingAppHomePageTitle"));
 		isLoggedIn = true;
-		homePage.clickOnConduct("The World of the StarMaker Associate");
 		sAssert.assertAll();
 	}
 
 	@Test(priority = 2)
 	public void loginWithWrongEmail() throws InterruptedException {
-		loginPage.enterUserEmail("abcd" + prop.getProperty("emailId"));
-		loginPage.enterPassword(prop.getProperty("pwd"));
-		loginPage.clickLogin();
-		sAssert.assertEquals(loginPage.getLoginErrorMsg(), prop.getProperty("myAppLoginErrorMsg"));
+		loginToCoachingApp("abcd" + prop.getProperty("emailId"),prop.getProperty("pwd"));
+		sAssert.assertEquals(loginPage.getLoginErrorMsg(), prop.getProperty("coachingAppLoginErrorMsg"));
 		sAssert.assertAll();
 	}
 
 	@Test(priority = 3)
 	public void loginWithWrongPassword() throws InterruptedException {
-		loginPage.enterUserEmail(prop.getProperty("emailId"));
-		loginPage.enterPassword("abcd" + prop.getProperty("pwd"));
-		loginPage.clickLogin();
-		sAssert.assertEquals(loginPage.getLoginErrorMsg(), prop.getProperty("myAppLoginErrorMsg"));
+		loginToCoachingApp(prop.getProperty("emailId"),"abcd"+prop.getProperty("pwd"));
+		sAssert.assertEquals(loginPage.getLoginErrorMsg(), prop.getProperty("coachingAppLoginErrorMsg"));
 		sAssert.assertAll();
+	}
+	
+	public void loginToCoachingApp(String userName, String password) {
+		loginPage.enterUserEmail(userName);
+		loginPage.enterPassword(password);
+		loginPage.clickLogin();
+		homePage=new CoachingAppHomePage(driver);
 	}
 
 	@AfterMethod

@@ -3,6 +3,8 @@ package com.coaching.myApp.web.tests;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.coaching.myApp.web.pages.CoachingAppHomePage;
+import com.coaching.myApp.web.pages.CoachingAppLoginPage;
 import com.coaching.pedgog.web.pages.ConductPage;
 import com.coaching.pedgog.web.pages.ExplorePage;
 import com.coaching.pedgog.web.pages.HelpPage;
@@ -14,60 +16,40 @@ import com.pedgog.utilities.ConfigFileReader;
 import com.pedgog.web.common.TestBase;
 
 public class HomePageTest extends TestBase {
-	PedgogLoginPage loginPage;
-	PedgogHomePage homePage;
-	ExplorePage explorePage;
-	PreparePage preparePage;
-	ConductPage conductPage;
-	ProjectsPage projectsPage;
-	HelpPage helpPage;
+
+	CoachingAppHomePage homePage;
 
 	@BeforeClass
 	public void loginSetup() {
 		prop = new ConfigFileReader().getConfig();
 		if (!isLoggedIn) {
-			homePage = loginToPedgog();
+			homePage = loginToCoachingApp();
 		}
 	}
 
 	@Test(priority = 6)
-	public void navigateToPreparePage() {
-		homePage.gotoPrepare();
-		preparePage = new PreparePage(driver);
-		sAssert.assertEquals(preparePage.getPreparePageTtile(), prop.getProperty("preparePageTitle"));
+	public void clickOnConductModule() {
+		String currentModule = "The World of the StarMaker Associate";
+		homePage.clickOnConduct(currentModule);
+		sAssert.assertEquals(homePage.getConductingModuleTitle(), currentModule);
 		sAssert.assertAll();
 	}
 
 	@Test(priority = 7)
-	public void navigateToConductPage() {
-		homePage.gotoConduct();
-		conductPage = new ConductPage(driver);
-		sAssert.assertEquals(conductPage.getConductPageTtile(), prop.getProperty("conductPageTitle"));
+	public void getOtpLink() {
+		sAssert.assertEquals(homePage.getOtpLink(),
+				"https://uatmyapp.pedgog.in/auth?accesscode=STARMAKERAP&&otp=" + homePage.getOtpNumber());
 		sAssert.assertAll();
-	}
-
-	@Test(priority = 8)
-	public void navigateToProjectsPage() {
-		homePage.gotoProjects();
-		projectsPage = new ProjectsPage(driver);
-		sAssert.assertEquals(projectsPage.getProjectsPageTtile(), prop.getProperty("projectsPageTitle"));
-		sAssert.assertAll();
-	}
-
-	@Test(priority = 9)
-	public void navigateToExplorePage() {
-		homePage.gotoExplore();
-		explorePage = new ExplorePage(driver);
-		sAssert.assertEquals(explorePage.getExplorePageTtile(), prop.getProperty("explorePageTitle"));
-		sAssert.assertAll();
+		otpLink=homePage.getOtpLink();
 	}
 	
-	@Test(priority = 10)
-	public void navigateToHelpPage() throws InterruptedException {
-		homePage.gotoHelp();
-		helpPage = new HelpPage(driver);
-		sAssert.assertTrue(helpPage.isVideoAvailable());
-		helpPage.closeHelpPage();
+	@Test(priority = 8)
+	public void getOtpNumber() {
+		String otpLink=homePage.getOtpLink();
+		sAssert.assertEquals(otpLink.substring(otpLink.length()-4),
+				homePage.getOtpNumber());
 		sAssert.assertAll();
+		otpNumber=homePage.getOtpNumber();
 	}
+
 }
