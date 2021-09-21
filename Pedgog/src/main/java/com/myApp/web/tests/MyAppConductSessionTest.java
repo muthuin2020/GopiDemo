@@ -43,7 +43,7 @@ public class MyAppConductSessionTest extends TestBase {
 
 		loginToMyApp(prop.getProperty("myAppLoginEmail"), prop.getProperty("myAppLoginPassword"), driverTwo);
 		Thread.sleep(2000);
-		clickOnClassRoomLearning(driverTwo);
+		joinSession(driverTwo);
 
 	}
 
@@ -54,7 +54,7 @@ public class MyAppConductSessionTest extends TestBase {
 		myAppHomePage = new MyAppHomePage(driver);
 	}
 
-	public void clickOnClassRoomLearning(WebDriver driver) throws InterruptedException {
+	public void joinSession(WebDriver driver) throws InterruptedException {
 		myAppHomePage = new MyAppHomePage(driver);
 		myAppHomePage.clickOnClassRoomLearning();
 		MyAppSessionPage myAppSessionpage = new MyAppSessionPage(driverTwo);

@@ -61,14 +61,17 @@ public class TestBase {
 	public static ExtentHtmlReporter reporter;
 	public static ExtentReports extent;
 	public static ExtentTest logger;
+	public static ChromeOptions options;
+	public static MultipleStudents multipleStudents;
 
 	@BeforeSuite
 	protected void setDrivers() throws InterruptedException {
+		multipleStudents= new MultipleStudents();
 		setLoginData();
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\drivers\\chromedriver.exe");
 		Map<String, Object> pref = new HashMap<String, Object>();
 		pref.put("profile.default_content_setting_values.notifications", 2);
-		ChromeOptions options = new ChromeOptions();
+		options = new ChromeOptions();
 		options.addArguments("--disable-extensions");
 		options.addArguments("–disable-notifications");
 		options.setExperimentalOption("prefs", pref);
@@ -92,9 +95,13 @@ public class TestBase {
 		}
 
 		if (myAppTesting) {
-			driverTwo = new ChromeDriver(options);
-			driverTwo.manage().window().maximize();
-			driverTwo.get(myAppURL);
+			// int numberOfStudents=Integer.parseInt(prop.getProperty("totalStudents"));
+
+			int numberOfStudents = 19;
+			for (int i = 1; i <= numberOfStudents; i++) {
+				multipleStudents.openWindowForStudents(i);
+			}
+
 		}
 
 		reporter = new ExtentHtmlReporter("./reports/learn_automation1.html");
