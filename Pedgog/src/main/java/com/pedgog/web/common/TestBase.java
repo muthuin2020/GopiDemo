@@ -40,7 +40,9 @@ import com.coaching.pedgog.web.pages.PedgogRegisterPage;
 import com.pedgog.utilities.JiraOperationsREST;
 
 public class TestBase {
-	public static WebDriver driver, driverTwo;
+	public static WebDriver driver, driverTwo, driverThree, driverFour, driverFive, driverSix, driverSeven, driverEight,
+			driverNine, driverTen, driverEleven, driverTwelve, driverThirteen, driverFourteen, driverFifteen,
+			driverSixteen, driverSeventeen, driverEighteen, driverNineteen, driverTwenty;
 	public static boolean isLoggedIn = false, isLoggedInToAnalytics = false, analyticsTest, myAppTesting;
 	public static String userName, userPassword, homePageTitle, testMethodName, currentPage, pedgogURL, analyticsURL,
 			coachingAppUserName, coachingAppUserPassword, coachingAppHomePageTitle, coachingAppURL;
@@ -100,7 +102,6 @@ public class TestBase {
 		extent.attachReporter(reporter);
 		logger = extent.createTest("Starting logger...");
 
-	
 	}
 
 	@BeforeMethod
