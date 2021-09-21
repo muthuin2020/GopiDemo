@@ -98,6 +98,9 @@ public class CoachingAppHomePage extends BasePageAction{
 		
 	}
 	
-	
+	public void waitForSomeTime(int seconds)
+	{
+		implicitWait(driver, seconds*1000);
+	}
 
 }

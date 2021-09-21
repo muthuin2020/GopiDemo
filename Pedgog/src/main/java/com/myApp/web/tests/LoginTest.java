@@ -28,9 +28,7 @@ public class LoginTest extends TestBase {
 
 	@Test(priority = 1)
 	public void loginWithCorrectCredentials() {
-		loginPage.enterUserEmail(prop.getProperty("myAppLoginEmail"));
-		loginPage.enterPassword(prop.getProperty("myAppLoginPassword"));
-		loginPage.clickLogin();
+		loginToMyApp(prop.getProperty("myAppLoginEmail"),prop.getProperty("myAppLoginPassword"));
 		sAssert.assertEquals(homePage.getHomePageTitle(), prop.getProperty("myAppHomePageTitle"));
 		isLoggedIn = true;
 		sAssert.assertAll();
@@ -38,21 +36,25 @@ public class LoginTest extends TestBase {
 
 	@Test(priority = 2)
 	public void loginWithWrongEmail() throws InterruptedException {
-		loginPage.enterUserEmail("abcd" + prop.getProperty("emailId"));
-		loginPage.enterPassword(prop.getProperty("pwd"));
-		loginPage.clickLogin();
+		loginToMyApp("abcd" + prop.getProperty("emailId"),prop.getProperty("pwd"));
 		sAssert.assertEquals(loginPage.getLoginErrorMsg(), prop.getProperty("myAppLoginErrorMsg"));
 		sAssert.assertAll();
 	}
 
 	@Test(priority = 3)
 	public void loginWithWrongPassword() throws InterruptedException {
-		loginPage.enterUserEmail(prop.getProperty("emailId"));
-		loginPage.enterPassword("abcd" + prop.getProperty("pwd"));
-		loginPage.clickLogin();
+		loginToMyApp(prop.getProperty("emailId"),"abcd" + prop.getProperty("pwd"));
 		sAssert.assertEquals(loginPage.getLoginErrorMsg(), prop.getProperty("myAppLoginErrorMsg"));
 		sAssert.assertAll();
 	}
+	
+	public void loginToMyApp(String userName, String password) {
+		loginPage.enterUserEmail(userName);
+		loginPage.enterPassword(password);
+		loginPage.clickLogin();
+		homePage=new MyAppHomePage(driverTwo);
+	}
+
 
 	@AfterMethod
 	public void logout() throws InterruptedException {

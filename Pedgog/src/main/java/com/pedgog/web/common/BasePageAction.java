@@ -5,6 +5,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,7 +21,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.aventstack.extentreports.Status;
 
-public class BasePageAction extends TestBase{
+public class BasePageAction extends TestBase {
 
 	WebDriver driver;
 
@@ -74,7 +75,7 @@ public class BasePageAction extends TestBase{
 
 	public void scrollToElement(WebElement element) {
 		new WebDriverWait(driver, 60).withMessage("element is not visible")
-		.until(ExpectedConditions.visibilityOf(element));
+				.until(ExpectedConditions.visibilityOf(element));
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView();", element);
 	}
@@ -260,9 +261,8 @@ public class BasePageAction extends TestBase{
 		actions.moveToElement(element);
 		actions.build().perform();
 	}
-	
-	public String getPageTitle()
-	{
+
+	public String getPageTitle() {
 		return driver.getTitle();
 	}
 
@@ -270,5 +270,9 @@ public class BasePageAction extends TestBase{
 		Actions actions = new Actions(driver);
 		actions.sendKeys(key).build().perform();
 		return this;
+	}
+
+	public void implicitWait(WebDriver driver, int seconds) {
+		driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
 	}
 }

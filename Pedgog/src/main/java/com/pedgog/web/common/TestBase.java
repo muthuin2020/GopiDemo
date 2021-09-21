@@ -42,7 +42,8 @@ import com.pedgog.utilities.JiraOperationsREST;
 public class TestBase {
 	public static WebDriver driver, driverTwo;
 	public static boolean isLoggedIn = false, isLoggedInToAnalytics = false, analyticsTest, myAppTesting;
-	public static String userName, userPassword, homePageTitle, testMethodName, currentPage, pedgogURL, analyticsURL, coachingAppUserName, coachingAppUserPassword, coachingAppHomePageTitle, coachingAppURL;
+	public static String userName, userPassword, homePageTitle, testMethodName, currentPage, pedgogURL, analyticsURL,
+			coachingAppUserName, coachingAppUserPassword, coachingAppHomePageTitle, coachingAppURL;
 	public static String analyticsLoginEmail, analyticsLoginPassword, myAppLoginEmail, myAppLoginPassword, myAppURL;
 	public static String otpLink, otpNumber;
 	public static Properties prop;
@@ -87,7 +88,7 @@ public class TestBase {
 			driverTwo = new ChromeDriver(options);
 			driverTwo.manage().window().maximize();
 		}
-		
+
 		if (myAppTesting) {
 			driverTwo = new ChromeDriver(options);
 			driverTwo.manage().window().maximize();
@@ -98,6 +99,8 @@ public class TestBase {
 		extent = new ExtentReports();
 		extent.attachReporter(reporter);
 		logger = extent.createTest("Starting logger...");
+
+	
 	}
 
 	@BeforeMethod
@@ -183,7 +186,7 @@ public class TestBase {
 		return PageFactory.initElements(driverTwo, AnalyticsHomePage.class);
 
 	}
-	
+
 	public void setLoginData() {
 		String propertyFilePath = System.getProperty("user.dir") + "\\config\\config.properties";
 		Properties prop = new Properties();
@@ -205,12 +208,12 @@ public class TestBase {
 		userPassword = prop.getProperty("pwd");
 		homePageTitle = prop.getProperty("homePageTitle");
 		pedgogURL = prop.getProperty("pedgogURL");
-		
+
 		coachingAppUserName = prop.getProperty("coachingAppEmailId");
 		coachingAppUserPassword = prop.getProperty("coachingAppPassword");
 		coachingAppHomePageTitle = prop.getProperty("coachingAppHomePageTitle");
 		coachingAppURL = prop.getProperty("coachingAppURL");
-		
+
 		analyticsTest = Boolean.parseBoolean(prop.getProperty("analyticsTest"));
 		if (analyticsTest) {
 			analyticsLoginEmail = prop.getProperty("analyticsLoginEmail");
