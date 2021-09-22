@@ -18,6 +18,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.ITestResult;
@@ -82,9 +83,8 @@ public class TestBase {
 		options.setExperimentalOption("prefs", pref);
 		driver = new ChromeDriver(options);
 
-//		enable the below line to run in firefox browser
-//		 System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") +
-//		 "\\drivers\\geckodriver.exe");
+//		---- disable the above line and enable the below 2 lines to run in firefox browser ----
+//		System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "\\drivers\\geckodriver.exe");
 //		driver = new FirefoxDriver();
 
 		System.out.println("Browser is launched...");
