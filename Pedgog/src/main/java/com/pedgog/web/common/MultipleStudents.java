@@ -91,7 +91,6 @@ public class MultipleStudents extends TestBase {
 			driverFive.manage().window().maximize();
 			driverFive.get(myAppURL);
 			break;
-			
 
 		case 16:
 			driverSix = new ChromeDriver(options);
@@ -126,4 +125,64 @@ public class MultipleStudents extends TestBase {
 		}
 	}
 
+	public WebDriver getCurrentStudentsWindow(int i) {
+
+		switch (i) {
+		case 2:
+			return driverTwo;
+		case 3:
+			return driverThree;
+
+		case 4:
+			return driverFour;
+
+		case 5:
+			return driverFive;
+
+		case 6:
+			return driverSix;
+
+		case 7:
+			return driverSeven;
+
+		case 8:
+			return driverEight;
+
+		case 9:
+			return driverNine;
+		case 10:
+			return driverTen;
+
+		case 11:
+			return driverEleven;
+
+		case 12:
+			return driverTwelve;
+
+		case 13:
+			return driverThirteen;
+
+		case 14:
+			return driverFourteen;
+
+		case 15:
+			return driverFifteen;
+
+		case 16:
+			return driverSixteen;
+
+		case 17:
+			return driverSeventeen;
+
+		case 18:
+			return driverEighteen;
+
+		case 19:
+			return driverNineteen;
+		case 20:
+			return driverTwenty;
+		default:
+			return null;
+		}
+	}
 }
