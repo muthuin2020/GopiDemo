@@ -5,6 +5,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.coaching.myApp.web.pages.CoachingAppConductPage;
 import com.coaching.myApp.web.pages.CoachingAppHomePage;
 import com.coaching.myApp.web.pages.CoachingAppLoginPage;
 import com.coaching.pedgog.web.pages.PedgogHomePage;
@@ -20,6 +21,7 @@ public class MyAppConductSessionTest extends TestBase {
 	CoachingAppHomePage coachingAppHomePage;
 	MyAppLoginPage myAppLoginPage;
 	MyAppHomePage myAppHomePage;
+	CoachingAppConductPage coachingAppConductPage;
 
 	@BeforeClass
 	public void loginSetup() {
@@ -64,6 +66,29 @@ public class MyAppConductSessionTest extends TestBase {
 		sAssert.assertTrue(coachingAppHomePage.getParticipantNames().equals(studentsList));
 		sAssert.assertAll();
 	}
+
+	@Test(priority = 4)
+	public void verifyAssessmentLinkIsPresent() throws InterruptedException {
+		coachingAppHomePage.clickOnBeginSession();
+		Thread.sleep(2000);
+		coachingAppConductPage = new CoachingAppConductPage(driver);
+		coachingAppConductPage.gotoAssessmentLink();
+		assessmentLink = coachingAppConductPage.getAssessmentLink();
+		sAssert.assertTrue(!assessmentLink.isEmpty());
+		sAssert.assertAll();
+
+	}
+	
+	@Test(priority = 5)
+	public void takeAssessment() throws InterruptedException {
+		for (int i = 2; i < numberOfStudents + 2; i++) {
+			driver = multipleStudents.getCurrentStudentsWindow(i);
+			driver.get(assessmentLink);
+			System.out.println(driver.getTitle());
+		}
+
+	}
+	
 
 	public void loginToMyApp(String userName, String password, WebDriver driver) {
 		myAppLoginPage = new MyAppLoginPage(driver);

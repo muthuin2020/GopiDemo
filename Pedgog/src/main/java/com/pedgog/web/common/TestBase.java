@@ -50,7 +50,7 @@ public class TestBase {
 	public static String userName, userPassword, homePageTitle, testMethodName, currentPage, pedgogURL, analyticsURL,
 			coachingAppUserName, coachingAppUserPassword, coachingAppHomePageTitle, coachingAppURL;
 	public static String analyticsLoginEmail, analyticsLoginPassword, myAppLoginEmail, myAppLoginPassword, myAppURL;
-	public static String otpLink, otpNumber;
+	public static String otpLink, otpNumber, assessmentLink;
 	public static Properties prop;
 	PedgogLoginPage loginPage;
 	CoachingAppHomePage coachingAppHomePage;

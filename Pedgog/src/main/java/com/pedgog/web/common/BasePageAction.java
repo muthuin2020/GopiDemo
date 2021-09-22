@@ -243,6 +243,18 @@ public class BasePageAction extends TestBase {
 		return isPresent;
 	}
 
+	public Boolean isElementPresentWithoutWait(String xpath) {
+		boolean isPresent = false;
+		try {
+			driver.findElement(By.xpath(xpath));
+			isPresent = true;
+		} catch (Exception e) {
+			
+		}
+
+		return isPresent;
+	}
+
 	public boolean elementHasText(WebElement we, String text) {
 		new WebDriverWait(driver, 15).withMessage("element is not visible").until(ExpectedConditions.visibilityOf(we));
 		return we.getText().contains(text);
