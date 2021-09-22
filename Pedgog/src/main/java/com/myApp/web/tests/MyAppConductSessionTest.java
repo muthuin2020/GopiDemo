@@ -43,11 +43,21 @@ public class MyAppConductSessionTest extends TestBase {
 
 		loginToMyApp(prop.getProperty("myAppLoginEmail"), prop.getProperty("myAppLoginPassword"), driverTwo);
 		Thread.sleep(2000);
+		
+		
+		loginToMyApp(prop.getProperty("myAppLoginEmail1"), prop.getProperty("myAppLoginPassword1"), driverThree);
+		Thread.sleep(2000);
+		
 		joinSession(driverTwo);
+		joinSession(driverThree);
+		
+		coachingAppHomePage.getTotalParticipants();
+		coachingAppHomePage.getParticipantNames();
 
 	}
 
 	public void loginToMyApp(String userName, String password, WebDriver driver) {
+		myAppLoginPage = new MyAppLoginPage(driver);
 		myAppLoginPage.enterUserEmail(userName);
 		myAppLoginPage.enterPassword(password);
 		myAppLoginPage.clickLogin();
@@ -57,7 +67,7 @@ public class MyAppConductSessionTest extends TestBase {
 	public void joinSession(WebDriver driver) throws InterruptedException {
 		myAppHomePage = new MyAppHomePage(driver);
 		myAppHomePage.clickOnClassRoomLearning();
-		MyAppSessionPage myAppSessionpage = new MyAppSessionPage(driverTwo);
+		MyAppSessionPage myAppSessionpage = new MyAppSessionPage(driver);
 		myAppSessionpage.clickOnJoinSessionButton();
 		myAppSessionpage.enterOtp(otpNumber);
 		Thread.sleep(2000);

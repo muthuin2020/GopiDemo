@@ -63,10 +63,11 @@ public class TestBase {
 	public static ExtentTest logger;
 	public static ChromeOptions options;
 	public static MultipleStudents multipleStudents;
+	public static int numberOfStudents;
 
 	@BeforeSuite
 	protected void setDrivers() throws InterruptedException {
-		multipleStudents= new MultipleStudents();
+		multipleStudents = new MultipleStudents();
 		setLoginData();
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\drivers\\chromedriver.exe");
 		Map<String, Object> pref = new HashMap<String, Object>();
@@ -95,10 +96,8 @@ public class TestBase {
 		}
 
 		if (myAppTesting) {
-			// int numberOfStudents=Integer.parseInt(prop.getProperty("totalStudents"));
-
-			int numberOfStudents = 19;
-			for (int i = 1; i <= numberOfStudents; i++) {
+			 
+			for (int i = 2; i < numberOfStudents + 2; i++) {
 				multipleStudents.openWindowForStudents(i);
 			}
 
@@ -234,6 +233,7 @@ public class TestBase {
 			myAppLoginEmail = prop.getProperty("myAppLoginEmail");
 			myAppLoginPassword = prop.getProperty("myAppLoginPassword");
 			myAppURL = prop.getProperty("myAppURL");
+			numberOfStudents = Integer.parseInt(prop.getProperty("totalStudents"));
 		}
 	}
 
