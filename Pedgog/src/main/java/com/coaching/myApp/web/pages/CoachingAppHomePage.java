@@ -90,10 +90,10 @@ public class CoachingAppHomePage extends BasePageAction {
 		return participantList;
 	}
 
-	public String getTotalParticipants() {
+	public int getTotalParticipants() {
 		String partipantsText = getText(totalParticipants);	
 		System.out.println("total participants : " + partipantsText);
-		return partipantsText.split(" ")[0];
+		return Integer.parseInt(partipantsText.split(" ")[0]);
 	}
 
 	public int getNumberOfModules() {

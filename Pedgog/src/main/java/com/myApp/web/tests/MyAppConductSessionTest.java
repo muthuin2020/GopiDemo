@@ -32,6 +32,8 @@ public class MyAppConductSessionTest extends TestBase {
 
 	@Test(priority = 1)
 	public void attendSessionWithOtp() throws InterruptedException {
+		WebDriver driver;
+		int studentNumber;
 		coachingAppLoginPage.enterUserEmail(prop.getProperty("coachingAppEmailId"));
 		coachingAppLoginPage.enterPassword(prop.getProperty("coachingAppPassword"));
 		coachingAppLoginPage.clickLogin();
@@ -41,19 +43,26 @@ public class MyAppConductSessionTest extends TestBase {
 		otpNumber = coachingAppHomePage.getOtpNumber();
 		System.out.println("Generated Otp is : " + otpNumber);
 
-		loginToMyApp(prop.getProperty("myAppLoginEmail"), prop.getProperty("myAppLoginPassword"), driverTwo);
-		Thread.sleep(2000);
-		
-		
-		loginToMyApp(prop.getProperty("myAppLoginEmail1"), prop.getProperty("myAppLoginPassword1"), driverThree);
-		Thread.sleep(2000);
-		
-		joinSession(driverTwo);
-		joinSession(driverThree);
-		
-		coachingAppHomePage.getTotalParticipants();
-		coachingAppHomePage.getParticipantNames();
+		for (int i = 2; i < numberOfStudents + 2; i++) {
+			driver = multipleStudents.getCurrentStudentsWindow(i);
+			studentNumber = i - 1;
+			loginToMyApp(prop.getProperty("myAppLoginEmail" + studentNumber),
+					prop.getProperty("myAppLoginPassword" + studentNumber), driver);
+			Thread.sleep(2000);
+			joinSession(driver);
+		}
+	}
 
+	@Test(priority = 2)
+	public void verifyTotalNumberOfStudents() throws InterruptedException {
+		sAssert.assertEquals(coachingAppHomePage.getTotalParticipants(), numberOfStudents);
+		sAssert.assertAll();
+	}
+
+	@Test(priority = 3)
+	public void verifyStudentsAreListedToTeacher() throws InterruptedException {
+		sAssert.assertTrue(coachingAppHomePage.getParticipantNames().equals(studentsList));
+		sAssert.assertAll();
 	}
 
 	public void loginToMyApp(String userName, String password, WebDriver driver) {

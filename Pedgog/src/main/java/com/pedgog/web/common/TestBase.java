@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -64,10 +66,12 @@ public class TestBase {
 	public static ChromeOptions options;
 	public static MultipleStudents multipleStudents;
 	public static int numberOfStudents;
+	public static List<String> studentsList;
 
 	@BeforeSuite
 	protected void setDrivers() throws InterruptedException {
 		multipleStudents = new MultipleStudents();
+		studentsList = new ArrayList<String>();
 		setLoginData();
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\drivers\\chromedriver.exe");
 		Map<String, Object> pref = new HashMap<String, Object>();
@@ -96,7 +100,7 @@ public class TestBase {
 		}
 
 		if (myAppTesting) {
-			 
+
 			for (int i = 2; i < numberOfStudents + 2; i++) {
 				multipleStudents.openWindowForStudents(i);
 			}
@@ -234,6 +238,10 @@ public class TestBase {
 			myAppLoginPassword = prop.getProperty("myAppLoginPassword");
 			myAppURL = prop.getProperty("myAppURL");
 			numberOfStudents = Integer.parseInt(prop.getProperty("totalStudents"));
+			for (int i = 1; i < numberOfStudents + 1; i++) {
+				studentsList.add(prop.getProperty("myAppUserName" + i));
+				System.out.println("Student " + i + " : " + prop.getProperty("myAppUserName" + i));
+			}
 		}
 	}
 
