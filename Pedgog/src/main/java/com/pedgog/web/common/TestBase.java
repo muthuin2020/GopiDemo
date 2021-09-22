@@ -275,6 +275,13 @@ public class TestBase {
 			driverTwo.quit();
 			analyticsTest = false;
 		}
+		if (myAppTesting) {
+
+			for (int i = 2; i < numberOfStudents + 2; i++) {
+				multipleStudents.closeStudentsWindow(i);
+			}
+
+		}
 	}
 
 }

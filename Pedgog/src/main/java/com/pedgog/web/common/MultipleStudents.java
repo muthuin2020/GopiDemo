@@ -8,7 +8,7 @@ public class MultipleStudents extends TestBase {
 
 	public void openWindowForStudents(int i) {
 
-		String browser = "ff";
+		String browser = "ch";
 		if (browser.equalsIgnoreCase("ch")) {
 			switch (i) {
 			case 2:
@@ -306,6 +306,85 @@ public class MultipleStudents extends TestBase {
 			return driverTwenty;
 		default:
 			return null;
+		}
+	}
+
+	public void closeStudentsWindow(int i) {
+
+		switch (i) {
+		case 2:
+			driverTwo.quit();
+			break;
+		case 3:
+			driverTwo.quit();
+			break;
+
+		case 4:
+			driverFour.quit();
+			break;
+
+		case 5:
+			driverFive.quit();
+			break;
+
+		case 6:
+			driverSix.quit();
+			break;
+
+		case 7:
+			driverSeven.quit();
+			break;
+
+		case 8:
+			driverEight.quit();
+			break;
+
+		case 9:
+			driverNine.quit();
+			break;
+		case 10:
+			driverTen.quit();
+			break;
+		case 11:
+			driverEleven.quit();
+			break;
+
+		case 12:
+			driverTwelve.quit();
+			break;
+
+		case 13:
+			driverThirteen.quit();
+			break;
+
+		case 14:
+			driverFourteen.quit();
+			break;
+
+		case 15:
+			driverFifteen.quit();
+			break;
+
+		case 16:
+			driverSixteen.quit();
+			break;
+
+		case 17:
+			driverSeventeen.quit();
+			break;
+
+		case 18:
+			driverEighteen.quit();
+			break;
+
+		case 19:
+			driverNineteen.quit();
+			break;
+		case 20:
+			driverTwenty.quit();
+			break;
+		default:
+			break;
 		}
 	}
 }
