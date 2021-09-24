@@ -2,14 +2,15 @@ package com.pedgog.web.common;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class MultipleStudents extends TestBase {
 
 	public void openWindowForStudents(int i) {
 
-		String browser = "ch";
-		if (browser.equalsIgnoreCase("ch")) {
+		// String browser = "firefox";
+		if (browser.equalsIgnoreCase("chrome")) {
 			switch (i) {
 			case 2:
 				driverTwo = new ChromeDriver(options);
@@ -127,12 +128,12 @@ public class MultipleStudents extends TestBase {
 				break;
 			}
 		}
-		if (browser.equalsIgnoreCase("ff")) {
+		if (browser.equalsIgnoreCase("firefox")) {
 			switch (i) {
 			case 2:
 				driverTwo = new FirefoxDriver();
 				driverTwo.manage().window().maximize();
-				driverTwo.get(myAppURL);
+				driverThree.get(myAppURL);
 				break;
 
 			case 3:
@@ -244,6 +245,126 @@ public class MultipleStudents extends TestBase {
 			default:
 				break;
 			}
+
+		}
+		if (browser.equalsIgnoreCase("edge")) {
+			switch (i) {
+			case 2:
+				driverTwo = new EdgeDriver();
+				driverTwo.manage().window().maximize();
+				driverTwo.get(myAppURL);
+				break;
+
+			case 3:
+				driverThree = new EdgeDriver();
+				driverThree.manage().window().maximize();
+				driverThree.get(myAppURL);
+				break;
+
+			case 4:
+				driverFour = new EdgeDriver();
+				driverFour.manage().window().maximize();
+				driverFour.get(myAppURL);
+				break;
+
+			case 5:
+				driverFive = new EdgeDriver();
+				driverFive.manage().window().maximize();
+				driverFive.get(myAppURL);
+				break;
+
+			case 6:
+				driverSix = new EdgeDriver();
+				driverSix.manage().window().maximize();
+				driverSix.get(myAppURL);
+				break;
+
+			case 7:
+				driverSeven = new EdgeDriver();
+				driverSeven.manage().window().maximize();
+				driverSeven.get(myAppURL);
+				break;
+
+			case 8:
+				driverEight = new EdgeDriver();
+				driverEight.manage().window().maximize();
+				driverEight.get(myAppURL);
+				break;
+
+			case 9:
+				driverNine = new EdgeDriver();
+				driverNine.manage().window().maximize();
+				driverNine.get(myAppURL);
+				break;
+
+			case 10:
+				driverTen = new EdgeDriver();
+				driverTen.manage().window().maximize();
+				driverTen.get(myAppURL);
+				break;
+
+			case 11:
+				driverEleven = new EdgeDriver();
+				driverEleven.manage().window().maximize();
+				driverEleven.get(myAppURL);
+				break;
+
+			case 12:
+				driverTwelve = new EdgeDriver();
+				driverTwelve.manage().window().maximize();
+				driverTwelve.get(myAppURL);
+				break;
+
+			case 13:
+				driverThirteen = new EdgeDriver();
+				driverThirteen.manage().window().maximize();
+				driverThirteen.get(myAppURL);
+				break;
+
+			case 14:
+				driverFourteen = new EdgeDriver();
+				driverFourteen.manage().window().maximize();
+				driverFourteen.get(myAppURL);
+				break;
+
+			case 15:
+				driverFifteen = new EdgeDriver();
+				driverFifteen.manage().window().maximize();
+				driverFifteen.get(myAppURL);
+				break;
+
+			case 16:
+				driverSixteen = new EdgeDriver();
+				driverSixteen.manage().window().maximize();
+				driverSixteen.get(myAppURL);
+				break;
+
+			case 17:
+				driverSeventeen = new EdgeDriver();
+				driverSeventeen.manage().window().maximize();
+				driverSeventeen.get(myAppURL);
+				break;
+
+			case 18:
+				driverEighteen = new EdgeDriver();
+				driverEighteen.manage().window().maximize();
+				driverEighteen.get(myAppURL);
+				break;
+
+			case 19:
+				driverNineteen = new EdgeDriver();
+				driverNineteen.manage().window().maximize();
+				driverNineteen.get(myAppURL);
+				break;
+			case 20:
+				driverTwenty = new EdgeDriver();
+				driverTwenty.manage().window().maximize();
+				driverTwenty.get(myAppURL);
+				break;
+			default:
+				break;
+			}
+
 		}
 
 	}

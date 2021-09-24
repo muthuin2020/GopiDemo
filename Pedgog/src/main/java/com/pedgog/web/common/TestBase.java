@@ -19,6 +19,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.PageFactory;
@@ -71,25 +72,33 @@ public class TestBase {
 	public static MultipleStudents multipleStudents;
 	public static int numberOfStudents, registeredUserEmailCount;
 	public static List<String> studentsList, assessmentCompletedList;
+	public static String browser = null;
 
 	@BeforeSuite
 	protected void setDrivers() throws InterruptedException {
 		multipleStudents = new MultipleStudents();
 		studentsList = new ArrayList<String>();
-		assessmentCompletedList= new ArrayList<String>();
+		assessmentCompletedList = new ArrayList<String>();
 		setLoginData();
-		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\drivers\\chromedriver.exe");
-		Map<String, Object> pref = new HashMap<String, Object>();
-		pref.put("profile.default_content_setting_values.notifications", 2);
-		options = new ChromeOptions();
-		options.addArguments("--disable-extensions");
-		options.addArguments("–disable-notifications");
-		options.setExperimentalOption("prefs", pref);
-		driver = new ChromeDriver(options);
-
+		if (browser.equals("chrome")) {
+			System.setProperty("webdriver.chrome.driver",
+					System.getProperty("user.dir") + "\\drivers\\chromedriver.exe");
+			Map<String, Object> pref = new HashMap<String, Object>();
+			pref.put("profile.default_content_setting_values.notifications", 2);
+			options = new ChromeOptions();
+			options.addArguments("--disable-extensions");
+			options.addArguments("–disable-notifications");
+			options.setExperimentalOption("prefs", pref);
+			driver = new ChromeDriver(options);
+		} else if (browser.equals("firefox")) {
 //		---- disable the above line and enable the below 2 lines to run in firefox browser ----
-//		System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "\\drivers\\geckodriver.exe");
-//		driver = new FirefoxDriver();
+			System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "\\drivers\\geckodriver.exe");
+			driver = new FirefoxDriver();
+		} else if (browser.equals("edge")) {
+			System.setProperty("webdriver.edge.driver", System.getProperty("user.dir") + "\\drivers\\msedgedriver.exe");
+			driver = new EdgeDriver();
+		} else
+			System.err.println("Please set the browser.....");
 
 		System.out.println("Browser is launched...");
 		driver.manage().window().maximize();
@@ -99,8 +108,16 @@ public class TestBase {
 		System.out.println("Page title is : " + driver.getTitle());
 
 		if (analyticsTest) {
-			driverTwo = new ChromeDriver(options);
-			driverTwo.manage().window().maximize();
+			if (browser.equals("chrome")) {
+				driverTwo = new ChromeDriver(options);
+				driverTwo.manage().window().maximize();
+			} else if (browser.equals("firefox")) {
+				driver = new FirefoxDriver();
+			} else if (browser.equals("edge")) {
+				System.setProperty("webdriver.edge.driver",
+						System.getProperty("user.dir") + "\\drivers\\msedgedriver.exe");
+				driver = new EdgeDriver();
+			}
 		}
 
 		if (myAppTesting) {
@@ -203,8 +220,8 @@ public class TestBase {
 	}
 
 	public void setLoginData() {
-		 propertyFilePath = System.getProperty("user.dir") + "\\config\\config.properties";
-		 propBase = new Properties();
+		propertyFilePath = System.getProperty("user.dir") + "\\config\\config.properties";
+		propBase = new Properties();
 		BufferedReader reader;
 		try {
 			reader = new BufferedReader(new FileReader(propertyFilePath));
@@ -218,6 +235,8 @@ public class TestBase {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+
+		browser = propBase.getProperty("browser");
 
 		userName = propBase.getProperty("emailId");
 		userPassword = propBase.getProperty("pwd");
@@ -248,7 +267,7 @@ public class TestBase {
 				registerUserEmail = propBase.getProperty("registerUserEmail");
 				registerUserPassword = propBase.getProperty("registerUserPassword");
 				registerAccessCode = propBase.getProperty("registerAccessCode");
-				registeredUserEmailCount= Integer.parseInt(propBase.getProperty("registeredUserEmailCount"));
+				registeredUserEmailCount = Integer.parseInt(propBase.getProperty("registeredUserEmailCount"));
 			}
 
 			for (int i = 1; i < numberOfStudents + 1; i++) {
@@ -293,11 +312,11 @@ public class TestBase {
 			for (int i = 2; i < numberOfStudents + 2; i++) {
 				multipleStudents.closeStudentsWindow(i);
 			}
-			if(registerAndTest) {
-			propBase.setProperty("registeredUserEmailCount", ""+registeredUserEmailCount);
-			FileOutputStream fis = new FileOutputStream(new File(propertyFilePath));
-			propBase.store(fis, "Updated on through automation");
-			fis.close();
+			if (registerAndTest) {
+				propBase.setProperty("registeredUserEmailCount", "" + registeredUserEmailCount);
+				FileOutputStream fis = new FileOutputStream(new File(propertyFilePath));
+				propBase.store(fis, "Updated on through automation");
+				fis.close();
 			}
 
 		}
