@@ -12,6 +12,7 @@ import com.coaching.pedgog.web.pages.PedgogHomePage;
 import com.coaching.pedgog.web.pages.PedgogLoginPage;
 import com.myApp.web.pages.MyAppHomePage;
 import com.myApp.web.pages.MyAppLoginPage;
+import com.myApp.web.pages.MyAppRegisterPage;
 import com.myApp.web.pages.MyAppSessionPage;
 import com.pedgog.utilities.ConfigFileReader;
 import com.pedgog.web.common.TestBase;
@@ -21,6 +22,8 @@ public class MyAppConductSessionTest extends TestBase {
 	CoachingAppHomePage coachingAppHomePage;
 	MyAppLoginPage myAppLoginPage;
 	MyAppHomePage myAppHomePage;
+	MyAppRegisterPage myAppRegisterPage;
+	RegisterTest registerTest;
 	CoachingAppConductPage coachingAppConductPage;
 
 	@BeforeClass
@@ -29,13 +32,16 @@ public class MyAppConductSessionTest extends TestBase {
 		coachingAppHomePage = new CoachingAppHomePage(driver);
 		myAppLoginPage = new MyAppLoginPage(driverTwo);
 		myAppHomePage = new MyAppHomePage(driverTwo);
+		myAppRegisterPage = new MyAppRegisterPage(driverTwo);
+		registerTest = new RegisterTest();
 		prop = new ConfigFileReader().getConfig();
 	}
 
 	@Test(priority = 1)
 	public void attendSessionWithOtp() throws InterruptedException {
-		WebDriver driver;
-		int studentNumber;
+		WebDriver driver = null;
+		int studentNumber, emailFrom = 9;
+		String studentEmail = "test_associate", pwd = "Royal@123", accessCode = "STARMAKERAP";
 		coachingAppLoginPage.enterUserEmail(prop.getProperty("coachingAppEmailId"));
 		coachingAppLoginPage.enterPassword(prop.getProperty("coachingAppPassword"));
 		coachingAppLoginPage.clickLogin();
@@ -45,29 +51,48 @@ public class MyAppConductSessionTest extends TestBase {
 		otpNumber = coachingAppHomePage.getOtpNumber();
 		System.out.println("Generated Otp is : " + otpNumber);
 
-		for (int i = 2; i < numberOfStudents + 2; i++) {
-			driver = multipleStudents.getCurrentStudentsWindow(i);
-			studentNumber = i - 1;
-			loginToMyApp(prop.getProperty("myAppLoginEmail" + studentNumber),
-					prop.getProperty("myAppLoginPassword" + studentNumber), driver);
+		if (registerAndTest) {
+			studentsList.clear();
+			for (int i = 2; i < numberOfStudents + 2; i++) {
+				driver = multipleStudents.getCurrentStudentsWindow(i);
+				studentNumber = i - 1;			
+				registerTest.registerStudent(studentEmail + emailFrom + "@gmail.com", pwd, accessCode,
+						studentEmail + emailFrom, driver);
+				studentsList.add(studentEmail + emailFrom);
+				joinSession(driver);
+				emailFrom++;
+			}
+
+		} else {
+
+			for (int i = 2; i < numberOfStudents + 2; i++) {
+				driver = multipleStudents.getCurrentStudentsWindow(i);
+				studentNumber = i - 1;
+				loginToMyApp(prop.getProperty("myAppLoginEmail" + studentNumber),
+						prop.getProperty("myAppLoginPassword" + studentNumber), driver);
+				joinSession(driver);
+
+			}
 			Thread.sleep(2000);
-			joinSession(driver);
+			
 		}
 	}
 
 	@Test(priority = 2)
 	public void verifyTotalNumberOfStudents() throws InterruptedException {
+		Thread.sleep(2000);
 		sAssert.assertEquals(coachingAppHomePage.getTotalParticipants(), numberOfStudents);
 		sAssert.assertAll();
 	}
 
 	@Test(priority = 3)
 	public void verifyStudentsAreListedToTeacher() throws InterruptedException {
+		Thread.sleep(2000);
 		sAssert.assertTrue(coachingAppHomePage.getParticipantNames().equals(studentsList));
 		sAssert.assertAll();
 	}
 
-	@Test(priority = 4)
+	@Test(enabled=false)
 	public void verifyAssessmentLinkIsPresent() throws InterruptedException {
 		coachingAppHomePage.clickOnBeginSession();
 		Thread.sleep(2000);
@@ -78,8 +103,8 @@ public class MyAppConductSessionTest extends TestBase {
 		sAssert.assertAll();
 
 	}
-	
-	@Test(priority = 5)
+
+	@Test(enabled=false)
 	public void takeAssessment() throws InterruptedException {
 		for (int i = 2; i < numberOfStudents + 2; i++) {
 			driver = multipleStudents.getCurrentStudentsWindow(i);
@@ -88,7 +113,6 @@ public class MyAppConductSessionTest extends TestBase {
 		}
 
 	}
-	
 
 	public void loginToMyApp(String userName, String password, WebDriver driver) {
 		myAppLoginPage = new MyAppLoginPage(driver);

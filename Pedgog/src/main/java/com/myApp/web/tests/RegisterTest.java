@@ -1,5 +1,6 @@
 package com.myApp.web.tests;
 
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -27,24 +28,27 @@ public class RegisterTest extends TestBase {
 		myAppHomePage = new MyAppHomePage(driverTwo);
 		loginPage = new MyAppLoginPage(driverTwo);
 		prop = new ConfigFileReader().getConfig();
-		loginPage.clickRegister();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Test(priority = 1)
 	public void loginWithCorrectCredentials() {
-		sAssert.assertTrue(registerStudent("test_student71@gmail.com", "Royal@123", "STARMAKERAP", "seventyOne"));
-		isLoggedIn = true;
-		sAssert.assertAll();
+//		sAssert.assertTrue(registerStudent("test_student74@gmail.com", "Royal@123", "STARMAKERAP", "seventyOne"));
+//		isLoggedIn = true;
+//		sAssert.assertAll();
 	}
 
-	public boolean registerStudent(String userEmail, String pwd, String accessCode, String fullName) {
+	public boolean registerStudent(String userEmail, String pwd, String accessCode, String fullName, WebDriver driver) {
+		myAppRegisterPage = new MyAppRegisterPage(driver);
+		myAppHomePage = new MyAppHomePage(driver);
+		loginPage = new MyAppLoginPage(driver);
+		loginPage.clickRegister();
 		myAppRegisterPage.enterUserEmail(userEmail);
 		myAppRegisterPage.enterPassword(pwd);
 		myAppRegisterPage.enterAccessCode(accessCode);

@@ -316,7 +316,7 @@ public class MultipleStudents extends TestBase {
 			driverTwo.quit();
 			break;
 		case 3:
-			driverTwo.quit();
+			driverThree.quit();
 			break;
 
 		case 4:
