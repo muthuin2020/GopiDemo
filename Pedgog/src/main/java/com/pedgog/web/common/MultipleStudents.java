@@ -133,7 +133,7 @@ public class MultipleStudents extends TestBase {
 			case 2:
 				driverTwo = new FirefoxDriver();
 				driverTwo.manage().window().maximize();
-				driverThree.get(myAppURL);
+				driverTwo.get(myAppURL);
 				break;
 
 			case 3:
