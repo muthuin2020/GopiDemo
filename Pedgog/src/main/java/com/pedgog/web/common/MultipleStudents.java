@@ -90,27 +90,27 @@ public class MultipleStudents extends TestBase {
 				break;
 
 			case 15:
-				driverFive = new ChromeDriver(options);
-				driverFive.manage().window().maximize();
-				driverFive.get(myAppURL);
+				driverFifteen = new ChromeDriver(options);
+				driverFifteen.manage().window().maximize();
+				driverFifteen.get(myAppURL);
 				break;
 
 			case 16:
-				driverSix = new ChromeDriver(options);
-				driverSix.manage().window().maximize();
-				driverSix.get(myAppURL);
+				driverSixteen = new ChromeDriver(options);
+				driverSixteen.manage().window().maximize();
+				driverSixteen.get(myAppURL);
 				break;
 
 			case 17:
-				driverSeven = new ChromeDriver(options);
-				driverSeven.manage().window().maximize();
-				driverSeven.get(myAppURL);
+				driverSeventeen = new ChromeDriver(options);
+				driverSeventeen.manage().window().maximize();
+				driverSeventeen.get(myAppURL);
 				break;
 
 			case 18:
-				driverEight = new ChromeDriver(options);
-				driverEight.manage().window().maximize();
-				driverEight.get(myAppURL);
+				driverEighteen = new ChromeDriver(options);
+				driverEighteen.manage().window().maximize();
+				driverEighteen.get(myAppURL);
 				break;
 
 			case 19:
@@ -208,27 +208,27 @@ public class MultipleStudents extends TestBase {
 				break;
 
 			case 15:
-				driverFive = new FirefoxDriver();
-				driverFive.manage().window().maximize();
-				driverFive.get(myAppURL);
+				driverFifteen = new FirefoxDriver();
+				driverFifteen.manage().window().maximize();
+				driverFifteen.get(myAppURL);
 				break;
 
 			case 16:
-				driverSix = new FirefoxDriver();
-				driverSix.manage().window().maximize();
-				driverSix.get(myAppURL);
+				driverSixteen = new FirefoxDriver();
+				driverSixteen.manage().window().maximize();
+				driverSixteen.get(myAppURL);
 				break;
 
 			case 17:
-				driverSeven = new FirefoxDriver();
-				driverSeven.manage().window().maximize();
-				driverSeven.get(myAppURL);
+				driverSeventeen = new FirefoxDriver();
+				driverSeventeen.manage().window().maximize();
+				driverSeventeen.get(myAppURL);
 				break;
 
 			case 18:
-				driverEight = new FirefoxDriver();
-				driverEight.manage().window().maximize();
-				driverEight.get(myAppURL);
+				driverEighteen = new FirefoxDriver();
+				driverEighteen.manage().window().maximize();
+				driverEighteen.get(myAppURL);
 				break;
 
 			case 19:

@@ -40,8 +40,7 @@ public class MyAppConductSessionTest extends TestBase {
 	@Test(priority = 1)
 	public void attendSessionWithOtp() throws InterruptedException {
 		WebDriver driver = null;
-		int studentNumber, emailFrom = 20;
-		String studentEmail = "test_associate", pwd = "Royal@123", accessCode = "STARMAKERAP";
+		int studentNumber;
 		coachingAppLoginPage.enterUserEmail(prop.getProperty("coachingAppEmailId"));
 		coachingAppLoginPage.enterPassword(prop.getProperty("coachingAppPassword"));
 		coachingAppLoginPage.clickLogin();
@@ -55,12 +54,12 @@ public class MyAppConductSessionTest extends TestBase {
 			studentsList.clear();
 			for (int i = 2; i < numberOfStudents + 2; i++) {
 				driver = multipleStudents.getCurrentStudentsWindow(i);
-				studentNumber = i - 1;			
-				registerTest.registerStudent(studentEmail + emailFrom + "@gmail.com", pwd, accessCode,
-						studentEmail + emailFrom, driver);
-				studentsList.add(studentEmail + emailFrom);
+				studentNumber = i - 1;
+				registeredUserEmailCount++;
+				registerTest.registerStudent(registerUserEmail + registeredUserEmailCount + "@gmail.com",
+						registerUserPassword, registerAccessCode, registerUserEmail + registeredUserEmailCount, driver);
+				studentsList.add(registerUserEmail + registeredUserEmailCount);
 				joinSession(driver);
-				emailFrom++;
 			}
 
 		} else {
@@ -73,8 +72,8 @@ public class MyAppConductSessionTest extends TestBase {
 				joinSession(driver);
 
 			}
-			Thread.sleep(2000);
 			
+
 		}
 	}
 
@@ -92,7 +91,7 @@ public class MyAppConductSessionTest extends TestBase {
 		sAssert.assertAll();
 	}
 
-	@Test(priority = 4)
+	@Test(enabled=false)
 	public void verifyAssessmentLinkIsPresent() throws InterruptedException {
 		coachingAppHomePage.clickOnBeginSession();
 		Thread.sleep(2000);
@@ -104,7 +103,7 @@ public class MyAppConductSessionTest extends TestBase {
 
 	}
 
-	@Test(priority = 5)
+	@Test(enabled=false)
 	public void takeAssessment() throws InterruptedException {
 		for (int i = 2; i < numberOfStudents + 2; i++) {
 			driver = multipleStudents.getCurrentStudentsWindow(i);

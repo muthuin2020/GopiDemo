@@ -3,6 +3,7 @@ package com.pedgog.web.common;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -52,8 +53,8 @@ public class TestBase {
 			coachingAppUserName, coachingAppUserPassword, coachingAppHomePageTitle, coachingAppURL;
 	public static String analyticsLoginEmail, analyticsLoginPassword, myAppLoginEmail, myAppLoginPassword, myAppURL,
 			registerUserEmail, registerUserPassword, registerAccessCode;
-	public static String otpLink, otpNumber, assessmentLink;
-	public static Properties prop;
+	public static String otpLink, otpNumber, assessmentLink, propertyFilePath;
+	public static Properties prop, propBase;
 	PedgogLoginPage loginPage;
 	CoachingAppHomePage coachingAppHomePage;
 	CoachingAppLoginPage coachingAppLoginPage;
@@ -68,7 +69,7 @@ public class TestBase {
 	public static ExtentTest logger;
 	public static ChromeOptions options;
 	public static MultipleStudents multipleStudents;
-	public static int numberOfStudents;
+	public static int numberOfStudents, registeredUserEmailCount;
 	public static List<String> studentsList;
 
 	@BeforeSuite
@@ -201,14 +202,14 @@ public class TestBase {
 	}
 
 	public void setLoginData() {
-		String propertyFilePath = System.getProperty("user.dir") + "\\config\\config.properties";
-		Properties prop = new Properties();
+		 propertyFilePath = System.getProperty("user.dir") + "\\config\\config.properties";
+		 propBase = new Properties();
 		BufferedReader reader;
 		try {
 			reader = new BufferedReader(new FileReader(propertyFilePath));
 
 			try {
-				prop.load(reader);
+				propBase.load(reader);
 				reader.close();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -217,40 +218,41 @@ public class TestBase {
 			e.printStackTrace();
 		}
 
-		userName = prop.getProperty("emailId");
-		userPassword = prop.getProperty("pwd");
-		homePageTitle = prop.getProperty("homePageTitle");
-		pedgogURL = prop.getProperty("pedgogURL");
+		userName = propBase.getProperty("emailId");
+		userPassword = propBase.getProperty("pwd");
+		homePageTitle = propBase.getProperty("homePageTitle");
+		pedgogURL = propBase.getProperty("pedgogURL");
 
-		coachingAppUserName = prop.getProperty("coachingAppEmailId");
-		coachingAppUserPassword = prop.getProperty("coachingAppPassword");
-		coachingAppHomePageTitle = prop.getProperty("coachingAppHomePageTitle");
-		coachingAppURL = prop.getProperty("coachingAppURL");
+		coachingAppUserName = propBase.getProperty("coachingAppEmailId");
+		coachingAppUserPassword = propBase.getProperty("coachingAppPassword");
+		coachingAppHomePageTitle = propBase.getProperty("coachingAppHomePageTitle");
+		coachingAppURL = propBase.getProperty("coachingAppURL");
 
-		analyticsTest = Boolean.parseBoolean(prop.getProperty("analyticsTest"));
+		analyticsTest = Boolean.parseBoolean(propBase.getProperty("analyticsTest"));
 		if (analyticsTest) {
-			analyticsLoginEmail = prop.getProperty("analyticsLoginEmail");
-			analyticsLoginPassword = prop.getProperty("analyticsLoginPassword");
-			analyticsURL = prop.getProperty("analyticsURL");
+			analyticsLoginEmail = propBase.getProperty("analyticsLoginEmail");
+			analyticsLoginPassword = propBase.getProperty("analyticsLoginPassword");
+			analyticsURL = propBase.getProperty("analyticsURL");
 		}
 
-		myAppTesting = Boolean.parseBoolean(prop.getProperty("myAppTesting"));
+		myAppTesting = Boolean.parseBoolean(propBase.getProperty("myAppTesting"));
 		if (myAppTesting) {
-			myAppLoginEmail = prop.getProperty("myAppLoginEmail");
-			myAppLoginPassword = prop.getProperty("myAppLoginPassword");
-			myAppURL = prop.getProperty("myAppURL");
-			numberOfStudents = Integer.parseInt(prop.getProperty("totalStudents"));
-			registerAndTest = Boolean.parseBoolean(prop.getProperty("registerAndTest"));
+			myAppLoginEmail = propBase.getProperty("myAppLoginEmail");
+			myAppLoginPassword = propBase.getProperty("myAppLoginPassword");
+			myAppURL = propBase.getProperty("myAppURL");
+			numberOfStudents = Integer.parseInt(propBase.getProperty("totalStudents"));
+			registerAndTest = Boolean.parseBoolean(propBase.getProperty("registerAndTest"));
 
 			if (registerAndTest) {
-				registerUserEmail = prop.getProperty("registerUserEmail");
-				registerUserPassword = prop.getProperty("registerUserPassword");
-				registerAccessCode = prop.getProperty("registerAccessCode");
+				registerUserEmail = propBase.getProperty("registerUserEmail");
+				registerUserPassword = propBase.getProperty("registerUserPassword");
+				registerAccessCode = propBase.getProperty("registerAccessCode");
+				registeredUserEmailCount= Integer.parseInt(propBase.getProperty("registeredUserEmailCount"));
 			}
 
 			for (int i = 1; i < numberOfStudents + 1; i++) {
-				studentsList.add(prop.getProperty("myAppUserName" + i));
-				System.out.println("Student " + i + " : " + prop.getProperty("myAppUserName" + i));
+				studentsList.add(propBase.getProperty("myAppUserName" + i));
+				System.out.println("Student " + i + " : " + propBase.getProperty("myAppUserName" + i));
 			}
 		}
 	}
@@ -277,7 +279,7 @@ public class TestBase {
 	}
 
 	@AfterSuite
-	protected void closeDriver() {
+	protected void closeDriver() throws IOException {
 		System.out.println("========================================================================================");
 		driver.quit();
 		isLoggedIn = false;
@@ -289,6 +291,12 @@ public class TestBase {
 
 			for (int i = 2; i < numberOfStudents + 2; i++) {
 				multipleStudents.closeStudentsWindow(i);
+			}
+			if(registerAndTest) {
+			propBase.setProperty("registeredUserEmailCount", ""+registeredUserEmailCount);
+			FileOutputStream fis = new FileOutputStream(new File(propertyFilePath));
+			propBase.store(fis, "Updated on through automation");
+			fis.close();
 			}
 
 		}
