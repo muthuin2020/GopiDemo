@@ -40,7 +40,7 @@ public class MyAppConductSessionTest extends TestBase {
 	@Test(priority = 1)
 	public void attendSessionWithOtp() throws InterruptedException {
 		WebDriver driver = null;
-		int studentNumber, emailFrom = 9;
+		int studentNumber, emailFrom = 20;
 		String studentEmail = "test_associate", pwd = "Royal@123", accessCode = "STARMAKERAP";
 		coachingAppLoginPage.enterUserEmail(prop.getProperty("coachingAppEmailId"));
 		coachingAppLoginPage.enterPassword(prop.getProperty("coachingAppPassword"));
@@ -92,7 +92,7 @@ public class MyAppConductSessionTest extends TestBase {
 		sAssert.assertAll();
 	}
 
-	@Test(enabled=false)
+	@Test(priority = 4)
 	public void verifyAssessmentLinkIsPresent() throws InterruptedException {
 		coachingAppHomePage.clickOnBeginSession();
 		Thread.sleep(2000);
@@ -104,7 +104,7 @@ public class MyAppConductSessionTest extends TestBase {
 
 	}
 
-	@Test(enabled=false)
+	@Test(priority = 5)
 	public void takeAssessment() throws InterruptedException {
 		for (int i = 2; i < numberOfStudents + 2; i++) {
 			driver = multipleStudents.getCurrentStudentsWindow(i);

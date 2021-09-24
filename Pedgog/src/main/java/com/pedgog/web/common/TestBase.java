@@ -46,10 +46,12 @@ public class TestBase {
 	public static WebDriver driver, driverTwo, driverThree, driverFour, driverFive, driverSix, driverSeven, driverEight,
 			driverNine, driverTen, driverEleven, driverTwelve, driverThirteen, driverFourteen, driverFifteen,
 			driverSixteen, driverSeventeen, driverEighteen, driverNineteen, driverTwenty;
-	public static boolean isLoggedIn = false, isLoggedInToAnalytics = false, analyticsTest, myAppTesting, registerAndTest;
+	public static boolean isLoggedIn = false, isLoggedInToAnalytics = false, analyticsTest, myAppTesting,
+			registerAndTest;
 	public static String userName, userPassword, homePageTitle, testMethodName, currentPage, pedgogURL, analyticsURL,
 			coachingAppUserName, coachingAppUserPassword, coachingAppHomePageTitle, coachingAppURL;
-	public static String analyticsLoginEmail, analyticsLoginPassword, myAppLoginEmail, myAppLoginPassword, myAppURL;
+	public static String analyticsLoginEmail, analyticsLoginPassword, myAppLoginEmail, myAppLoginPassword, myAppURL,
+			registerUserEmail, registerUserPassword, registerAccessCode;
 	public static String otpLink, otpNumber, assessmentLink;
 	public static Properties prop;
 	PedgogLoginPage loginPage;
@@ -239,7 +241,13 @@ public class TestBase {
 			myAppURL = prop.getProperty("myAppURL");
 			numberOfStudents = Integer.parseInt(prop.getProperty("totalStudents"));
 			registerAndTest = Boolean.parseBoolean(prop.getProperty("registerAndTest"));
-			
+
+			if (registerAndTest) {
+				registerUserEmail = prop.getProperty("registerUserEmail");
+				registerUserPassword = prop.getProperty("registerUserPassword");
+				registerAccessCode = prop.getProperty("registerAccessCode");
+			}
+
 			for (int i = 1; i < numberOfStudents + 1; i++) {
 				studentsList.add(prop.getProperty("myAppUserName" + i));
 				System.out.println("Student " + i + " : " + prop.getProperty("myAppUserName" + i));
