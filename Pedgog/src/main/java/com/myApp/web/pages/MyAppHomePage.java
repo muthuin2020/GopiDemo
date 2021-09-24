@@ -22,6 +22,9 @@ public class MyAppHomePage extends BasePageAction{
 
 	@FindBy(xpath = "//div[text()=\"total score\"]/parent::div/following-sibling::div//span")
 	WebElement totalScore;
+	
+	@FindBy(xpath = "//div[@class=\"card-title\"][1]")
+	WebElement homePageTitle;
 
 	
 	public MyAppHomePage(WebDriver driver) {
@@ -47,6 +50,6 @@ public class MyAppHomePage extends BasePageAction{
 	
    public String getHomePageTitle()
    {
-	   return getPageTitle();
+	   return getText(homePageTitle);
    }
 }
