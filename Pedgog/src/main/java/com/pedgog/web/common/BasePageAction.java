@@ -24,6 +24,7 @@ import com.aventstack.extentreports.Status;
 public class BasePageAction extends TestBase {
 
 	WebDriver driver;
+	Actions actions = null;
 
 	public BasePageAction(WebDriver driver) {
 		this.driver = driver;
@@ -249,7 +250,7 @@ public class BasePageAction extends TestBase {
 			driver.findElement(By.xpath(xpath));
 			isPresent = true;
 		} catch (Exception e) {
-			
+
 		}
 
 		return isPresent;
@@ -267,11 +268,24 @@ public class BasePageAction extends TestBase {
 	}
 
 	public void mouseOverElement(WebElement element) {
-		Actions actions = new Actions(driver);
+		actions = new Actions(driver);
 		new WebDriverWait(driver, 15).withMessage("element is not visible")
 				.until(ExpectedConditions.visibilityOf(element));
 		actions.moveToElement(element);
 		actions.build().perform();
+	}
+
+	public void moveBtOffset(int x, int y) {
+		actions = new Actions(driver);
+		actions.moveByOffset(x, y);
+		actions.build().perform();
+	}
+
+	public void moveByOffsetAndClick(int x, int y) {
+		System.out.println("x y values are : "+x+" "+y);
+		actions = new Actions(driver);
+		actions.moveByOffset(x, y).build().perform();
+		actions.click().build().perform();
 	}
 
 	public String getPageTitle() {
@@ -279,7 +293,7 @@ public class BasePageAction extends TestBase {
 	}
 
 	public BasePageAction hitKey(Keys key) {
-		Actions actions = new Actions(driver);
+		actions = new Actions(driver);
 		actions.sendKeys(key).build().perform();
 		return this;
 	}

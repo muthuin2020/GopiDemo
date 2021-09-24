@@ -25,6 +25,9 @@ public class MyAppSessionPage extends BasePageAction {
 	WebElement joinButton;
 
 	String otpInputBox = "//div[@class=\"otp\"]";
+	
+	@FindBy(xpath = "//div[contains(text(),\"Hi \")]")
+	WebElement loggedInStudent;
 
 	public MyAppSessionPage(WebDriver driver) {
 		super(driver);
@@ -50,6 +53,11 @@ public class MyAppSessionPage extends BasePageAction {
 			enterText(driver.findElement(By.xpath(otpInputBox + "[" + i + "]//input")),
 					Character.toString(otpNumbers[i - 1]));
 		}
+	}
+	
+	public String getLoggedInStudentName()
+	{
+		return getText(loggedInStudent).substring(3);
 	}
 
 }

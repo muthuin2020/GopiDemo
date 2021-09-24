@@ -70,12 +70,13 @@ public class TestBase {
 	public static ChromeOptions options;
 	public static MultipleStudents multipleStudents;
 	public static int numberOfStudents, registeredUserEmailCount;
-	public static List<String> studentsList;
+	public static List<String> studentsList, assessmentCompletedList;
 
 	@BeforeSuite
 	protected void setDrivers() throws InterruptedException {
 		multipleStudents = new MultipleStudents();
 		studentsList = new ArrayList<String>();
+		assessmentCompletedList= new ArrayList<String>();
 		setLoginData();
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\drivers\\chromedriver.exe");
 		Map<String, Object> pref = new HashMap<String, Object>();

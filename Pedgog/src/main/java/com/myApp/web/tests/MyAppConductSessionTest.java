@@ -10,6 +10,7 @@ import com.coaching.myApp.web.pages.CoachingAppHomePage;
 import com.coaching.myApp.web.pages.CoachingAppLoginPage;
 import com.coaching.pedgog.web.pages.PedgogHomePage;
 import com.coaching.pedgog.web.pages.PedgogLoginPage;
+import com.myApp.web.pages.MyAppAssessmentPage;
 import com.myApp.web.pages.MyAppHomePage;
 import com.myApp.web.pages.MyAppLoginPage;
 import com.myApp.web.pages.MyAppRegisterPage;
@@ -25,6 +26,8 @@ public class MyAppConductSessionTest extends TestBase {
 	MyAppRegisterPage myAppRegisterPage;
 	RegisterTest registerTest;
 	CoachingAppConductPage coachingAppConductPage;
+	MyAppAssessmentPage myAppAssessmentPage;
+	MyAppSessionPage myAppSessionPage;
 
 	@BeforeClass
 	public void loginSetup() {
@@ -72,7 +75,6 @@ public class MyAppConductSessionTest extends TestBase {
 				joinSession(driver);
 
 			}
-			
 
 		}
 	}
@@ -91,7 +93,7 @@ public class MyAppConductSessionTest extends TestBase {
 		sAssert.assertAll();
 	}
 
-	@Test(enabled=false)
+	@Test(priority = 4)
 	public void verifyAssessmentLinkIsPresent() throws InterruptedException {
 		coachingAppHomePage.clickOnBeginSession();
 		Thread.sleep(2000);
@@ -103,14 +105,30 @@ public class MyAppConductSessionTest extends TestBase {
 
 	}
 
-	@Test(enabled=false)
+	@Test(priority = 5)
 	public void takeAssessment() throws InterruptedException {
 		for (int i = 2; i < numberOfStudents + 2; i++) {
 			driver = multipleStudents.getCurrentStudentsWindow(i);
 			driver.get(assessmentLink);
 			System.out.println(driver.getTitle());
+			myAppAssessmentPage = new MyAppAssessmentPage(driver);
+			System.out.println("I am on : " + myAppAssessmentPage.getAssessmentPageTitle());
+			myAppAssessmentPage.clickOnFirstNext();
+			myAppAssessmentPage.selectAnyAnswer();
+			myAppAssessmentPage.clickOnNext();
+			myAppAssessmentPage.selectAnyAnswer();
+			myAppAssessmentPage.clickOnNext();
+			myAppAssessmentPage.selectAnyAnswer();
+			myAppAssessmentPage.clickOnSubmit();
+			Thread.sleep(3000);
+			myAppAssessmentPage.clickOnAfterSubmitNextButton();
+			myAppAssessmentPage.selectRatings();
+			myAppAssessmentPage.clickOnSubmitRatings();
+			myAppSessionPage = new MyAppSessionPage(driver);
+			assessmentCompletedList.add(myAppSessionPage.getLoggedInStudentName());
+			sAssert.assertEquals(coachingAppHomePage.getTotalParticipants(), assessmentCompletedList.size());
 		}
-
+		sAssert.assertAll();
 	}
 
 	public void loginToMyApp(String userName, String password, WebDriver driver) {
@@ -129,7 +147,7 @@ public class MyAppConductSessionTest extends TestBase {
 		myAppSessionpage.enterOtp(otpNumber);
 		Thread.sleep(2000);
 		myAppSessionpage.clickOnJoinButton();
-		Thread.sleep(13000);
+		Thread.sleep(4000);
 
 	}
 
