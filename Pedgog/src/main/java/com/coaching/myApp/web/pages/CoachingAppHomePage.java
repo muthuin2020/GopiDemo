@@ -3,6 +3,7 @@ package com.coaching.myApp.web.pages;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -54,6 +55,9 @@ public class CoachingAppHomePage extends BasePageAction {
 
 	@FindBy(xpath = "//div[text()=\"CANCEL SESSION\"]")
 	List<WebElement> cancelSession;
+	
+	@FindBy(xpath = "//div[text()=\"test_associate325\"]//div")
+	WebElement studentNameColor;
 
 	public CoachingAppHomePage(WebDriver driver) {
 		super(driver);
@@ -130,4 +134,10 @@ public class CoachingAppHomePage extends BasePageAction {
 		implicitWait(driver, seconds * 1000);
 	}
 
+	public String getAssessmentCompletedStudentsNameColor(String name)
+	{
+		String studentNames="//div[text()=\""+name+"\"]//div";
+		WebElement we= driver.findElement(By.xpath(studentNames));
+		return we.getCssValue("background-color");
+	}
 }

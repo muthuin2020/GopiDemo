@@ -29,6 +29,8 @@ public class MyAppConductSessionTest extends TestBase {
 	MyAppAssessmentPage myAppAssessmentPage;
 	MyAppSessionPage myAppSessionPage;
 
+	String greenColor = "rgba(73, 213, 77, 1)";
+
 	@BeforeClass
 	public void loginSetup() {
 		coachingAppLoginPage = new CoachingAppLoginPage(driver);
@@ -48,7 +50,7 @@ public class MyAppConductSessionTest extends TestBase {
 		coachingAppLoginPage.enterPassword(prop.getProperty("coachingAppPassword"));
 		coachingAppLoginPage.clickLogin();
 		sAssert.assertEquals(coachingAppHomePage.getHomePageTtile(), prop.getProperty("coachingAppHomePageTitle"));
-		moduleToConduct=prop.getProperty("moduleToConduct");
+		moduleToConduct = prop.getProperty("moduleToConduct");
 		coachingAppHomePage.clickOnConduct(moduleToConduct);
 		Thread.sleep(2000);
 		otpNumber = coachingAppHomePage.getOtpNumber();
@@ -128,21 +130,20 @@ public class MyAppConductSessionTest extends TestBase {
 
 			myAppAssessmentPage.clickOnSubmit();
 			Thread.sleep(3000);
-			assessmentMark=myAppAssessmentPage.getAssessmentMark();
+			assessmentMark = myAppAssessmentPage.getAssessmentMark();
 			myAppAssessmentPage.clickOnAfterSubmitNextButton();
 			myAppAssessmentPage.selectRatings();
 			myAppAssessmentPage.clickOnSubmitRatings();
 			myAppSessionPage = new MyAppSessionPage(driver);
-			String studentName=myAppSessionPage.getLoggedInStudentName();
+			String studentName = myAppSessionPage.getLoggedInStudentName();
 			assessmentCompletedList.add(studentName);
 			sAssert.assertEquals(coachingAppHomePage.getTotalParticipants(), assessmentCompletedList.size());
-			sAssert.assertEquals(assessmentMark, myAppSessionPage.getAssessmentMark());		
+			sAssert.assertEquals(coachingAppHomePage.getAssessmentCompletedStudentsNameColor(studentName), greenColor);
+			sAssert.assertEquals(assessmentMark, myAppSessionPage.getAssessmentMark());
 		}
 		sAssert.assertAll();
 	}
 
-	
-	
 	public void loginToMyApp(String userName, String password, WebDriver driver) {
 		myAppLoginPage = new MyAppLoginPage(driver);
 		myAppLoginPage.enterUserEmail(userName);

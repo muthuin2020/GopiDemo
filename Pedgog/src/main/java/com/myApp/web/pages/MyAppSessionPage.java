@@ -58,7 +58,8 @@ public class MyAppSessionPage extends BasePageAction {
 	}
 
 	public String getLoggedInStudentName() {
-		return getText(loggedInStudent).substring(3);
+		String name=getText(loggedInStudent);
+		return name.substring(3,name.length()-7);
 	}
 
 	public int getAssessmentMark() {
