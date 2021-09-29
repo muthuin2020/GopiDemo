@@ -247,6 +247,7 @@ public class BasePageAction extends TestBase {
 	public Boolean isElementPresentWithoutWait(String xpath) {
 		boolean isPresent = false;
 		try {
+			Thread.sleep(1000);
 			driver.findElement(By.xpath(xpath));
 			isPresent = true;
 		} catch (Exception e) {

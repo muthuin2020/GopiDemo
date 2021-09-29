@@ -19,6 +19,8 @@ public class MyAppAssessmentPage extends BasePageAction {
 
 	@FindBy(xpath = "//span[text()=\"Next\"]")
 	WebElement nextButton;
+	
+	String nextBtn = "//span[text()=\"Next\"]";
 
 	@FindBy(xpath = "//button[@type=\"button\"]//span[text()=\"Previous\"]")
 	WebElement previousButton;
@@ -59,6 +61,11 @@ public class MyAppAssessmentPage extends BasePageAction {
 		clickElement(nextButton);
 	}
 
+	public boolean isLastQuestionInAssessment()
+	{
+		return !isElementPresentWithoutWait(nextBtn);
+	}
+	
 	public void clickOnPrevious() {
 		clickElement(previousButton);
 	}
@@ -73,7 +80,7 @@ public class MyAppAssessmentPage extends BasePageAction {
 
 	public void selectAnyAnswer() {
 		mouseOverElement(selectAnswer);
-		moveByOffsetAndClick(0, (int) Math.floor(Math.random() * (100 + 100 + 1) - 100));
+		moveByOffsetAndClick(0, (int) Math.floor(Math.random() * (40 + 40 + 1) - 40));
 	}
 
 	public void selectRatings() {

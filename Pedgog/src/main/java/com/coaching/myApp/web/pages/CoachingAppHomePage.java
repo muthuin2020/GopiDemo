@@ -119,6 +119,7 @@ public class CoachingAppHomePage extends BasePageAction {
 			}
 		}
 		act = new Actions(driver);
+		scrollToElement(moduleToSelect);
 		act.moveToElement(moduleToSelect).build().perform();
 		act.moveByOffset(0, 50).build().perform();
 		act.click().build().perform();

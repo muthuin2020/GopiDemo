@@ -114,11 +114,17 @@ public class MyAppConductSessionTest extends TestBase {
 			myAppAssessmentPage = new MyAppAssessmentPage(driver);
 			System.out.println("I am on : " + myAppAssessmentPage.getAssessmentPageTitle());
 			myAppAssessmentPage.clickOnFirstNext();
-			myAppAssessmentPage.selectAnyAnswer();
-			myAppAssessmentPage.clickOnNext();
-			myAppAssessmentPage.selectAnyAnswer();
-			myAppAssessmentPage.clickOnNext();
-			myAppAssessmentPage.selectAnyAnswer();
+
+			for (int j = 0; j < 100; j++) {
+				myAppAssessmentPage.selectAnyAnswer();
+				myAppAssessmentPage.clickOnNext();
+				if (myAppAssessmentPage.isLastQuestionInAssessment()) {
+					myAppAssessmentPage.selectAnyAnswer();
+					break;
+				}
+
+			}
+
 			myAppAssessmentPage.clickOnSubmit();
 			Thread.sleep(3000);
 			myAppAssessmentPage.clickOnAfterSubmitNextButton();
