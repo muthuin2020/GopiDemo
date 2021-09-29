@@ -21,6 +21,7 @@ public class RegisterTest extends TestBase {
 	MyAppHomePage myAppHomePage;
 	MyAppLoginPage loginPage;
 	String homePageTitle = "classroom learning";
+	MyAppSessionPage myAppSessionPage;
 
 	@BeforeClass
 	public void loginSetup() {
@@ -38,15 +39,25 @@ public class RegisterTest extends TestBase {
 	}
 
 	@Test(priority = 1)
-	public void loginWithCorrectCredentials() {
-//		sAssert.assertTrue(registerStudent("test_student74@gmail.com", "Royal@123", "STARMAKERAP", "seventyOne"));
-//		isLoggedIn = true;
-//		sAssert.assertAll();
+	public void registerWithCorrectCredentials() {
+		sAssert.assertTrue(
+				registerStudent("test_student106@gmail.com", "Royal@123", "STARMAKERAP", "test_student102", driverTwo));
+		isLoggedIn = true;
+		sAssert.assertAll();
+	}
+
+	@Test(priority = 2)
+	public void registerWithInCorrectEmail() {
+		boolean isRegistered = registerStudent("test_student107@gmai", "Royal@123", "STARMAKERAP", "test_student102",
+				driverTwo);
+		sAssert.assertTrue(!isRegistered
+				& myAppRegisterPage.getRegistrationErrorMessage().equals("\"email\" must be a valid email"));
+		sAssert.assertAll();
+		logout();
 	}
 
 	public boolean registerStudent(String userEmail, String pwd, String accessCode, String fullName, WebDriver driver) {
 		myAppRegisterPage = new MyAppRegisterPage(driver);
-		myAppHomePage = new MyAppHomePage(driver);
 		loginPage = new MyAppLoginPage(driver);
 		loginPage.clickRegister();
 		myAppRegisterPage.enterUserEmail(userEmail);
@@ -60,10 +71,26 @@ public class RegisterTest extends TestBase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (myAppHomePage.getHomePageTitle().equals(homePageTitle))
-			return true;
-		else
+		try {
+			myAppHomePage = new MyAppHomePage(driver);
+			if (myAppHomePage.getHomePageTitle().equals(homePageTitle))
+				return true;
+		} catch (Exception e) {
+			myAppRegisterPage = new MyAppRegisterPage(driver);
 			return false;
+		}
+		return false;
+	}
+
+	
+	public void logout() {
+		if (isLoggedIn) {
+			myAppHomePage.clickOnClassRoomLearning();
+			myAppSessionPage = new MyAppSessionPage(driverTwo);
+			myAppSessionPage.clickOnLogout();
+			isLoggedIn=false;
+		}
+
 	}
 
 }

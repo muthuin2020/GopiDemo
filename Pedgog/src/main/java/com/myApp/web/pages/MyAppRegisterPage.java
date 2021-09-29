@@ -30,6 +30,8 @@ public class MyAppRegisterPage extends BasePageAction {
 	@FindBy(xpath = "//a[text()=\"Login\"]")
 	WebElement login;
 	
+	@FindBy(xpath = "//div[@class=\"errorMsg\"]")
+	WebElement registerErrorMsg;
 
 	WebDriver driver;
 	
@@ -66,6 +68,11 @@ public class MyAppRegisterPage extends BasePageAction {
 
 	public void clickLogin() {
 		clickElement(login);
+	}
+	
+	public String getRegistrationErrorMessage()
+	{
+		return getText(registerErrorMsg);
 	}
 	
 }
