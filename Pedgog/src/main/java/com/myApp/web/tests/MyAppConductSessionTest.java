@@ -48,7 +48,8 @@ public class MyAppConductSessionTest extends TestBase {
 		coachingAppLoginPage.enterPassword(prop.getProperty("coachingAppPassword"));
 		coachingAppLoginPage.clickLogin();
 		sAssert.assertEquals(coachingAppHomePage.getHomePageTtile(), prop.getProperty("coachingAppHomePageTitle"));
-		coachingAppHomePage.clickOnConduct(prop.getProperty("moduleToConduct"));
+		moduleToConduct=prop.getProperty("moduleToConduct");
+		coachingAppHomePage.clickOnConduct(moduleToConduct);
 		Thread.sleep(2000);
 		otpNumber = coachingAppHomePage.getOtpNumber();
 		System.out.println("Generated Otp is : " + otpNumber);
@@ -123,7 +124,6 @@ public class MyAppConductSessionTest extends TestBase {
 					myAppAssessmentPage.selectAnyAnswer();
 					break;
 				}
-
 			}
 
 			myAppAssessmentPage.clickOnSubmit();

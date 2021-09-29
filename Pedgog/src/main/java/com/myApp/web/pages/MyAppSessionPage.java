@@ -29,8 +29,7 @@ public class MyAppSessionPage extends BasePageAction {
 	@FindBy(xpath = "//div[contains(text(),\"Hi \")]")
 	WebElement loggedInStudent;
 
-	@FindBy(xpath = "//span[text()=\"How to become a StarMaker Associate?\"]/ancestor::tr[1]//td[3]//span[1]")
-	WebElement assessmentMark;
+	String assessmentMark = "//span[text()=\"" + moduleToConduct + "\"]/ancestor::tr[1]//td[3]//span[1]";
 
 	public MyAppSessionPage(WebDriver driver) {
 		super(driver);
@@ -63,6 +62,12 @@ public class MyAppSessionPage extends BasePageAction {
 	}
 
 	public int getAssessmentMark() {
-		return Integer.parseInt(getText(assessmentMark));
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Integer.parseInt(getTextByXpath(assessmentMark));
 	}
 }

@@ -72,7 +72,7 @@ public class TestBase {
 	public static MultipleStudents multipleStudents;
 	public static int numberOfStudents, registeredUserEmailCount, assessmentMark;
 	public static List<String> studentsList, assessmentCompletedList;
-	public static String browser = null;
+	public static String browser = null, moduleToConduct;
 
 	@BeforeSuite
 	protected void setDrivers() throws InterruptedException {
