@@ -25,9 +25,12 @@ public class MyAppSessionPage extends BasePageAction {
 	WebElement joinButton;
 
 	String otpInputBox = "//div[@class=\"otp\"]";
-	
+
 	@FindBy(xpath = "//div[contains(text(),\"Hi \")]")
 	WebElement loggedInStudent;
+
+	@FindBy(xpath = "//span[text()=\"How to become a StarMaker Associate?\"]/ancestor::tr[1]//td[3]//span[1]")
+	WebElement assessmentMark;
 
 	public MyAppSessionPage(WebDriver driver) {
 		super(driver);
@@ -54,10 +57,12 @@ public class MyAppSessionPage extends BasePageAction {
 					Character.toString(otpNumbers[i - 1]));
 		}
 	}
-	
-	public String getLoggedInStudentName()
-	{
+
+	public String getLoggedInStudentName() {
 		return getText(loggedInStudent).substring(3);
 	}
 
+	public int getAssessmentMark() {
+		return Integer.parseInt(getText(assessmentMark));
+	}
 }

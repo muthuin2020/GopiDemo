@@ -99,6 +99,7 @@ public class MyAppConductSessionTest extends TestBase {
 		Thread.sleep(2000);
 		coachingAppConductPage = new CoachingAppConductPage(driver);
 		coachingAppConductPage.gotoAssessmentLink();
+		coachingAppConductPage.clickOnCopyAssessmentLink();
 		assessmentLink = coachingAppConductPage.getAssessmentLink();
 		sAssert.assertTrue(!assessmentLink.isEmpty());
 		sAssert.assertAll();
@@ -127,16 +128,21 @@ public class MyAppConductSessionTest extends TestBase {
 
 			myAppAssessmentPage.clickOnSubmit();
 			Thread.sleep(3000);
+			assessmentMark=myAppAssessmentPage.getAssessmentMark();
 			myAppAssessmentPage.clickOnAfterSubmitNextButton();
 			myAppAssessmentPage.selectRatings();
 			myAppAssessmentPage.clickOnSubmitRatings();
 			myAppSessionPage = new MyAppSessionPage(driver);
-			assessmentCompletedList.add(myAppSessionPage.getLoggedInStudentName());
+			String studentName=myAppSessionPage.getLoggedInStudentName();
+			assessmentCompletedList.add(studentName);
 			sAssert.assertEquals(coachingAppHomePage.getTotalParticipants(), assessmentCompletedList.size());
+			sAssert.assertEquals(assessmentMark, myAppSessionPage.getAssessmentMark());		
 		}
 		sAssert.assertAll();
 	}
 
+	
+	
 	public void loginToMyApp(String userName, String password, WebDriver driver) {
 		myAppLoginPage = new MyAppLoginPage(driver);
 		myAppLoginPage.enterUserEmail(userName);

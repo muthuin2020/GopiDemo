@@ -42,6 +42,10 @@ public class MyAppAssessmentPage extends BasePageAction {
 
 	@FindBy(xpath = "//span[text()=\"Submit\"]")
 	WebElement submitRating;
+	
+	@FindBy(xpath = "//div[@class=\"score circle\"]//div[1]")
+	WebElement assessmentMark;
+	
 
 	public MyAppAssessmentPage(WebDriver driver) {
 		super(driver);
@@ -94,4 +98,8 @@ public class MyAppAssessmentPage extends BasePageAction {
 		clickElement(submitRating);
 	}
 
+	public int getAssessmentMark()
+	{
+		return Integer.parseInt(getText(assessmentMark).substring(1));
+	}
 }

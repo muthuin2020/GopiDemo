@@ -31,7 +31,7 @@ public class CoachingAppConductPage extends BasePageAction {
 	@FindBy(xpath = "//span[text()=\"copy link \"]")
 	WebElement copyAssessmentLink;
 
-	@FindBy(xpath = "//span[text()=\"copy link \"]/following-sibling::div")
+	@FindBy(xpath = "//span[text()=\"Link copied \"]/following-sibling::div")
 	WebElement assessmentLink;
 
 	String assLink = "//span[text()=\"copy link \"]";
@@ -62,6 +62,12 @@ public class CoachingAppConductPage extends BasePageAction {
 	{
 		return getText(assessmentLink);
 	}
+	
+	public void clickOnCopyAssessmentLink()
+	{
+		clickElement(copyAssessmentLink);
+	}
+	
 	public void gotoAssessmentLink() throws InterruptedException {
 		for (int i = 0; i < 100; i++) {
 			try {
@@ -76,7 +82,6 @@ public class CoachingAppConductPage extends BasePageAction {
 			Thread.sleep(1000);
 			if(isElementPresentWithoutWait(assLink))
 				break;
-
 		}
 
 	}

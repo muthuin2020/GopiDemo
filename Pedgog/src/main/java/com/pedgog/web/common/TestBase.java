@@ -70,7 +70,7 @@ public class TestBase {
 	public static ExtentTest logger;
 	public static ChromeOptions options;
 	public static MultipleStudents multipleStudents;
-	public static int numberOfStudents, registeredUserEmailCount;
+	public static int numberOfStudents, registeredUserEmailCount, assessmentMark;
 	public static List<String> studentsList, assessmentCompletedList;
 	public static String browser = null;
 
